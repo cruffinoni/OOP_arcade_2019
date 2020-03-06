@@ -16,7 +16,6 @@ NAME			=	arcade
 
 SRC				=
 
-
 NAME_TEST		=	test_arcade
 
 SRC_TEST		=	./Tests/Combinations.cpp	\
@@ -24,7 +23,7 @@ SRC_TEST		=	./Tests/Combinations.cpp	\
 
 INCLUDE			=	./src/
 
-CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE)
+CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl
 
 ALL_SRC			=	$(SRC_GAME) $(SRC_GRAPHIC) $(SRC)
 OBJ				=	$(ALL_SRC:.cpp=.o)

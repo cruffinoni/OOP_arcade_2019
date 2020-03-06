@@ -6,12 +6,15 @@
 */
 
 #include <iostream>
+#include "DLLoader/DLLoader.hpp"
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
 
 int main(const int ac, const char **av)
 {
-    Arcade::Color a = Arcade::BLACK;
+    //Arcade::Color a = Arcade::BLACK;
+    DLLoader::DLLoader<Arcade::IGraphic> graphicDll("./a.out");
+
     std::cout << std::string(av[0]) << std::endl;
     return (0);
 }

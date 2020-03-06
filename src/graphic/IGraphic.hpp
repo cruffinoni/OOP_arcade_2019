@@ -24,6 +24,13 @@ namespace Arcade {
         YELLOW,
         GREY
     };
+
+    class IGraphic {
+        public:
+            virtual ~IGraphic() = default;
+
+            virtual void createSquare(void) = 0;
+    };
 }
 
 #endif
