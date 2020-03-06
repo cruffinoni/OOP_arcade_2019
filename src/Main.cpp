@@ -13,8 +13,20 @@
 int main(const int ac, const char **av)
 {
     //Arcade::Color a = Arcade::BLACK;
-    DLLoader::DLLoader<Arcade::IGraphic> graphicDll("./a.out");
+    if (ac == 1) {
+        printf("Enter a dll name\n");
+        return (84);
+    }
+    try {
+        DLLoader::DLLoader<Arcade::IGraphic> graphicDll(av[1]);
 
-    std::cout << std::string(av[0]) << std::endl;
-    return (0);
+        std::cout << std::string(av[1]) << std::endl;
+        return (0);
+    } catch (const DLLoader::Exceptions::InvalidDLL &e) {
+        std::cerr << e.what();
+        return (84);
+    } catch (const DLLoader::Exceptions::InvalidEntryPoint &e) {
+        std::cerr << e.what();
+        return (84);
+    }
 }

@@ -14,7 +14,8 @@ NAME			=	arcade
 #SRC_GRAPHIC		=	\
 #					./src/graphic				\
 
-SRC				=
+SRC				=	\
+					./src/DLLoader/Exceptions.cpp
 
 NAME_TEST		=	test_arcade
 
@@ -32,7 +33,7 @@ OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_MAIN)
-	g++ $(CXXFLAGS) -o $(NAME) $(OBJ) $(OBJ_MAIN)
+	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
 
 
 debug:

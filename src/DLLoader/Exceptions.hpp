@@ -12,16 +12,22 @@
 
 namespace DLLoader {
     namespace Exceptions {
-        class NotFound : std::exception {
+        class InvalidDLL : std::exception {
             public:
-            NotFound() noexcept = default;
-            const char *what(const std::string &DLLPath) const noexcept override;
+                explicit InvalidDLL(const std::string &DLLPath) noexcept;
+                const char *what() const noexcept override;
+
+            private:
+                std::string _dllPath;
         };
 
         class InvalidEntryPoint : std::exception {
             public:
-                InvalidEntryPoint() noexcept = default;
-                const char *what(const std::string &)
+                explicit InvalidEntryPoint(const std::string &DLLName) noexcept;
+                const char *what() const noexcept override;
+
+            private:
+                std::string _dllName;
         };
     }
 }
