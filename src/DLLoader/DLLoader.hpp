@@ -17,18 +17,28 @@ namespace DLLoader {
     class DLLoader {
         public:
             typedef T *(*EntryPointPtrFunc)(void);
-            static constexpr const char *entryPointName = "entryPoint";
+            static constexpr const char *entryPointName = "loadLibrary";
 
             explicit DLLoader(const std::string &DLLPath) : _dll(nullptr) {
-                void *dll = dlopen(DLLPath.c_str(), RTLD_LAZY);
-                EntryPointPtrFunc entryPointFunc;
+                try {
+                    this->loadDLL(DLLPath);
+                } catch (const Exceptions::InvalidDLL &e) {
+                    throw e;
+                } catch (const Exceptions::InvalidEntryPoint &e) {
+                    throw e;
+                }
+            }
 
-                if (dll == nullptr)
-                    throw Exceptions::InvalidDLL(DLLPath);
-                entryPointFunc = ((EntryPointPtrFunc) (dlsym(dll, DLLPath.c_str())));
-                if (entryPointFunc == nullptr)
-                    throw Exceptions::InvalidEntryPoint(std::string(entryPointName));
-                this->_instance = entryPointFunc();
+            void changeDLL(const std::string &DLLPath) {
+                if (this->_dll != nullptr)
+                    dlclose(this->_dll);
+                try {
+                    this->loadDLL(DLLPath);
+                } catch (const Exceptions::InvalidDLL &e) {
+                    throw e;
+                } catch (const Exceptions::InvalidEntryPoint &e) {
+                    throw e;
+                }
             }
 
             ~DLLoader() {
@@ -36,13 +46,25 @@ namespace DLLoader {
                     dlclose(this->_dll);
             }
 
-            T *GetInstance() {
+            T *getInstance() {
                 return (this->_instance);
             }
 
         private:
             T *_instance;
             void *_dll;
+
+            void loadDLL(const std::string &DLLPath) {
+                EntryPointPtrFunc entryPointFunc;
+
+                this->_dll = dlopen(DLLPath.c_str(), RTLD_LAZY);
+                if (this->_dll == nullptr)
+                    throw Exceptions::InvalidDLL(DLLPath);
+                entryPointFunc = (EntryPointPtrFunc) dlsym(this->_dll, entryPointName);
+                if (entryPointFunc == nullptr)
+                    throw Exceptions::InvalidEntryPoint(DLLPath);
+                this->_instance = entryPointFunc();
+            }
     };
 }
 

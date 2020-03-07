@@ -35,7 +35,6 @@ all: $(NAME)
 $(NAME): $(OBJ) $(OBJ_MAIN)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
 
-
 debug:
 	g++ -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CXXFLAGS)
 
@@ -49,6 +48,12 @@ fclean:
 	rm -f $(OBJ) $(OBJ_MAIN)
 	rm -f $(NAME) $(NAME_TEST)
 
+lib:
+	$(MAKE) -C ./src/lib/graphic/
+
+lib_re:
+	$(MAKE) -C ./src/lib/graphic/ re
+
 re:	fclean all
 
-.PHONY:	all clean fclean re debug tests_run
+.PHONY:	all clean fclean re debug tests_run lib lib_re

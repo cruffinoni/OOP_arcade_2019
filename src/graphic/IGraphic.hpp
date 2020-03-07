@@ -13,6 +13,7 @@ namespace Arcade {
         float x;
         float y;
     };
+
     enum Color {
         WHITE,
         BLACK,
@@ -29,7 +30,7 @@ namespace Arcade {
         public:
             virtual ~IGraphic() = default;
 
-            virtual void createSquare(void) = 0;
+            virtual uint createForm(Arcade::Vector position, Arcade::Vector size) = 0;
     };
 }
 

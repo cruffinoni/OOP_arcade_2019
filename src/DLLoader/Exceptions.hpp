@@ -14,15 +14,17 @@ namespace DLLoader {
     namespace Exceptions {
         class InvalidDLL : std::exception {
             public:
+                InvalidDLL(const InvalidDLL &a) noexcept;
                 explicit InvalidDLL(const std::string &DLLPath) noexcept;
                 const char *what() const noexcept override;
 
             private:
-                std::string _dllPath;
+                std::string _dllName;
         };
 
         class InvalidEntryPoint : std::exception {
             public:
+                InvalidEntryPoint(const InvalidEntryPoint &a) noexcept;
                 explicit InvalidEntryPoint(const std::string &DLLName) noexcept;
                 const char *what() const noexcept override;
 
