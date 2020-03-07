@@ -9,9 +9,13 @@
 #define SRC_ARCADE_IGRAPHIC
 
 namespace Arcade {
-    struct Vector {
+    struct fVector {
         float x;
         float y;
+    };
+    struct uVector {
+        uint x;
+        uint y;
     };
 
     enum Color {
@@ -30,7 +34,10 @@ namespace Arcade {
         public:
             virtual ~IGraphic() = default;
 
-            virtual uint createForm(Arcade::Vector position, Arcade::Vector size) = 0;
+            virtual uint createForm(const Arcade::fVector position,
+                const Arcade::fVector size) = 0;
+            virtual void process() = 0;
+            virtual bool windowIsOpen() = 0;
     };
 }
 

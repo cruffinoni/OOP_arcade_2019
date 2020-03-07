@@ -17,10 +17,15 @@ namespace Graphic {
             SFML();
             ~SFML() override;
 
-            uint createForm(Arcade::Vector position, Arcade::Vector size) override;
+            uint createForm(const Arcade::fVector position,
+                const Arcade::fVector size) override;
+            void process() override;
+            bool windowIsOpen() override;
 
         private:
             sf::RenderWindow *_window;
+
+            std::vector<sf::RectangleShape *> _forms;
     };
 }
 

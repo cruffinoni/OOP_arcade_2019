@@ -19,12 +19,22 @@ int main(const int ac, const char **av)
     }
     try {
         DLLoader::DLLoader<Arcade::IGraphic> graphicDll(av[1]);
+        Arcade::IGraphic *graphic = graphicDll.getInstance();
+
         std::cout << std::string(av[1]) << std::endl;
-        auto a = graphicDll.getInstance()->createForm({145.f, 100.f}, {5421.f, 243.f});
-        printf("a: %u\n", a);
-        graphicDll.changeDLL(av[1]);
-        a = graphicDll.getInstance()->createForm({541.f, 100.f}, {5421.f, 243.f});
-        printf("a (1): %u\n", a);
+        //auto a = graphicDll.getInstance()->createForm({145.f, 100.f}, {5421.f, 243.f});
+        //printf("a: %u\n", a);
+        //graphicDll.changeDLL(av[1]);
+        //a = graphicDll.getInstance()->createForm({541.f, 100.f}, {5421.f, 243.f});
+        //printf("a (1): %u\n", a);
+        uint a = 0;
+        while (graphic->windowIsOpen()) {
+            if (a == 0)
+                a = graphic->createForm({200.f, 200.f},
+                                                 {150, 200});
+            graphic->process();
+
+        }
         return (0);
     } catch (const DLLoader::Exceptions::InvalidDLL &e) {
         std::cerr << e.what();
