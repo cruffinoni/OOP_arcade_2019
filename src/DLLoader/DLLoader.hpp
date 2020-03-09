@@ -46,7 +46,7 @@ namespace DLLoader {
                     dlclose(this->_dll);
             }
 
-            T *getInstance() {
+            T *operator->() {
                 return (this->_instance);
             }
 
