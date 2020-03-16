@@ -12,20 +12,23 @@
 #include "graphic/IGraphic.hpp"
 
 namespace Graphic {
-    class SFML : public Arcade::IGraphic {
+    class SFML : public IGraphicRenderer {
         public:
             SFML();
-            ~SFML() override;
+            ~SFML();
 
-            uint createForm(const Arcade::fVector position,
-                const Arcade::fVector size) override;
-            void process() override;
-            bool windowIsOpen() override;
+            void clearScreen() override;
+            void drawCircle(Circle circle) override;
+            void drawRect(Rect rect) override;
+            void drawScreen() override;
+            void drawSprite(Sprite sprite) override;
+            void drawText(Text text) override;
 
         private:
             sf::RenderWindow *_window;
 
             std::vector<sf::RectangleShape *> _forms;
+            IEventIterator *event;
     };
 }
 
