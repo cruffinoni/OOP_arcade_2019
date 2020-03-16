@@ -1,44 +1,40 @@
 /*
-** EPITECH PROJECT, 2020
-** OOP_arcade_2019
+** EPITECH PROJECT, 2018
+** include/IGraphic
 ** File description:
-** Interface for graphic libraries
+** IGraphic
 */
 
-#ifndef SRC_ARCADE_IGRAPHIC
-#define SRC_ARCADE_IGRAPHIC
+#ifndef IGRAPHIC_HPP_
+#define IGRAPHIC_HPP_
 
-namespace Arcade {
-    struct fVector {
-        float x;
-        float y;
-    };
-    struct uVector {
-        uint x;
-        uint y;
-    };
+#include "Drawables.hpp"
 
-    enum Color {
-        WHITE,
-        BLACK,
-        RED,
-        BLUE,
-        CYAN,
-        PURPLE,
-        GREEN,
-        YELLOW,
-        GREY
-    };
+class IEventIterator {
+    public:
+        virtual bool hasNext() = 0;
 
-    class IGraphic {
-        public:
-            virtual ~IGraphic() = default;
+        virtual std::string &getNext() = 0;
+};
 
-            virtual uint createForm(const Arcade::fVector position,
-                const Arcade::fVector size) = 0;
-            virtual void process() = 0;
-            virtual bool windowIsOpen() = 0;
-    };
-}
+class IGraphicRenderer {
+    public:
+        virtual void drawScreen() = 0;
+        virtual void clearScreen() = 0;
+        virtual void drawRect(Rect rect) = 0;
+        virtual void drawCircle(Circle circle) = 0;
+        virtual void drawSprite(Sprite sprite) = 0;
+        virtual void drawText(Text text) = 0;
+
+        IGraphicRenderer(const IGraphicRenderer &) = delete;
+        IGraphicRenderer &operator=(const IGraphicRenderer &) = delete;
+};
+
+class IGraphic : public IGraphicRenderer {
+    public:
+        virtual bool isOperational() = 0;
+
+        virtual IEventIterator handleEvents() = 0;
+};
 
 #endif
