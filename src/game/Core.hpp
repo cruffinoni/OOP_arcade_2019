@@ -11,7 +11,7 @@
 #include <string>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
-#include "DLLoader/DLLoader.hpp"
+#include "DLLoader/SoLoader.hpp"
 
 class Core {
     public:
@@ -23,8 +23,8 @@ class Core {
         void run();
 
     private:
-        DLLoader::DLLoader<IGame> _game;
-        DLLoader::DLLoader<IGraphic> _graphic;
+        SoLoader::SoLoader<IGame> _game;
+        SoLoader::SoLoader<IGraphic> _graphic;
 };
 
 #endif

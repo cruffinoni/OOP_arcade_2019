@@ -6,8 +6,7 @@
 */
 
 #include <iostream>
-#include "DLLoader/DLLoader.hpp"
-#include "game/IGame.hpp"
+#include "SoLoader/SoLoader.hpp"
 #include "graphic/IGraphic.hpp"
 
 int main(const int ac, const char **av)
@@ -18,19 +17,14 @@ int main(const int ac, const char **av)
         return (84);
     }
     try {
-        DLLoader::DLLoader<IGraphic> graphicDll(av[1]);
+        SoLoader::SoLoader<IGraphic> graphicDll(av[1]);
 
         std::cout << std::string(av[1]) << std::endl;
-        //auto a = graphicDll.getInstance()->createForm({145.f, 100.f}, {5421.f, 243.f});
-        //printf("a: %u\n", a);
-        //graphicDll.changeDLL(av[1]);
-        //a = graphicDll.getInstance()->createForm({541.f, 100.f}, {5421.f, 243.f});
-        //printf("a (1): %u\n", a);
         return (0);
-    } catch (const DLLoader::Exceptions::InvalidDLL &e) {
+    } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what();
         return (84);
-    } catch (const DLLoader::Exceptions::InvalidEntryPoint &e) {
+    } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
         std::cerr << e.what();
         return (84);
     }

@@ -10,12 +10,12 @@
 
 #include <string>
 
-namespace DLLoader {
+namespace SoLoader {
     namespace Exceptions {
-        class InvalidDLL : std::exception {
+        class InvalidSO : std::exception {
             public:
-                InvalidDLL(const InvalidDLL &a) noexcept;
-                explicit InvalidDLL(const std::string &DLLPath) noexcept;
+                InvalidSO(const InvalidSO &a) noexcept;
+                explicit InvalidSO(const std::string &DLLPath) noexcept;
                 const char *what() const noexcept override;
 
             private:

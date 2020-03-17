@@ -8,14 +8,8 @@
 MAIN_FILE		=	./src/Main.cpp
 NAME			=	arcade
 
-#SRC_GAME		=	\
-#					./src/game				\
-
-#SRC_GRAPHIC		=	\
-#					./src/graphic				\
-
 SRC				=	\
-					./src/DLLoader/Exceptions.cpp
+					./src/SoLoader/Exceptions.cpp
 
 NAME_TEST		=	test_arcade
 

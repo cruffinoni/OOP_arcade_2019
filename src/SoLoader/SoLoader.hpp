@@ -12,17 +12,17 @@
 #include <dlfcn.h>
 #include "Exceptions.hpp"
 
-namespace DLLoader {
+namespace SoLoader {
     template <typename T>
-    class DLLoader {
+    class SoLoader {
         public:
             typedef T *(*EntryPointPtrFunc)(void);
             static constexpr const char *entryPointName = "loadLibrary";
 
-            explicit DLLoader(const std::string &DLLPath) : _dll(nullptr) {
+            explicit SoLoader(const std::string &DLLPath) : _dll(nullptr) {
                 try {
-                    this->loadDLL(DLLPath);
-                } catch (const Exceptions::InvalidDLL &e) {
+                    this->loadSo(DLLPath);
+                } catch (const Exceptions::InvalidSO &e) {
                     throw e;
                 } catch (const Exceptions::InvalidEntryPoint &e) {
                     throw e;
@@ -33,15 +33,15 @@ namespace DLLoader {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
                 try {
-                    this->loadDLL(DLLPath);
-                } catch (const Exceptions::InvalidDLL &e) {
+                    this->loadSo(DLLPath);
+                } catch (const Exceptions::InvalidSO &e) {
                     throw e;
                 } catch (const Exceptions::InvalidEntryPoint &e) {
                     throw e;
                 }
             }
 
-            ~DLLoader() {
+            ~SoLoader() {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
             }
@@ -54,12 +54,12 @@ namespace DLLoader {
             T *_instance;
             void *_dll;
 
-            void loadDLL(const std::string &DLLPath) {
+            void loadSo(const std::string &DLLPath) {
                 EntryPointPtrFunc entryPointFunc;
 
                 this->_dll = dlopen(DLLPath.c_str(), RTLD_LAZY);
                 if (this->_dll == nullptr)
-                    throw Exceptions::InvalidDLL(DLLPath);
+                    throw Exceptions::InvalidSO(DLLPath);
                 entryPointFunc = (EntryPointPtrFunc) dlsym(this->_dll, entryPointName);
                 if (entryPointFunc == nullptr)
                     throw Exceptions::InvalidEntryPoint(DLLPath);
