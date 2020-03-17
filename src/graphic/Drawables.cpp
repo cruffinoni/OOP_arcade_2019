@@ -49,7 +49,6 @@ Circle::Circle(Vector2f pos, Vector2f size, Color color)
 
 Rect::Rect(Vector2f pos, Vector2f size, Color color)
     : APosition(pos), ASize(size), AColor(color) {
-
 }
 
 AColor::AColor(const Color &color) : _color(color) {

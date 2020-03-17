@@ -12,7 +12,7 @@
 
 class Vector2f {
     public:
-        explicit Vector2f(float pX, float pY);
+        Vector2f(float pX, float pY);
 
         float x;
         float y;
@@ -20,7 +20,7 @@ class Vector2f {
 
 class Color {
     public:
-        explicit Color(unsigned char colorRed, unsigned char blue, unsigned char green,
+        Color(unsigned char colorRed, unsigned char blue, unsigned char green,
               unsigned char alpha);
 
         static Color Red();
@@ -38,7 +38,7 @@ class Color {
 
 class APosition {
     public:
-        explicit APosition(const Vector2f &pos);
+        APosition(const Vector2f &pos);
         ~APosition() = default;
 
         void setPosition(const Vector2f pos);
@@ -57,7 +57,7 @@ class APosition {
 
 class ASize {
     public:
-        explicit ASize(const Vector2f &size);
+        ASize(const Vector2f &size);
         ~ASize() = default;
 
         void setSize(const Vector2f &size);
@@ -73,7 +73,7 @@ class ASize {
 
 class AColor {
     public:
-        explicit AColor(const Color &color);
+        AColor(const Color &color);
         ~AColor() = default;
 
         void setColor(const Color &color);
@@ -94,21 +94,21 @@ class AColor {
 
 class Rect : public APosition, public ASize, public AColor {
     public:
-        explicit Rect(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
+        Rect(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
              Color color = Color::Black());
         ~Rect() = default;
 };
 
 class Circle : public APosition, public ASize, public AColor {
     public:
-        explicit Circle(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
+        Circle(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
                Color color = Color::Black());
         ~Circle() = default;
 };
 
 class Text : public APosition, public ASize, public AColor {
     public:
-        explicit Text(const std::string &text, Vector2f pos = Vector2f(0, 0),
+        Text(const std::string &text, Vector2f pos = Vector2f(0, 0),
              Vector2f size = Vector2f(0, 0), Color color = Color::Black());
         ~Text() = default;
 
@@ -121,7 +121,7 @@ class Text : public APosition, public ASize, public AColor {
 
 class Sprite : public APosition, public ASize {
     public:
-        explicit Sprite(const std::string &name, Vector2f pos = Vector2f(0, 0),
+        Sprite(const std::string &name, Vector2f pos = Vector2f(0, 0),
                Vector2f size = Vector2f(0, 0));
         ~Sprite() = default;
 

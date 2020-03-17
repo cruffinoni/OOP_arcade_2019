@@ -12,7 +12,7 @@
 #include "graphic/IGraphic.hpp"
 
 namespace Graphic {
-    class SFML : public IGraphicRenderer {
+    class SFML : public IGraphic {
         public:
             SFML();
             ~SFML();
@@ -24,9 +24,11 @@ namespace Graphic {
             void drawSprite(Sprite sprite) override;
             void drawText(Text text) override;
 
+            std::string handleEvent() override;
+            bool isOperational() override;
+
         private:
             sf::RenderWindow *_window;
-
             std::vector<sf::RectangleShape *> _forms;
             IEventIterator *_events;
     };

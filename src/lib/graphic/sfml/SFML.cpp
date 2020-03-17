@@ -57,3 +57,11 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 void Graphic::SFML::drawText(Text text) {
     // TODO: ...
 }
+
+std::string Graphic::SFML::handleEvent() {
+    return ("unknown");
+}
+
+bool Graphic::SFML::isOperational() {
+    return false;
+}
