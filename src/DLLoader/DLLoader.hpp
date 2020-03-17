@@ -68,5 +68,4 @@ namespace DLLoader {
     };
 }
 
-
 #endif //OOP_BOOSTRAP_ARCADE_DLLOADER_HPP

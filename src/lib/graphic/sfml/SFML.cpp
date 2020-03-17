@@ -25,7 +25,7 @@ extern "C" {
     }
 }
 
-Graphic::SFML::SFML() : event(nullptr) {
+Graphic::SFML::SFML() : _events(nullptr) {
     this->_window = new sf::RenderWindow({800, 600}, "Arcade");
 }
 
@@ -34,9 +34,26 @@ Graphic::SFML::~SFML() {
     //delete this->_window;
 }
 
-//void Graphic::SFML::process() {
-//    this->_window->clear();
-//    for (auto &i: this->_forms)
-//        this->_window->draw(*i);
-//    this->_window->display();
-//}
+void Graphic::SFML::clearScreen() {
+    this->_window->clear();
+}
+
+void Graphic::SFML::drawCircle(Circle circle) {
+    // TODO: ...
+}
+
+void Graphic::SFML::drawRect(Rect rect) {
+    // TODO: ...
+}
+
+void Graphic::SFML::drawScreen() {
+    // TODO: ...
+}
+
+void Graphic::SFML::drawSprite(Sprite sprite) {
+    // TODO: ...
+}
+
+void Graphic::SFML::drawText(Text text) {
+    // TODO: ...
+}

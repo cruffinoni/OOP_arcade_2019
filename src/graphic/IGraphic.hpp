@@ -21,8 +21,6 @@ class IGraphicRenderer {
     public:
         IGraphicRenderer() = default;
         virtual ~IGraphicRenderer() = default;
-        IGraphicRenderer(const IGraphicRenderer &) = delete;
-        IGraphicRenderer &operator=(const IGraphicRenderer &) = delete;
 
         virtual void drawScreen() = 0;
         virtual void clearScreen() = 0;
@@ -30,6 +28,9 @@ class IGraphicRenderer {
         virtual void drawCircle(Circle circle) = 0;
         virtual void drawSprite(Sprite sprite) = 0;
         virtual void drawText(Text text) = 0;
+
+        IGraphicRenderer(const IGraphicRenderer &) = delete;
+        IGraphicRenderer &operator=(const IGraphicRenderer &) = delete;
 };
 
 class IGraphic : public IGraphicRenderer {

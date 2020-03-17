@@ -28,7 +28,7 @@ namespace Graphic {
             sf::RenderWindow *_window;
 
             std::vector<sf::RectangleShape *> _forms;
-            IEventIterator *event;
+            IEventIterator *_events;
     };
 }
 
