@@ -11,12 +11,12 @@
 #include <string>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
-#include "DLLoader/SoLoader.hpp"
+#include "SoLoader/SoLoader.hpp"
 
 class Core {
     public:
-        explicit Core();
-        ~Core();
+        explicit Core(const std::string &libGame, const std::string &libGraphic);
+        ~Core() = default;
 
         void useGraphic(const std::string &filename);
         void useGame(const std::string &filename);

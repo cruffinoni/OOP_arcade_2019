@@ -6,20 +6,18 @@
 */
 
 #include <iostream>
+#include <game/Core.hpp>
 #include "SoLoader/SoLoader.hpp"
 #include "graphic/IGraphic.hpp"
 
 int main(const int ac, const char **av)
 {
-    //Arcade::Color a = Arcade::BLACK;
     if (ac == 1) {
-        printf("Enter a dll name\n");
+        std::cerr << "Enter a dll name" << std::endl;
         return (84);
     }
     try {
-        SoLoader::SoLoader<IGraphic> graphicDll(av[1]);
-
-        std::cout << std::string(av[1]) << std::endl;
+        Core core(av[1], av[1]);
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what();
