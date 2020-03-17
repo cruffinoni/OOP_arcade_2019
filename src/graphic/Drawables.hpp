@@ -10,28 +10,30 @@
 
 #include <string>
 
-struct Vector2f {
-    float x;
-    float y;
+class Vector2f {
+    public:
+        Vector2f(float pX, float pY);
 
-    Vector2f(float pX, float pY);
+        float x;
+        float y;
 };
 
-struct Color {
-    static Color Red();
-    static Color Blue();
-    static Color Green();
-    static Color Black();
-    static Color White();
-    static Color Transparent();
+class Color {
+    public:
+        Color(unsigned char colorRed, unsigned char blue, unsigned char green,
+              unsigned char alpha);
 
-    unsigned char red;
-    unsigned char blue;
-    unsigned char green;
-    unsigned char alpha;
+        static Color Red();
+        static Color Blue();
+        static Color Green();
+        static Color Black();
+        static Color White();
+        static Color Transparent();
 
-    Color(unsigned char colorRed, unsigned char blue, unsigned char green,
-          unsigned char alpha);
+        unsigned char red;
+        unsigned char blue;
+        unsigned char green;
+        unsigned char alpha;
 };
 
 class APosition {
@@ -92,7 +94,7 @@ class AColor {
 class Rect : public APosition, public ASize, public AColor {
     public:
     Rect(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
-         Color color = Color(0, 0, 0, 0));
+         Color color = Color::Black());
 
     ~Rect() = default;
 };
@@ -100,7 +102,7 @@ class Rect : public APosition, public ASize, public AColor {
 class Circle : public APosition, public ASize, public AColor {
     public:
     Circle(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
-           Color color = Color(0, 0, 0, 0));
+           Color color = Color::Black());
 
     ~Circle() = default;
 };
@@ -108,7 +110,7 @@ class Circle : public APosition, public ASize, public AColor {
 class Text : public APosition, public ASize, public AColor {
     public:
     Text(const std::string &text, Vector2f pos = Vector2f(0, 0),
-         Vector2f size = Vector2f(0, 0), Color color = Color(0, 0, 0, 0));
+         Vector2f size = Vector2f(0, 0), Color color = Color::Black());
 
     ~Text() = default;
 
