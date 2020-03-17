@@ -31,6 +31,7 @@ clean:
 fclean:
 	rm -f $(OBJ)
 	rm -f $(NAME)
+	rm -f $(BIN_DIRECTORY)$(NAME)
 
 re:	fclean all
 

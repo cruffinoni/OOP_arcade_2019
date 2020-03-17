@@ -30,6 +30,8 @@ ALL_SRC			=	$(SRC_GAME) $(SRC_GRAPHIC) $(SRC)
 OBJ				=	$(ALL_SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 
+GRAPHIC_PATH	=	./src/lib/graphic/
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_MAIN)
@@ -43,19 +45,21 @@ tests_run:
 
 clean:
 	rm -f $(OBJ) $(OBJ_MAIN)
+	$(MAKE) -C $(GRAPHIC_PATH) clean
 
 fclean:
 	rm -f $(OBJ) $(OBJ_MAIN)
 	rm -f $(NAME) $(NAME_TEST)
+	$(MAKE) -C $(GRAPHIC_PATH) fclean
 
 graphicals:
-	$(MAKE) -C ./src/lib/graphic/
+	$(MAKE) -C $(GRAPHIC_PATH)
 
 graphicals_re:
-	$(MAKE) -C ./src/lib/graphic/ re
+	$(MAKE) -C $(GRAPHIC_PATH) re
 
 core: all
 
-re:	fclean all
+re:	fclean core graphicals
 
-.PHONY:	all clean fclean re debug tests_run lib lib_re
+.PHONY:	all clean fclean re debug tests_run graphicals graphicals_re core
