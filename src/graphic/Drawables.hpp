@@ -81,6 +81,7 @@ class AColor {
         void setColorGreen(unsigned char green);
         void setColorBlue(unsigned char blue);
         void setColorAlpha(unsigned char alpha);
+
         Color getColor(void) const;
         unsigned char getColorRed(void) const;
         unsigned char getColorGreen(void) const;
@@ -93,33 +94,29 @@ class AColor {
 
 class Rect : public APosition, public ASize, public AColor {
     public:
-    Rect(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
-         Color color = Color::Black());
-
-    ~Rect() = default;
+        Rect(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
+             Color color = Color::Black());
+        ~Rect() = default;
 };
 
 class Circle : public APosition, public ASize, public AColor {
     public:
-    Circle(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
-           Color color = Color::Black());
-
-    ~Circle() = default;
+        Circle(Vector2f pos = Vector2f(0, 0), Vector2f size = Vector2f(0, 0),
+               Color color = Color::Black());
+        ~Circle() = default;
 };
 
 class Text : public APosition, public ASize, public AColor {
     public:
     Text(const std::string &text, Vector2f pos = Vector2f(0, 0),
          Vector2f size = Vector2f(0, 0), Color color = Color::Black());
-
     ~Text() = default;
 
     const std::string &getText(void) const;
-
     void setText(const std::string &newText);
 
     private:
-    std::string _text;
+        std::string _text;
 };
 
 class Sprite : public APosition, public ASize {

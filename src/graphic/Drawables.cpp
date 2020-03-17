@@ -23,3 +23,74 @@ Color Color::Green() {
     return {0x00, 0x99, 0x00, 0xFF};
 }
 
+Sprite::Sprite(const std::string &name, Vector2f pos, Vector2f size) : APosition(pos), ASize(size) {
+    this->_textureName = name;
+}
+
+const std::string &Sprite::getTextureName(void) const {
+    return (this->_textureName);
+}
+
+Text::Text(const std::string &text, Vector2f pos, Vector2f size, Color color) : APosition(pos), ASize(size), AColor(color) {
+    this->_text = text;
+}
+
+const std::string &Text::getText(void) const {
+    return (this->_text);
+}
+
+void Text::setText(const std::string &newText) {
+    this->_text = newText;
+}
+
+Circle::Circle(Vector2f pos, Vector2f size, Color color)
+    : APosition(pos), ASize(size), AColor(color) {
+}
+
+Rect::Rect(Vector2f pos, Vector2f size, Color color)
+    : APosition(pos), ASize(size), AColor(color) {
+
+}
+
+AColor::AColor(const Color &color) : _color(color) {
+}
+
+void AColor::setColor(const Color &color) {
+    this->_color = color;
+}
+
+void AColor::setColorRed(unsigned char red) {
+    this->_color.red = red;
+}
+
+void AColor::setColorGreen(unsigned char green) {
+    this->_color.green = green;
+}
+
+void AColor::setColorBlue(unsigned char blue) {
+    this->_color.blue = blue;
+}
+
+void AColor::setColorAlpha(unsigned char alpha) {
+    this->_color.alpha = alpha;
+}
+
+Color AColor::getColor(void) const {
+    return (this->_color);
+}
+
+unsigned char AColor::getColorRed(void) const {
+    return (this->_color.red);
+}
+
+unsigned char AColor::getColorGreen(void) const {
+    return (this->_color.green);
+}
+
+unsigned char AColor::getColorBlue(void) const {
+    return (this->_color.blue);
+}
+
+unsigned char AColor::getColorAlpha(void) const {
+    return (this->_color.alpha);
+}
