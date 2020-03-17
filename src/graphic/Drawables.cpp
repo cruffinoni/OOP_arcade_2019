@@ -94,3 +94,35 @@ unsigned char AColor::getColorBlue(void) const {
 unsigned char AColor::getColorAlpha(void) const {
     return (this->_color.alpha);
 }
+
+ASize::ASize(const Vector2f &size) : _size(size) {
+}
+
+void ASize::setSize(const Vector2f &size) {
+    this->_size = size;
+}
+
+void ASize::setSizeX(float sizeX) {
+    this->_size.x = sizeX;
+}
+
+void ASize::setSizeY(float sizeY) {
+    this->_size.y = sizeY;
+}
+
+Vector2f ASize::getSize(void) const {
+    return (this->_size);
+}
+
+float ASize::getSizeX(void) const {
+    return (this->_size.x);
+}
+
+float ASize::getSizeY(void) const {
+    return (this->_size.y);
+}
+
+Vector2f::Vector2f(float pX, float pY) {
+    this->x = pX;
+    this->y = pY;
+}
