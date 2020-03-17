@@ -8,19 +8,27 @@
 #include "Drawables.hpp"
 
 Color Color::Black() {
-    return {0x40, 0x40, 0x40, 0xFF};
+    return {0x40, 0x40, 0x40, 0};
 }
 
 Color Color::Red() {
-    return {0xE6, 0x39, 0x00, 0xFF};
+    return {0xE6, 0x39, 0x00, 0};
 }
 
 Color Color::Blue() {
-    return {0x00, 0x66, 0xFF, 0xFF};
+    return {0x00, 0x66, 0xFF, 0};
 }
 
 Color Color::Green() {
-    return {0x00, 0x99, 0x00, 0xFF};
+    return {0x00, 0x99, 0x00, 0};
+}
+
+Color Color::White() {
+    return {0xFF, 0xFF, 0xFF, 0};
+}
+
+Color Color::Transparent() {
+    return {0, 0, 0, 255};
 }
 
 Sprite::Sprite(const std::string &name, Vector2f pos, Vector2f size) : APosition(pos), ASize(size) {
@@ -125,3 +133,43 @@ Vector2f::Vector2f(float pX, float pY) {
     this->x = pX;
     this->y = pY;
 }
+
+APosition::APosition(const Vector2f &pos) : _pos(pos) {
+}
+
+void APosition::setPosition(const Vector2f pos) {
+    this->_pos = pos;
+}
+
+void APosition::setPositionX(float posX) {
+    this->_pos.x = posX;
+}
+
+void APosition::setPositionY(float posY) {
+    this->_pos.y = posY;
+}
+
+void APosition::move(const Vector2f pos) {
+    this->_pos = pos;
+}
+
+void APosition::moveX(float movx) {
+    this->_pos.x = movx;
+}
+
+void APosition::moveY(float movy) {
+    this->_pos.y = movy;
+}
+
+Vector2f APosition::getPosition(void) const {
+    return Vector2f(_pos.x, _pos.y);
+}
+
+float APosition::getPositionX(void) const {
+    return this->_pos.x;
+}
+
+float APosition::getPositionY(void) const {
+    return this->_pos.x;
+}
+
