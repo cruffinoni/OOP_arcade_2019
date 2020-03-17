@@ -25,7 +25,7 @@ extern "C" {
     }
 }
 
-Graphic::SFML::SFML() {
+Graphic::SFML::SFML() : event(nullptr) {
     this->_window = new sf::RenderWindow({800, 600}, "Arcade");
 }
 

@@ -48,11 +48,13 @@ fclean:
 	rm -f $(OBJ) $(OBJ_MAIN)
 	rm -f $(NAME) $(NAME_TEST)
 
-lib:
+graphicals:
 	$(MAKE) -C ./src/lib/graphic/
 
-lib_re:
+graphicals_re:
 	$(MAKE) -C ./src/lib/graphic/ re
+
+core: all
 
 re:	fclean all
 

@@ -5,7 +5,7 @@
 ## Makefile for the project
 ##
 
-NAME			=	libsfml.so
+NAME			=	lib_arcade_sfml.so
 SRC				=	./SFML.cpp
 
 INCLUDE			=	../../../
