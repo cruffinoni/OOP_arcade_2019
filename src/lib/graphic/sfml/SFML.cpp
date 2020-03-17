@@ -39,6 +39,7 @@ void Graphic::SFML::clearScreen() {
 }
 
 void Graphic::SFML::drawCircle(Circle circle) {
+    Vector2f a(4.5, 63.1);
     // TODO: ...
 }
 

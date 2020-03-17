@@ -31,6 +31,14 @@ Color Color::Transparent() {
     return {0, 0, 0, 255};
 }
 
+Color::Color(unsigned char colorRed, unsigned char colorBlue, unsigned char colorGreen,
+             unsigned char colorAlpha) {
+    this->red = colorRed;
+    this->blue = colorBlue;
+    this->green = colorGreen;
+    this->alpha = colorAlpha;
+}
+
 Sprite::Sprite(const std::string &name, Vector2f pos, Vector2f size) : APosition(pos), ASize(size) {
     this->_textureName = name;
 }
