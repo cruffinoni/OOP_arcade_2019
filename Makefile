@@ -10,6 +10,7 @@ NAME			=	arcade
 
 SRC				=	./src/SoLoader/Exceptions.cpp		\
 					./src/game/Core.cpp					\
+					./src/graphic/Drawables.cpp			\
 
 INCLUDE			=	./src/
 
