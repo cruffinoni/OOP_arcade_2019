@@ -39,7 +39,11 @@ void Graphic::SFML::clearScreen() {
 }
 
 void Graphic::SFML::drawCircle(Circle circle) {
-    // TODO: ...
+    auto entity = new sf::CircleShape(circle.getSizeX());
+
+    entity->setPosition(circle.getPositionX(), circle.getPositionY());
+    entity->setFillColor(sf::Color(circle.getColorRed(), circle.getColorGreen(), circle.getColorBlue()));
+    this->_entities.push_back(entity);
 }
 
 void Graphic::SFML::drawRect(Rect rect) {
@@ -47,7 +51,12 @@ void Graphic::SFML::drawRect(Rect rect) {
 }
 
 void Graphic::SFML::drawScreen() {
-    // TODO: ...
+    for (auto &i: this->_entities) {
+        printf("Display entity: %p\n", i);
+        this->_window->draw(*i);
+    }
+    this->_window->display();
+    while (this->_window->isOpen());
 }
 
 void Graphic::SFML::drawSprite(Sprite sprite) {

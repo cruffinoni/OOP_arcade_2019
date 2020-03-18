@@ -30,7 +30,7 @@ namespace Graphic {
 
         private:
             sf::RenderWindow *_window;
-            std::vector<sf::RectangleShape *> _forms;
+            std::vector<sf::Drawable *> _entities;
             IEventIterator *_events;
     };
 }

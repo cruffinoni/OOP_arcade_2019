@@ -6,9 +6,12 @@
 ##
 
 NAME			=	lib_arcade_sfml.so
-SRC				=	./SFML.cpp
 
-INCLUDE			=	../../../
+INCLUDE			=	../../..
+
+SRC				=	./SFML.cpp 	\
+					$(INCLUDE)/graphic/Drawables.cpp
+
 BIN_DIRECTORY	=	../../../../bin/
 
 CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared -lsfml-graphics

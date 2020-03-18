@@ -19,6 +19,7 @@ int main(const int ac, const char **av)
     try {
         Core core;
         core.useGraphic(av[1]);
+        core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what();

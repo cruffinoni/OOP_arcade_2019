@@ -18,7 +18,7 @@ class IGame {
 
         virtual ~IGame() = default;
         virtual void handleEvent(std::string &name) = 0;
-        virtual void handleUpdate(int elepsedTime) = 0;
+        virtual void handleUpdate(int elapsedTime) = 0;
         virtual void handleRender(IGraphicRenderer &renderer) = 0;
         virtual GameDataType getGameData() = 0;
         virtual void setGameData(GameDataType &data) = 0;
