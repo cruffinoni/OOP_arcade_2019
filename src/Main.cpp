@@ -7,8 +7,7 @@
 
 #include <iostream>
 #include <game/Core.hpp>
-#include "SoLoader/SoLoader.hpp"
-#include "graphic/IGraphic.hpp"
+#include "soLoader/SoLoader.hpp"
 
 int main(const int ac, const char **av)
 {

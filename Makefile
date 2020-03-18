@@ -8,13 +8,13 @@
 MAIN_FILE		=	./src/Main.cpp
 NAME			=	arcade
 
-SRC				=	./src/SoLoader/Exceptions.cpp		\
+SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/game/Core.cpp					\
 					./src/graphic/Drawables.cpp			\
 
 INCLUDE			=	./src/
 
-CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl
+CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl -fPIC
 
 OBJ				=	$(SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)

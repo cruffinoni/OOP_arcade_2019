@@ -14,6 +14,7 @@
 namespace Graphic {
     class SFML : public IGraphic {
         public:
+            static const constexpr char *FONT_PATH = "./src/lib/graphic/sfml/arial.ttf";
             SFML();
             ~SFML();
 
@@ -31,7 +32,7 @@ namespace Graphic {
         private:
             sf::RenderWindow *_window;
             std::vector<sf::Drawable *> _entities;
-            IEventIterator *_events;
+            bool _operational;
     };
 }
 

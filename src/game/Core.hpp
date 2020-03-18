@@ -11,7 +11,7 @@
 #include <string>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
-#include "SoLoader/SoLoader.hpp"
+#include "soLoader/SoLoader.hpp"
 
 class Core {
     public:

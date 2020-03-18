@@ -162,11 +162,11 @@ void APosition::move(const Vector2f pos) {
 }
 
 void APosition::moveX(float movx) {
-    this->_pos.x = movx;
+    this->_pos.x += movx;
 }
 
 void APosition::moveY(float movy) {
-    this->_pos.y = movy;
+    this->_pos.y += movy;
 }
 
 Vector2f APosition::getPosition(void) const {

@@ -11,7 +11,7 @@
 #include <string>
 #include <dlfcn.h>
 #include <iostream>
-#include "Exceptions.hpp"
+#include "soLoader/Exceptions.hpp"
 
 namespace SoLoader {
     template <typename T>

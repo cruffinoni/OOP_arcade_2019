@@ -10,7 +10,8 @@ NAME			=	lib_arcade_sfml.so
 INCLUDE			=	../../..
 
 SRC				=	./SFML.cpp 	\
-					$(INCLUDE)/graphic/Drawables.cpp
+					$(INCLUDE)/graphic/Drawables.cpp	\
+					../Exceptions.cpp
 
 BIN_DIRECTORY	=	../../../../bin/
 
