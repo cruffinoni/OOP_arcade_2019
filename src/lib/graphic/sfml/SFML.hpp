@@ -18,6 +18,7 @@ namespace Graphic {
             ~SFML();
 
             void clearScreen() override;
+
             void drawCircle(Circle circle) override;
             void drawRect(Rect rect) override;
             void drawScreen() override;

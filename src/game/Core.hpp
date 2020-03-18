@@ -15,7 +15,7 @@
 
 class Core {
     public:
-        explicit Core(const std::string &libGame, const std::string &libGraphic);
+        Core() = default;
         ~Core() = default;
 
         void useGraphic(const std::string &filename);

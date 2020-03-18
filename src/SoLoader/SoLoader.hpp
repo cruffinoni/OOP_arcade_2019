@@ -10,6 +10,7 @@
 
 #include <string>
 #include <dlfcn.h>
+#include <iostream>
 #include "Exceptions.hpp"
 
 namespace SoLoader {
@@ -27,6 +28,9 @@ namespace SoLoader {
                 } catch (const Exceptions::InvalidEntryPoint &e) {
                     throw e;
                 }
+            }
+
+            SoLoader() : _instance(nullptr), _dll(nullptr) {
             }
 
             void changeDLL(const std::string &DLLPath) {
@@ -47,6 +51,8 @@ namespace SoLoader {
             }
 
             T *operator->() {
+                if (this->_instance == nullptr)
+                    std::cerr << "[SoLoader] The instance is null, you might not want to use that" << std::endl;
                 return (this->_instance);
             }
 

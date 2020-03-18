@@ -31,7 +31,7 @@ Graphic::SFML::SFML() : _events(nullptr) {
 
 Graphic::SFML::~SFML() {
     printf("delete constructor\n");
-    //delete this->_window;
+    delete this->_window;
 }
 
 void Graphic::SFML::clearScreen() {
@@ -39,7 +39,6 @@ void Graphic::SFML::clearScreen() {
 }
 
 void Graphic::SFML::drawCircle(Circle circle) {
-    Vector2f a(4.5, 63.1);
     // TODO: ...
 }
 

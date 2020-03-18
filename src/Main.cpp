@@ -17,7 +17,8 @@ int main(const int ac, const char **av)
         return (84);
     }
     try {
-        Core core(av[1], av[1]);
+        Core core;
+        core.useGraphic(av[1]);
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what();
