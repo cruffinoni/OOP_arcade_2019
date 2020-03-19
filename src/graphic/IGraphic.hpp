@@ -15,7 +15,6 @@ class IEventIterator {
         virtual bool hasNext() = 0;
         virtual std::string &getNext() = 0;
 
-        static constexpr const char *CLOSE = "EVENT_CLOSE";
         static constexpr const char *KEY_A = "EVENT_KEY_A";
         static constexpr const char *KEY_B = "EVENT_KEY_B";
         static constexpr const char *KEY_C = "EVENT_KEY_C";

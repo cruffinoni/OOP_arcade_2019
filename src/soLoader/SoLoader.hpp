@@ -56,6 +56,10 @@ namespace SoLoader {
                 return (this->_instance);
             }
 
+            T *getInstance() {
+                return (this->_instance);
+            }
+
         private:
             T *_instance;
             void *_dll;

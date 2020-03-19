@@ -170,7 +170,7 @@ void APosition::moveY(float movy) {
 }
 
 Vector2f APosition::getPosition(void) const {
-    return Vector2f(_pos.x, _pos.y);
+    return {_pos.x, _pos.y};
 }
 
 float APosition::getPositionX(void) const {
@@ -178,6 +178,6 @@ float APosition::getPositionX(void) const {
 }
 
 float APosition::getPositionY(void) const {
-    return this->_pos.x;
+    return this->_pos.y;
 }
 

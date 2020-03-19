@@ -20,19 +20,18 @@ OBJ				=	$(SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 
 GRAPHIC_PATH	=	./src/lib/graphic/
+GAME_PATH		=	./src/lib/game/
 
-all: core graphicals
+all: core graphicals games
 
-core: $(NAME)
+core: $(OBJ) $(OBJ_MAIN)
+	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
 
 graphicals:
 	$(MAKE) -C $(GRAPHIC_PATH)
 
-graphicals_re:
-	$(MAKE) -C $(GRAPHIC_PATH) re
-
-$(NAME): $(OBJ) $(OBJ_MAIN)
-	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
+games:
+	$(MAKE) -C $(GAME_PATH)
 
 debug:
 	g++ -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CXXFLAGS)
@@ -48,4 +47,4 @@ fclean:
 
 re:	fclean core graphicals
 
-.PHONY:	all clean fclean re debug tests_run graphicals graphicals_re core
+.PHONY:	all clean fclean re debug graphicals core

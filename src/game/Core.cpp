@@ -5,13 +5,17 @@
 ** Core.cpp
 */
 
+#include <chrono>
 #include "soLoader/SoLoader.hpp"
 #include "lib/graphic/Exceptions.hpp"
 #include "Core.hpp"
 
+using Clock = std::chrono::high_resolution_clock;
+
 void Core::useGraphic(const std::string &filename) {
     try {
         _graphic.changeDLL(filename);
+        std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         throw e;
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
@@ -22,6 +26,7 @@ void Core::useGraphic(const std::string &filename) {
 void Core::useGame(const std::string &filename) {
     try {
         _game.changeDLL(filename);
+        std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         throw e;
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
@@ -30,15 +35,20 @@ void Core::useGame(const std::string &filename) {
 }
 
 void Core::run() {
+    auto t1 = Clock::now();
+
     while (this->_graphic->isOperational()) {
-        this->_graphic->clearScreen();
         try {
-            //this->_graphic->drawRect(Rect({20, 20}, {20, 20},
-            //                              Color::White()));
-            this->_graphic->drawText(Text("hello world!",
-                                          {50, 50}, {20, 20}, Color::White()));
-            //this->_graphic->drawRect(Rect({60, 60}, {20, 20},
-            //                              Color::Red()));
+            this->_graphic->clearScreen();
+            auto event = this->_graphic->handleEvent();
+            if (event != IEventIterator::KEY_UNKNOWN) {
+                printf("Event: '%s'\n", event.c_str());
+                this->_game->handleEvent(event);
+            }
+            this->_game->handleUpdate(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - t1).count());
+            this->_game->handleRender(*this->_graphic.getInstance());
+            this->_graphic->drawScreen();
+            t1 = Clock::now();
         } catch (const std::bad_alloc &e) {
             std::cerr << e.what();
             return;
@@ -50,10 +60,6 @@ void Core::run() {
         //    std::cerr << e.what();
         //    return;
         //}
-        this->_graphic->drawScreen();
-        auto event = this->_graphic->handleEvent();
-        if (event != IEventIterator::KEY_UNKNOWN)
-            printf("Event: '%s'\n", event.c_str());
     }
 }
 

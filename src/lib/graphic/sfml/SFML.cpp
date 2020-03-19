@@ -11,23 +11,25 @@
 static Graphic::SFML *instance;
 
 extern "C" {
-    IGraphicRenderer *loadLibrary() {
+    IGraphic *loadLibrary() {
         return (instance);
     }
 
     __attribute__((constructor)) void load() {
-        printf("constructor SFML called\n");
+        printf("[graphic] constructor SFML called\n");
         instance = new Graphic::SFML();
     }
 
     __attribute__((destructor)) void unload() {
-        printf("destructor SFML called\n");
+        printf("[graphic] destructor SFML called\n");
         delete instance;
     }
 }
 
 Graphic::SFML::SFML() : _operational(true) {
-    this->_window = new sf::RenderWindow({800, 600}, "Arcade");
+    this->_window = new sf::RenderWindow({
+        Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
+        }, "Arcade");
 }
 
 Graphic::SFML::~SFML() {
@@ -42,9 +44,10 @@ void Graphic::SFML::clearScreen() {
 
 void Graphic::SFML::drawCircle(Circle circle) {
     try {
-        auto entity = new sf::CircleShape(circle.getSizeX());
+        auto entity = new sf::CircleShape(circle.getSizeX() * Graphic::SFML::WINDOW_WIDTH);
 
-        entity->setPosition(circle.getPositionX(), circle.getPositionY());
+        entity->setPosition(circle.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
+            circle.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
         entity->setFillColor(sf::Color(circle.getColorRed(), circle.getColorGreen(), circle.getColorBlue()));
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
@@ -54,9 +57,12 @@ void Graphic::SFML::drawCircle(Circle circle) {
 
 void Graphic::SFML::drawRect(Rect rect) {
     try {
-        auto entity = new sf::RectangleShape(sf::Vector2f{rect.getSizeX(), rect.getSizeY()});
-
-        entity->setPosition(rect.getPositionX(), rect.getPositionY());
+        auto entity = new sf::RectangleShape(sf::Vector2f {
+            PERCENTAGE(rect.getSizeX()) * Graphic::SFML::WINDOW_WIDTH,
+            PERCENTAGE(rect.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT}
+            );
+        entity->setPosition(PERCENTAGE(rect.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+            PERCENTAGE(rect.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         entity->setFillColor(sf::Color(rect.getColorRed(), rect.getColorGreen(), rect.getColorBlue()));
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
@@ -70,11 +76,13 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
         texture->loadFromFile(sprite.getTextureName(), sf::IntRect {
             {0, 0},
             //{static_cast<int>(sprite.getPositionX()), static_cast<int>(sprite.getPositionY())},
-            {static_cast<int>(sprite.getSizeX()), static_cast<int>(sprite.getSizeY())},
+            {static_cast<int>(sprite.getSizeX() * Graphic::SFML::WINDOW_WIDTH),
+             static_cast<int>(sprite.getSizeY() * Graphic::SFML::WINDOW_HEIGHT)},
         });
-        auto entity = new sf::Sprite(*texture);
 
-        entity->setPosition(sprite.getPositionX(), sprite.getPositionY());
+        auto entity = new sf::Sprite(*texture);
+        entity->setPosition(sprite.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
+            sprite.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;
@@ -86,9 +94,11 @@ void Graphic::SFML::drawText(Text text) {
         auto font = new sf::Font();
         if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
             throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
+
         auto entity = new sf::Text(text.getText(), *font);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
-        entity->setPosition(text.getPositionX(), text.getPositionY());
+        entity->setPosition(text.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
+            text.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;

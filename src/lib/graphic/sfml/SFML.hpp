@@ -18,6 +18,10 @@ namespace Graphic {
             SFML();
             ~SFML();
 
+            #ifndef PERCENTAGE
+                #define PERCENTAGE(a) (a / 100.f)
+            #endif
+
             void clearScreen() override;
 
             void drawCircle(Circle circle) override;
@@ -28,6 +32,9 @@ namespace Graphic {
 
             std::string handleEvent() override;
             bool isOperational() override;
+
+            static const uint WINDOW_WIDTH = 800;
+            static const uint WINDOW_HEIGHT = 600;
 
         private:
             sf::RenderWindow *_window;
