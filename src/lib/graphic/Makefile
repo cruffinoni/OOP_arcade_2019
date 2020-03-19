@@ -7,15 +7,19 @@
 
 all:
 	$(MAKE) -C ./sfml/
+	$(MAKE) -C ./sdl2/
 
 debug:
 	$(MAKE) -C ./sfml/ debug
+	$(MAKE) -C ./sdl2/ debug
 
 clean:
 	$(MAKE) -C ./sfml/ clean
+	$(MAKE) -C ./sdl2/ clean
 
 fclean:
 	$(MAKE) -C ./sfml/ fclean
+	$(MAKE) -C ./sdl2/ fclean
 
 re:	fclean all
 
