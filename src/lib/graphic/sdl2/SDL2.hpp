@@ -18,6 +18,10 @@ namespace Graphic {
             SDL2();
             ~SDL2();
 
+            #ifndef PERCENTAGE
+                #define PERCENTAGE(a) (a / 100.f)
+            #endif
+
             void clearScreen() override;
 
             void drawCircle(Circle circle) override;
