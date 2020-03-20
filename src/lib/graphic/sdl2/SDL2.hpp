@@ -35,10 +35,10 @@ namespace Graphic {
 
             static const uint WINDOW_WIDTH = 800;
             static const uint WINDOW_HEIGHT = 600;
+
         private:
             SDL_Window *_window;
             SDL_Renderer *_renderer;
-            SDL_Event _event;
             bool _running;
             std::vector<SDL_Texture *> _entities;
     };

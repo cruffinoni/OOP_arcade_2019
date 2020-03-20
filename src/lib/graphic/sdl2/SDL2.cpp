@@ -5,6 +5,7 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
+#include <iostream>
 #include "SDL2.hpp"
 
 static Graphic::SDL2 *instance;
@@ -15,12 +16,12 @@ extern "C" {
     }
 
     __attribute__((constructor)) void load() {
-        printf("constructor SDL2 called\n");
+        printf("[graphic] constructor SDL2 called\n");
         instance = new Graphic::SDL2();
     }
 
     __attribute__((destructor)) void unload() {
-        printf("destructor SDL2 called\n");
+        printf("[graphic] destructor SDL2 called\n");
         delete instance;
     }
 }
@@ -44,21 +45,23 @@ void Graphic::SDL2::clearScreen() {
 }
 
 void Graphic::SDL2::drawCircle(Circle circle) {
-    float circleX = PERCENTAGE(circle.getSizeX() * Graphic::SDL2::WINDOW_WIDTH);
-    float circleY = PERCENTAGE(circle.getSizeY() * Graphic::SDL2::WINDOW_HEIGHT);
-    float circleRadius = PERCENTAGE(circle.getSizeY());
-    int pointX = 0;
-    int pointY = 0;
+    int dx;
+    int dy;
+    int circleRadius = static_cast<int>(PERCENTAGE(circle.getSizeX()) * Graphic::SDL2::WINDOW_WIDTH);
 
-    SDL_SetRenderDrawColor(_renderer, circle.getColor().red,
+    SDL_SetRenderDrawColor(this->_renderer, circle.getColor().red,
         circle.getColor().green, circle.getColor().blue, circle.getColor().alpha);
-    while (circleRadius > 0) {
-        for (int i = 0; i < 360; ++i) {
-            pointX = circleX + circleRadius * cos(i);
-            pointY = circleY + circleRadius * cos(i);
-            SDL_RenderDrawPoint(_renderer, pointX, pointY);
+    for (int w = 0; w < circleRadius * 2; w++) {
+        for (int h = 0; h < circleRadius * 2; h++) {
+            dx = circleRadius - w;
+            dy = circleRadius - h;
+            if ((std::pow(dx, 2) + std::pow(dy, 2)) <= (circleRadius * circleRadius)) {
+                SDL_RenderDrawPoint(this->_renderer,
+                    static_cast<int>(PERCENTAGE(circle.getPositionX()) * Graphic::SDL2::WINDOW_WIDTH) + dx,
+                    static_cast<int>(PERCENTAGE(circle.getPositionY()) * Graphic::SDL2::WINDOW_HEIGHT) + dy
+                    );
+            }
         }
-        --circleRadius;
     }
 }
 
@@ -78,7 +81,7 @@ void Graphic::SDL2::drawScreen() {
 }
 
 void Graphic::SDL2::drawSprite(Sprite sprite) {
-
+    std::cerr << "Draw sprite is not supported in SDL2 (sprite name: " << sprite.getTextureName() << ")" << std::endl;
 }
 
 void Graphic::SDL2::drawText(Text text) {
@@ -86,13 +89,47 @@ void Graphic::SDL2::drawText(Text text) {
 }
 
 std::string Graphic::SDL2::handleEvent() {
-    SDL_PollEvent(&_event);
-    switch (_event.type) {
+    SDL_Event events;
+
+    SDL_PollEvent(&events);
+    switch (events.type) {
         case SDL_QUIT:
             _running = false;
             return (IEventIterator::KEY_UNKNOWN);
+        case SDL_KEYDOWN:
+            if (events.key.repeat)
+                return (IEventIterator::KEY_UNKNOWN);
+            switch (events.key.keysym.sym) {
+                case SDLK_a:
+                    return (IEventIterator::KEY_A);
+                case SDLK_b:
+                    return (IEventIterator::KEY_B);
+                case SDLK_ESCAPE:
+                    this->_running = false;
+                    return (IEventIterator::KEY_UNKNOWN);
+                case SDLK_c:
+                    return (IEventIterator::KEY_C);
+                case SDLK_d:
+                    return (IEventIterator::KEY_D);
+                case SDLK_r:
+                    return (IEventIterator::KEY_R);
+                case SDLK_UP:
+                    return (IEventIterator::KEY_UP);
+                case SDLK_DOWN:
+                    return (IEventIterator::KEY_DOWN);
+                case SDLK_LEFT:
+                    return (IEventIterator::KEY_LEFT);
+                case SDLK_RIGHT:
+                    return (IEventIterator::KEY_RIGHT);
+                default:
+                    return (IEventIterator::KEY_UNKNOWN);
+            }
+        default:
+            break;
     }
-    return "undefined";
+    return (IEventIterator::KEY_UNKNOWN);
 }
 
-bool Graphic::SDL2::isOperational() { return _running; }
+bool Graphic::SDL2::isOperational() {
+    return (_running);
+}

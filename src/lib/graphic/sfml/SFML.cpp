@@ -27,23 +27,30 @@ extern "C" {
 }
 
 Graphic::SFML::SFML() : _operational(true) {
-    this->_window = new sf::RenderWindow({
-        Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
-        }, "Arcade");
-    this->_window->setFramerateLimit(60);
+    try {
+        auto font = new sf::Font();
+
+        this->_window = new sf::RenderWindow({
+            Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
+            }, "Arcade");
+        this->_window->setFramerateLimit(60);
+        if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
+            throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
+    } catch (const Graphic::Exceptions::LoadFontFailed &e) {
+        throw e;
+    } catch (const std::bad_alloc &e) {
+        throw e;
+    }
 }
 
 Graphic::SFML::~SFML() {
-    printf("delete constructor\n");
     delete this->_window;
+    delete this->_font;
 }
 
 void Graphic::SFML::clearScreen() {
     this->_window->clear();
     for (auto &i: this->_entities) {
-        sf::Text *typeText = dynamic_cast<sf::Text *>(i);
-        if (typeText != nullptr)
-            delete typeText->getFont();
         delete i;
     }
     this->_entities.clear();
@@ -99,11 +106,7 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 
 void Graphic::SFML::drawText(Text text) {
     try {
-        auto font = new sf::Font();
-        if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
-            throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
-
-        auto entity = new sf::Text(text.getText(), *font);
+        auto entity = new sf::Text(text.getText(), *this->_font);
         entity->setCharacterSize(18);
         entity->setStyle(sf::Text::Bold);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));

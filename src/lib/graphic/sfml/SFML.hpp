@@ -40,6 +40,7 @@ namespace Graphic {
         private:
             sf::RenderWindow *_window;
             std::vector<sf::Drawable *> _entities;
+            sf::Font *_font;
             bool _operational;
     };
 }

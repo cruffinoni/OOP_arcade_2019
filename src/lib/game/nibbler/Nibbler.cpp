@@ -69,7 +69,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
         } else {
-            printf("Cheat with the key %s activated\n", keys[i].c_str());
+            printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
             (this->*cheatsFunc[i - middle])();
             return;
         }
@@ -172,7 +172,8 @@ void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
     renderer.drawRect(Rect({
        {0.f, 0.f},
        {100.f, 100.f},
-       Color::White()}));
+       Color::White()
+    }));
 }
 
 void Game::Nibbler::addNode() {
@@ -188,12 +189,14 @@ void Game::Nibbler::resetPlayer() {
 }
 
 void Game::Nibbler::spawnReward() {
-    std::uniform_real_distribution<float> distribution(DEFAULT_SQUARE_SIZE.x,
+    std::uniform_real_distribution<float> distribution(DEFAULT_SQUARE_SIZE.x * 2,
         100.f - DEFAULT_SQUARE_SIZE.y);
     std::random_device rd;
     std::default_random_engine generator(rd());
-    double x = round(distribution(generator));
-    double y = round(distribution(generator));
-    this->_reward.x = static_cast<float>(round(x / 10.f) * 10.f);
-    this->_reward.y = static_cast<float>(round(y / 10.f) * 10.f);
+    double x = floor(distribution(generator));
+    double y = floor(distribution(generator));
+    this->_reward.x = static_cast<float>(floor(x / 10.f) * 10.f);
+    this->_reward.y = static_cast<float>(floor(y / 10.f) * 10.f);
+    if (std::count(this->_player.position.begin(), this->_player.position.end(), this->_reward) > 0)
+        this->spawnReward();
 }
