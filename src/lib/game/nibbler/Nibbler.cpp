@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include "Nibbler.hpp"
 
 static Game::Nibbler *instance;
@@ -27,17 +28,10 @@ extern "C" {
     }
 }
 
-Game::Nibbler::Nibbler() : _elapsedTime(0), _score(0) {
+Game::Nibbler::Nibbler() : _reward(50.f, 50.f) {
     this->_data["score"] = "0";
-    this->_data["time"] = "0"; // (?)-
+    this->_data["time"] = "0";
     this->resetPlayer();
-    /*
-     * TODO:
-     * - Spawn les "rewards" pour faire grandir le snake
-     * - Function pour ajouter une node au snake
-     * - Hitbox
-     * - Loose/Win conditions
-     */
 
     for (ushort x = 0; x < this->MAX_MAP_SIZE; ++x) {
         for (ushort y = 0; y < this->MAX_MAP_SIZE; ++y) {
@@ -48,6 +42,7 @@ Game::Nibbler::Nibbler() : _elapsedTime(0), _score(0) {
                     (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
         }
     }
+    this->spawnReward();
 }
 
 void Game::Nibbler::handleEvent(std::string &name) {
@@ -58,70 +53,74 @@ void Game::Nibbler::handleEvent(std::string &name) {
         IEventIterator::KEY_LEFT,
     };
     if (name == IEventIterator::KEY_A) {
-        printf("[debug] add node to the snake\n");
+        printf("[cheat] add node to the snake\n");
         this->addNode();
+        return;
+    }
+    if (name == IEventIterator::KEY_B) {
+        printf("[cheat] respawn reward\n");
+        this->spawnReward();
         return;
     }
     for (std::size_t i = 0, j = keys->size(); i < j; i++) {
         if (keys[i] == name) {
-            this->_direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
+            this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
         }
     }
 }
 
 void Game::Nibbler::handleRender(IGraphicRenderer &renderer) {
-    // TODO: Display the game thanks to the renderer
-
     Game::Nibbler::drawBackground(renderer);
-    for (auto &node : this->_player) {
-        renderer.drawRect(Rect{node, this->DEFAULT_SQUARE_SIZE, Color::Black()});
+    for (auto &node : this->_player.position) {
+        renderer.drawRect(Rect{node, this->DEFAULT_SQUARE_SIZE, Color::Green()});
     }
     for (auto &mapNode : this->_map) {
         renderer.drawRect(Rect{mapNode, this->DEFAULT_SQUARE_SIZE, Color::Red()});
     }
+    renderer.drawRect(Rect{
+        this->_reward, this->DEFAULT_SQUARE_SIZE,
+        Color::Blue()
+    });
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
-    this->_elapsedTime += elapsedTime;
-    if (this->_elapsedTime > 1e+7) {
-        //printf("1 sec elapsed\n");
-        Vector2f prev = this->_player.front();
+    this->_player.elapsedTime += elapsedTime;
+    if (this->_player.elapsedTime > 5e+6) {
+        Vector2f prev = this->_player.position.front();
         Vector2f next(0.f, 0.f);
-        for (auto &iter : this->_player) {
+        for (auto &iter: this->_player.position) {
             next = iter;
             iter.x = prev.x;
             iter.y = prev.y;
             prev = next;
         }
-
-        // TODO: Gérer le cas où le snake sort de la map
-        switch (this->_direction) {
+        switch (this->_player.direction) {
             case NORTH:
-                this->_player.front().y -= DEFAULT_SQUARE_SIZE.y;
+                this->_player.position.front().y -= DEFAULT_SQUARE_SIZE.y;
                 break;
             case SOUTH:
-                this->_player.front().y += DEFAULT_SQUARE_SIZE.y;
+                this->_player.position.front().y += DEFAULT_SQUARE_SIZE.y;
                 break;
             case EAST:
-                this->_player.front().x += DEFAULT_SQUARE_SIZE.x;
+                this->_player.position.front().x += DEFAULT_SQUARE_SIZE.x;
                 break;
             case WEST:
-                this->_player.front().x -= DEFAULT_SQUARE_SIZE.x;
+                this->_player.position.front().x -= DEFAULT_SQUARE_SIZE.x;
                 break;
         }
-        this->_elapsedTime = 0;
-        if (this->_player.front().x >= (100.f - DEFAULT_SQUARE_SIZE.x) ||
-            this->_player.front().y >= (100.f - DEFAULT_SQUARE_SIZE.y) ||
-            this->_player.front().x <= DEFAULT_SQUARE_SIZE.x ||
-            this->_player.front().y <= DEFAULT_SQUARE_SIZE.y ||
-            std::count(this->_player.begin(), this->_player.end(), this->_player.front()) > 1) {
-            printf("Player lost\n");
+        this->_player.elapsedTime = 0;
+        if (this->_player.position.front().x >= (100.f - DEFAULT_SQUARE_SIZE.x) ||
+            this->_player.position.front().y >= (100.f - DEFAULT_SQUARE_SIZE.y) ||
+            this->_player.position.front().x < DEFAULT_SQUARE_SIZE.x ||
+            this->_player.position.front().y < DEFAULT_SQUARE_SIZE.y ||
+            std::count(this->_player.position.begin(), this->_player.position.end(), this->_player.position.front()) > 1) {
             this->resetPlayer();
         }
-        //for (auto &node : this->_player) {
-        //    printf("[%p] New pos: %f & %f\n", &node, node.x, node.y);
-        //}
+        if (this->_player.position.front() == this->_reward) {
+            this->addNode();
+            this->spawnReward();
+        }
     }
 }
 
@@ -141,11 +140,23 @@ void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
 }
 
 void Game::Nibbler::addNode() {
-    this->_player.emplace_back(this->_player.back());
+    this->_score++;
+    this->_player.position.emplace_back(this->_player.position.back());
 }
 
 void Game::Nibbler::resetPlayer() {
-    this->_player.clear();
-    this->_player.emplace_back(50.f, 50.f);
-    this->_direction = SOUTH;
+    this->_player.position.clear();
+    this->_player.position.emplace_back(50.f, 50.f);
+    this->_player.direction = SOUTH;
+}
+
+void Game::Nibbler::spawnReward() {
+    std::uniform_real_distribution<float> distribution(DEFAULT_SQUARE_SIZE.x,
+        100.f - DEFAULT_SQUARE_SIZE.y);
+    std::random_device rd;
+    std::default_random_engine generator(rd());
+    double x = round(distribution(generator));
+    double y = round(distribution(generator));
+    this->_reward.x = static_cast<float>(round(x / 10.f) * 10.f);
+    this->_reward.y = static_cast<float>(round(y / 10.f) * 10.f);
 }

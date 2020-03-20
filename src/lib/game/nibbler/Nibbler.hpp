@@ -30,6 +30,8 @@ namespace Game {
             void addNode();
             void resetPlayer();
 
+            void spawnReward();
+
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
 
@@ -40,9 +42,19 @@ namespace Game {
                 WEST
             };
 
-            int _elapsedTime;
-            std::list<Vector2f> _player;
-            PLAYER_DIRECTION _direction;
+            struct player_s {
+                int elapsedTime;
+                std::list<Vector2f> position;
+                PLAYER_DIRECTION direction;
+            };
+
+            //struct reward_s {
+            //    int elapsedTime;
+            //    Vector2f position;
+            //};
+            player_s _player;
+            //reward_s _reward;
+            Vector2f _reward;
             GameDataType _data;
             std::vector<Vector2f> _map;
             std::size_t _score;

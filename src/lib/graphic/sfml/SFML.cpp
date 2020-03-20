@@ -39,6 +39,8 @@ Graphic::SFML::~SFML() {
 
 void Graphic::SFML::clearScreen() {
     this->_window->clear();
+    for (auto &i: this->_entities)
+        delete i;
     this->_entities.clear();
 }
 
@@ -121,6 +123,9 @@ std::string Graphic::SFML::handleEvent() {
                 return (IEventIterator::KEY_UNKNOWN);
             case sf::Event::KeyReleased:
                 switch (event.key.code) {
+                    case sf::Keyboard::Escape:
+                        this->_operational = false;
+                        return (IEventIterator::KEY_UNKNOWN);
                     case sf::Keyboard::A:
                         return (IEventIterator::KEY_A);
                     case sf::Keyboard::B:
