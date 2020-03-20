@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iostream>
 #include <random>
+#include <array>
 #include "Nibbler.hpp"
 
 static Game::Nibbler *instance;
@@ -46,7 +47,7 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f) {
 }
 
 void Game::Nibbler::handleEvent(std::string &name) {
-    std::string keys[] = {
+    std::array<std::string, 7> keys = {
         // Default keys
         IEventIterator::KEY_UP,
         IEventIterator::KEY_DOWN,
@@ -62,15 +63,16 @@ void Game::Nibbler::handleEvent(std::string &name) {
         &Game::Nibbler::spawnReward,
         &Game::Nibbler::resetPlayer,
     };
-    for (std::size_t i = 0, j = keys->size(); i < j; i++) {
+
+    for (std::size_t i = 0, j = keys.size(), middle = (keys.size() + 1) / 2; i < j; i++) {
         if (keys[i] != name)
             continue;
-        if (i < 4) {
+        if (i < middle) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
         } else {
-            printf("[cheat] Key: %s w/ %lu\n", keys[i].c_str(), i);
-            (this->*cheatsFunc[i - 4])();
+            printf("Cheat with the key %s activated\n", keys[i].c_str());
+            (this->*cheatsFunc[i - middle])();
             return;
         }
     }
@@ -78,21 +80,46 @@ void Game::Nibbler::handleEvent(std::string &name) {
 
 void Game::Nibbler::handleRender(IGraphicRenderer &renderer) {
     Game::Nibbler::drawBackground(renderer);
+    std::size_t count = 0;
+
     for (auto &node : this->_player.position) {
-        renderer.drawRect(Rect{node, this->DEFAULT_SQUARE_SIZE, Color::Green()});
+        if (count++ % 2 == 0) {
+            renderer.drawRect(Rect {
+                node,
+                this->DEFAULT_SQUARE_SIZE,
+                Game::Nibbler::SNAKE_COLOR_1,
+            });
+        } else {
+            renderer.drawRect(Rect {
+                node,
+                this->DEFAULT_SQUARE_SIZE,
+                Game::Nibbler::SNAKE_COLOR_2,
+            });
+        }
     }
     for (auto &mapNode : this->_map) {
-        renderer.drawRect(Rect{mapNode, this->DEFAULT_SQUARE_SIZE, Color::Red()});
+        renderer.drawRect(Rect {
+            mapNode,
+            this->DEFAULT_SQUARE_SIZE,
+            Game::Nibbler::WALL_COLOR,
+        });
     }
-    renderer.drawRect(Rect{
-        this->_reward, this->DEFAULT_SQUARE_SIZE,
-        Color::Blue()
+    renderer.drawRect(Rect {
+        this->_reward,
+        this->DEFAULT_SQUARE_SIZE,
+        Game::Nibbler::REWARD_COLOR,
+    });
+    renderer.drawText(Text {
+        std::string("Score: " + std::to_string(this->_player.score)),
+        {45.f, 0.f},
+        {0.f, 0.f},
+        Color::Black(),
     });
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
     this->_player.elapsedTime += elapsedTime;
-    if (this->_player.elapsedTime > 5e+6) {
+    if (this->_player.elapsedTime > 1e+6) {
         Vector2f prev = this->_player.position.front();
         Vector2f next(0.f, 0.f);
         for (auto &iter: this->_player.position) {
@@ -146,7 +173,7 @@ void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
 }
 
 void Game::Nibbler::addNode() {
-    this->_score++;
+    this->_player.score++;
     this->_player.position.emplace_back(this->_player.position.back());
 }
 
@@ -154,6 +181,7 @@ void Game::Nibbler::resetPlayer() {
     this->_player.position.clear();
     this->_player.position.emplace_back(50.f, 50.f);
     this->_player.direction = SOUTH;
+    this->_player.score = 0;
 }
 
 void Game::Nibbler::spawnReward() {

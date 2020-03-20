@@ -22,8 +22,8 @@ class Vector2f {
 
 class Color {
     public:
-        Color(unsigned char colorRed, unsigned char blue, unsigned char green,
-              unsigned char alpha);
+        Color(unsigned char colorRed, unsigned char colorGreen, unsigned char colorBlue,
+             unsigned char colorAlpha);
 
         static Color Red();
         static Color Blue();

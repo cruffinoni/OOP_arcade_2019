@@ -39,12 +39,14 @@ debug:
 clean:
 	rm -f $(OBJ) $(OBJ_MAIN)
 	$(MAKE) -C $(GRAPHIC_PATH) clean
+	$(MAKE) -C $(GAME_PATH) clean
 
 fclean:
 	rm -f $(OBJ) $(OBJ_MAIN)
 	rm -f $(NAME) $(NAME_TEST)
 	$(MAKE) -C $(GRAPHIC_PATH) fclean
+	$(MAKE) -C $(GAME_PATH) fclean
 
-re:	fclean core graphicals
+re:	fclean all
 
 .PHONY:	all clean fclean re debug graphicals core

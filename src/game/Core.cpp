@@ -53,7 +53,7 @@ void Core::run() {
             std::cerr << e.what();
             return;
         } catch (...) {
-            std::cerr << "exception occurred ?";
+            std::cerr << "exception occurred ?" << std::endl;
             return;
         }
         //} catch (const Graphic::Exceptions::LoadFontFailed &e) {

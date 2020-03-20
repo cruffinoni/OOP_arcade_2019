@@ -29,11 +29,16 @@ namespace Game {
             static void drawBackground(IGraphicRenderer &renderer);
             void addNode();
             void resetPlayer();
-
             void spawnReward();
+            //void
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
+            const Color SNAKE_COLOR_1 = {0x00, 0x66, 0x00, 0xFF};
+            const Color SNAKE_COLOR_2 = {0x33, 0xCC, 0x33, 0xFF};
+            const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
+            const Color REWARD_COLOR = {0x00, 0xcc, 0xff, 0xFF};
+
 
             enum PLAYER_DIRECTION {
                 NORTH,
@@ -46,18 +51,13 @@ namespace Game {
                 int elapsedTime;
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
+                std::size_t score;
             };
 
-            //struct reward_s {
-            //    int elapsedTime;
-            //    Vector2f position;
-            //};
             player_s _player;
-            //reward_s _reward;
             Vector2f _reward;
             GameDataType _data;
             std::vector<Vector2f> _map;
-            std::size_t _score;
     };
 }
 

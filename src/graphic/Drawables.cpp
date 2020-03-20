@@ -8,30 +8,30 @@
 #include "Drawables.hpp"
 
 Color Color::Black() {
-    return {0x40, 0x40, 0x40, 0};
+    return {0x40, 0x40, 0x40, 0x00};
 }
 
 Color Color::Red() {
-    return {0xE6, 0x39, 0x00, 0};
+    return {0xE6, 0x00, 0x00, 0x00};
 }
 
 Color Color::Blue() {
-    return {0x00, 0x66, 0xFF, 0};
+    return {0x00, 0x66, 0xFF, 0x00};
 }
 
 Color Color::Green() {
-    return {0x00, 0x99, 0x00, 0};
+    return {0x00, 0x99, 0x00, 0x00};
 }
 
 Color Color::White() {
-    return {0xFF, 0xFF, 0xFF, 0};
+    return {0xFF, 0xFF, 0xFF, 0x00};
 }
 
 Color Color::Transparent() {
     return {0, 0, 0, 255};
 }
 
-Color::Color(unsigned char colorRed, unsigned char colorBlue, unsigned char colorGreen,
+Color::Color(unsigned char colorRed, unsigned char colorGreen, unsigned char colorBlue,
              unsigned char colorAlpha) {
     this->red = colorRed;
     this->blue = colorBlue;

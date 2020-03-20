@@ -30,6 +30,7 @@ Graphic::SFML::SFML() : _operational(true) {
     this->_window = new sf::RenderWindow({
         Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
         }, "Arcade");
+    this->_window->setFramerateLimit(60);
 }
 
 Graphic::SFML::~SFML() {
@@ -39,8 +40,12 @@ Graphic::SFML::~SFML() {
 
 void Graphic::SFML::clearScreen() {
     this->_window->clear();
-    for (auto &i: this->_entities)
+    for (auto &i: this->_entities) {
+        sf::Text *typeText = dynamic_cast<sf::Text *>(i);
+        if (typeText != nullptr)
+            delete typeText->getFont();
         delete i;
+    }
     this->_entities.clear();
 }
 
@@ -66,7 +71,6 @@ void Graphic::SFML::drawRect(Rect rect) {
         entity->setPosition(PERCENTAGE(rect.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(rect.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         entity->setFillColor(sf::Color(rect.getColorRed(), rect.getColorGreen(), rect.getColorBlue()));
-        //entity->setOutlineColor(sf::Color(0xE6, 0x39, 0x00, 0));
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;
@@ -93,8 +97,13 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 
 void Graphic::SFML::drawText(Text text) {
     try {
-        auto entity = new sf::Text();
-        entity->setString(text.getText());
+        auto font = new sf::Font();
+        if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
+            throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
+
+        auto entity = new sf::Text(text.getText(), *font);
+        entity->setCharacterSize(18);
+        entity->setStyle(sf::Text::Bold);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
         entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(text.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
