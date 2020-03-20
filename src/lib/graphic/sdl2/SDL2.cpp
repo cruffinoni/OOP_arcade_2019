@@ -28,7 +28,7 @@ extern "C" {
 Graphic::SDL2::SDL2() {
     SDL_Init(SDL_INIT_EVERYTHING);
     _window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+        SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
     _running = true;
 }
@@ -44,7 +44,10 @@ void Graphic::SDL2::clearScreen() {
 }
 
 void Graphic::SDL2::drawCircle(Circle circle) {
+    float circleX = circle.getSizeX() * Graphic::SDL2::WINDOW_WIDTH;
+    float circleY = circle.getSizeY() * Graphic::SDL2::WINDOW_HEIGHT;
 
+    
 }
 
 void Graphic::SDL2::drawRect(Rect rect) {
@@ -68,7 +71,7 @@ std::string Graphic::SDL2::handleEvent() {
     switch (_event.type) {
         case SDL_QUIT:
             _running = false;
-            return IEventIterator::CLOSE;
+            return "gameClosed";
     }
     return "undefined";
 }

@@ -29,6 +29,8 @@ namespace Graphic {
             std::string handleEvent() override;
             bool isOperational() override;
 
+            static const uint WINDOW_WIDTH = 800;
+            static const uint WINDOW_HEIGHT = 600;
         private:
             SDL_Window *_window;
             SDL_Renderer *_renderer;
