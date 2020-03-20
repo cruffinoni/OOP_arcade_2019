@@ -142,6 +142,10 @@ Vector2f::Vector2f(float pX, float pY) {
     this->y = pY;
 }
 
+bool Vector2f::operator==(const Vector2f a) const {
+    return (a.x == this->x && a.y == this->y);
+}
+
 APosition::APosition(const Vector2f &pos) : _pos(pos) {
 }
 

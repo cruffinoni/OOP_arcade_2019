@@ -5,6 +5,7 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
+#include <algorithm>
 #include <iostream>
 #include "Nibbler.hpp"
 
@@ -26,12 +27,10 @@ extern "C" {
     }
 }
 
-Game::Nibbler::Nibbler() : _elapsedTime(0) {
-    this->_player.emplace_back(50.f, 50.f);
-    this->_direction = SOUTH;
-    this->_data["xp"] = "0";
-    this->_data["time"] = "0"; // (?)
-
+Game::Nibbler::Nibbler() : _elapsedTime(0), _score(0) {
+    this->_data["score"] = "0";
+    this->_data["time"] = "0"; // (?)-
+    this->resetPlayer();
     /*
      * TODO:
      * - Spawn les "rewards" pour faire grandir le snake
@@ -111,10 +110,18 @@ void Game::Nibbler::handleUpdate(int elapsedTime) {
                 this->_player.front().x -= DEFAULT_SQUARE_SIZE.x;
                 break;
         }
+        this->_elapsedTime = 0;
+        if (this->_player.front().x >= (100.f - DEFAULT_SQUARE_SIZE.x) ||
+            this->_player.front().y >= (100.f - DEFAULT_SQUARE_SIZE.y) ||
+            this->_player.front().x <= DEFAULT_SQUARE_SIZE.x ||
+            this->_player.front().y <= DEFAULT_SQUARE_SIZE.y ||
+            std::count(this->_player.begin(), this->_player.end(), this->_player.front()) > 1) {
+            printf("Player lost\n");
+            this->resetPlayer();
+        }
         //for (auto &node : this->_player) {
         //    printf("[%p] New pos: %f & %f\n", &node, node.x, node.y);
         //}
-        this->_elapsedTime = 0;
     }
 }
 
@@ -135,4 +142,10 @@ void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
 
 void Game::Nibbler::addNode() {
     this->_player.emplace_back(this->_player.back());
+}
+
+void Game::Nibbler::resetPlayer() {
+    this->_player.clear();
+    this->_player.emplace_back(50.f, 50.f);
+    this->_direction = SOUTH;
 }

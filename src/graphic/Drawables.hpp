@@ -16,6 +16,8 @@ class Vector2f {
 
         float x;
         float y;
+
+        bool operator==(const Vector2f a) const;
 };
 
 class Color {

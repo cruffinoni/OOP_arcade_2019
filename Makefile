@@ -22,7 +22,7 @@ OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 GRAPHIC_PATH	=	./src/lib/graphic/
 GAME_PATH		=	./src/lib/game/
 
-all: core graphicals
+all: core graphicals games
 
 core: $(OBJ) $(OBJ_MAIN)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)

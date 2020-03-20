@@ -26,8 +26,9 @@ namespace Game {
             GameDataType getGameData() override;
 
         private:
-            static void drawBackground(IGraphicRenderer &renderer) ;
+            static void drawBackground(IGraphicRenderer &renderer);
             void addNode();
+            void resetPlayer();
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
@@ -44,6 +45,7 @@ namespace Game {
             PLAYER_DIRECTION _direction;
             GameDataType _data;
             std::vector<Vector2f> _map;
+            std::size_t _score;
     };
 }
 
