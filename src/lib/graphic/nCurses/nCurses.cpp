@@ -12,38 +12,29 @@
 static Graphic::nCurses *instance;
 
 extern "C" {
-IGraphicRenderer *loadLibrary() {
-//    return (instance);
-}
-
-__attribute__((constructor)) void load() {
-    printf("constructor nCurses called\n");
-    instance = new Graphic::nCurses();
-}
-
-__attribute__((destructor)) void unload() {
-    printf("destructor nCurses called\n");
-    delete instance;
-}
-}
-
-Graphic::nCurses::nCurses() {
-    char *msg= "Texte au centre";
-    int taille= strlen(msg);
-
-    initscr();
-    while(1) {
-        clear();
-//        mvwchgat("arcade");
-        mvprintw(LINES/2, (COLS / 2) - (taille / 2), msg);
-//        drawRect(4);
-        refresh();
-        if(getch() != 410)
-            break;
+    IGraphicRenderer *loadLibrary() {
+        return (instance);
     }
 
-    endwin();
+    __attribute__((constructor)) void load() {
+        printf("[graphic] constructor nCurses called\n");
+        instance = new Graphic::nCurses();
+    }
 
+    __attribute__((destructor)) void unload() {
+        printf("[graphic] destructor nCurses called\n");
+        delete instance;
+    }
+}
+
+Graphic::nCurses::nCurses() : _alive(true) {
+    initscr();
+    noecho();
+    start_color();
+    keypad(stdscr, TRUE);
+    timeout(3);
+    for (short i = 0; i < 8; i++)
+        init_pair(i, i, COLOR_BLACK);
 }
 
 Graphic::nCurses::~nCurses() {
@@ -52,9 +43,10 @@ Graphic::nCurses::~nCurses() {
 }
 
 void Graphic::nCurses::clearScreen() {
-    werase(this->_window);
-    wclear(this->_window);
-    free(this->_window);
+    //werase(this->_window);
+    erase();
+    //wclear(this->_window);
+    clear();
 }
 
 void Graphic::nCurses::drawCircle(Circle circle) {
@@ -62,27 +54,42 @@ void Graphic::nCurses::drawCircle(Circle circle) {
 }
 
 void Graphic::nCurses::drawRect(Rect rect) {
-//    int x = 0;
-//    int y = 0;
-//
-//    while (x < LINES) {
-//        move(x, COLS / 2);
-//        addch('|');
-//        ++x;
-//    }
-//    while (y < COLS) {
-//        move(LINES / 2, y);
-//        addch('-');
-//        ++y;
-//    }
-//    attron(COLOR_PAIR(COLOR_GREEN));
-//    attron(A_BOLD);
-//    mvprintw(LINES / 2 - 1, COLS / 2 - 1, "1");
-//    mvprintw(LINES / 2 - 1, COLS / 2 + 1, "2");
-//    mvprintw(LINES / 2 + 1, COLS / 2 - 1, "3");
-//    mvprintw(LINES / 2 + 1, COLS / 2 + 1, "4");
-//    attroff(A_BOLD);
-//    attroff(COLOR_PAIR(COLOR_GREEN));
+    int maxSizeX = static_cast<int>(PERCENTAGE(rect.getSizeX()) * static_cast<float>(COLS));
+    int maxSizeY = static_cast<int>(PERCENTAGE(rect.getSizeY()) * static_cast<float>(LINES));
+    int posX = static_cast<int>(PERCENTAGE(rect.getPositionX()) * static_cast<float>(COLS));
+    int posY = static_cast<int>(PERCENTAGE(rect.getPositionY()) * static_cast<float>(LINES));
+
+    //attron(A_BOLD);
+    //for (int i = 0; i < maxSizeX; i++)
+    //    mvprintw(posY, i + posX, "-");
+    //for (int x = 0; x < maxSizeX; x++) {
+    //    for (int y = 1; y < maxSizeY; y++) {
+    //        if (x == 0 || x + 1 == maxSizeX)
+    //            mvprintw(y + posY, x + posX, "|");
+    //        else
+    //            mvprintw(y + posY, x + posX, "X");
+    //    }
+    //}
+    //for (int i = 0; i < maxSizeX; i++)
+    //    mvprintw(maxSizeY + posY, i + posX, "-");
+    int color = COLOR_WHITE;
+
+    if (rect.getColor() == Color::Red())
+        color = COLOR_RED;
+    else if (rect.getColor() == Color::Blue())
+        color = COLOR_BLUE;
+    else if (rect.getColor() == Color::Green())
+        color = COLOR_GREEN;
+    else if (rect.getColor() == Color::Black())
+        color = COLOR_BLACK;
+    attron(color);
+    for (int x = 0; x < maxSizeX; x++) {
+        for (int y = 0; y < maxSizeY; y++) {
+            mvprintw(y + posY, x + posX, "X");
+        }
+    }
+    //attroff(A_BOLD);
+    attroff(color);
 }
 
 void Graphic::nCurses::drawScreen() {
@@ -98,39 +105,27 @@ void Graphic::nCurses::drawText(Text text) {
 }
 
 std::string Graphic::nCurses::handleEvent() {
-//    int keyboardCode;
-//    keyboardCode = getch();
-//    switch (keyboardCode) {
-//        case KEY_RESIZE:
-//            clear();
-//            this->printScreen();
-//            break;
-//        case KEY_ESCAPE:
-//        case 'q':
-//            return MonitorDisplay::Status::KO;
-//        case '1':
-//            clear();
-//            this->swapModule(0);
-//            break;
-//        case '2':
-//            clear();
-//            this->swapModule(1);
-//            break;
-//        case '3':
-//            clear();
-//            this->swapModule(2);
-//            break;
-//        case '4':
-//            clear();
-//            this->swapModule(3);
-//            break;
-//        case 'p':
-//            clear();
-//            return MonitorDisplay::Status::STATUS_CHANGE_GRAPHICS;
-//    }
-//    return MonitorDisplay::Status::STATUS_OK;
+    switch (getch()) {
+        //case KEY_RESIZE:
+        //    break;
+        //case 'q':
+        case KEY_ESCAPE:
+            this->_alive = false;
+            return (IEventIterator::KEY_UNKNOWN);
+        case KEY_UP:
+            return "EVENT_KEY_UP";//(IEventIterator::KEY_UP);
+        case KEY_DOWN:
+            return "EVENT_KEY_DOWN";//(IEventIterator::KEY_DOWN);
+        case KEY_LEFT:
+            return "EVENT_KEY_LEFT";//(IEventIterator::KEY_LEFT);
+        case KEY_RIGHT:
+            return "EVENT_KEY_RIGHT";//(IEventIterator::KEY_RIGHT);
+        default:
+            return (IEventIterator::KEY_UNKNOWN);
+    }
+    return (IEventIterator::KEY_UNKNOWN);
 }
 
 bool Graphic::nCurses::isOperational() {
-    return false;
+    return (this->_alive);
 }

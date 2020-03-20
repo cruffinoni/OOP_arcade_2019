@@ -39,6 +39,11 @@ Color::Color(unsigned char colorRed, unsigned char colorGreen, unsigned char col
     this->alpha = colorAlpha;
 }
 
+bool Color::operator==(const Color a) const {
+    return a.red == this->red && a.green == this->green &&
+    a.blue == this->blue && a.alpha == this->alpha;
+}
+
 Sprite::Sprite(const std::string &name, Vector2f pos, Vector2f size) : APosition(pos), ASize(size) {
     this->_textureName = name;
 }

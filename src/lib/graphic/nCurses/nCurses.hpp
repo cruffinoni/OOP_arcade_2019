@@ -15,7 +15,13 @@ namespace Graphic {
     class nCurses : public IGraphic {
         public:
             nCurses();
-            ~nCurses();
+            ~nCurses() override;
+
+            #define KEY_ESCAPE  27
+
+            #ifndef PERCENTAGE
+                #define PERCENTAGE(a) (a / 100.f)
+            #endif
 
             void clearScreen() override;
             void drawCircle(Circle circle) override;
@@ -28,8 +34,8 @@ namespace Graphic {
             bool isOperational() override;
 
         private:
-            WINDOW *_window;
-
+            //WINDOW *_window;
+            bool _alive;
     };
 }
 

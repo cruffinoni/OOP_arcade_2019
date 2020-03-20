@@ -36,6 +36,7 @@ class Color {
         unsigned char blue;
         unsigned char green;
         unsigned char alpha;
+        bool operator==(const Color a) const;
 };
 
 class APosition {
