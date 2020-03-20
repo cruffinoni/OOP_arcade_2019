@@ -18,6 +18,7 @@ int main(const int ac, const char **av)
     try {
         Core core;
         core.useGraphic(av[1]);
+        core.useGame("./bin/lib_arcade_nibbler.so");
         core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {

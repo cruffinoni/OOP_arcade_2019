@@ -64,6 +64,7 @@ void Graphic::SFML::drawRect(Rect rect) {
         entity->setPosition(PERCENTAGE(rect.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(rect.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         entity->setFillColor(sf::Color(rect.getColorRed(), rect.getColorGreen(), rect.getColorBlue()));
+        //entity->setOutlineColor(sf::Color(0xE6, 0x39, 0x00, 0));
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;
@@ -91,11 +92,8 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 
 void Graphic::SFML::drawText(Text text) {
     try {
-        auto font = new sf::Font();
-        if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
-            throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
-
-        auto entity = new sf::Text(text.getText(), *font);
+        auto entity = new sf::Text();
+        entity->setString(text.getText());
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
         entity->setPosition(text.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
             text.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
@@ -131,6 +129,14 @@ std::string Graphic::SFML::handleEvent() {
                         return (IEventIterator::KEY_C);
                     case sf::Keyboard::D:
                         return (IEventIterator::KEY_D);
+                    case sf::Keyboard::Up:
+                        return (IEventIterator::KEY_UP);
+                    case sf::Keyboard::Down:
+                        return (IEventIterator::KEY_DOWN);
+                    case sf::Keyboard::Left:
+                        return (IEventIterator::KEY_LEFT);
+                    case sf::Keyboard::Right:
+                        return (IEventIterator::KEY_RIGHT);
                     default:
                         return (IEventIterator::KEY_UNKNOWN);
                 }

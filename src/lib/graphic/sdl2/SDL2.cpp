@@ -90,7 +90,7 @@ std::string Graphic::SDL2::handleEvent() {
     switch (_event.type) {
         case SDL_QUIT:
             _running = false;
-            return "gameClosed";
+            return (IEventIterator::KEY_UNKNOWN);
     }
     return "undefined";
 }
