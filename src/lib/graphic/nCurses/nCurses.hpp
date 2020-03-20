@@ -9,6 +9,7 @@
 #define OOP_ARCADE_2019_NCURSES_HPP
 
 #include "graphic/IGraphic.hpp"
+#include <curses.h>
 
 namespace Graphic {
     class nCurses : public IGraphic {
@@ -27,9 +28,8 @@ namespace Graphic {
             bool isOperational() override;
 
         private:
-//            sf::RenderWindow *_window;
-//            std::vector<sf::RectangleShape *> _forms;
-//            IEventIterator *_events;
+            WINDOW *_window;
+
     };
 }
 
