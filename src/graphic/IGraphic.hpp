@@ -19,7 +19,7 @@ class IEventIterator {
         static constexpr const char *KEY_B = "EVENT_KEY_B";
         static constexpr const char *KEY_C = "EVENT_KEY_C";
         static constexpr const char *KEY_D = "EVENT_KEY_D";
-        static constexpr const char *KEY_E = "EVENT_KEY_E";
+        static constexpr const char *KEY_R = "EVENT_KEY_R";
         static constexpr const char *KEY_UP = "EVENT_KEY_UP";
         static constexpr const char *KEY_DOWN = "EVENT_KEY_DOWN";
         static constexpr const char *KEY_LEFT = "EVENT_KEY_LEFT";

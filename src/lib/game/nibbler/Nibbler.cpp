@@ -47,24 +47,30 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f) {
 
 void Game::Nibbler::handleEvent(std::string &name) {
     std::string keys[] = {
+        // Default keys
         IEventIterator::KEY_UP,
         IEventIterator::KEY_DOWN,
         IEventIterator::KEY_RIGHT,
         IEventIterator::KEY_LEFT,
+        // Cheats
+        IEventIterator::KEY_A,
+        IEventIterator::KEY_B,
+        IEventIterator::KEY_R,
     };
-    if (name == IEventIterator::KEY_A) {
-        printf("[cheat] add node to the snake\n");
-        this->addNode();
-        return;
-    }
-    if (name == IEventIterator::KEY_B) {
-        printf("[cheat] respawn reward\n");
-        this->spawnReward();
-        return;
-    }
+    void (Game::Nibbler::*cheatsFunc[])() = {
+        &Game::Nibbler::addNode,
+        &Game::Nibbler::spawnReward,
+        &Game::Nibbler::resetPlayer,
+    };
     for (std::size_t i = 0, j = keys->size(); i < j; i++) {
-        if (keys[i] == name) {
+        if (keys[i] != name)
+            continue;
+        if (i < 4) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
+            return;
+        } else {
+            printf("[cheat] Key: %s w/ %lu\n", keys[i].c_str(), i);
+            (this->*cheatsFunc[i - 4])();
             return;
         }
     }

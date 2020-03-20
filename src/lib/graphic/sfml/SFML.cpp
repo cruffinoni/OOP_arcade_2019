@@ -46,10 +46,10 @@ void Graphic::SFML::clearScreen() {
 
 void Graphic::SFML::drawCircle(Circle circle) {
     try {
-        auto entity = new sf::CircleShape(circle.getSizeX() * Graphic::SFML::WINDOW_WIDTH);
+        auto entity = new sf::CircleShape(PERCENTAGE(circle.getSizeX()) * Graphic::SFML::WINDOW_WIDTH);
 
-        entity->setPosition(circle.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
-            circle.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
+        entity->setPosition(PERCENTAGE(circle.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+            PERCENTAGE(circle.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         entity->setFillColor(sf::Color(circle.getColorRed(), circle.getColorGreen(), circle.getColorBlue()));
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
@@ -78,14 +78,13 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
         auto texture = new sf::Texture();
         texture->loadFromFile(sprite.getTextureName(), sf::IntRect {
             {0, 0},
-            //{static_cast<int>(sprite.getPositionX()), static_cast<int>(sprite.getPositionY())},
-            {static_cast<int>(sprite.getSizeX() * Graphic::SFML::WINDOW_WIDTH),
-             static_cast<int>(sprite.getSizeY() * Graphic::SFML::WINDOW_HEIGHT)},
+            {static_cast<int>(PERCENTAGE(sprite.getSizeX()) * Graphic::SFML::WINDOW_WIDTH),
+             static_cast<int>(PERCENTAGE(sprite.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT)},
         });
 
         auto entity = new sf::Sprite(*texture);
-        entity->setPosition(sprite.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
-            sprite.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
+        entity->setPosition(PERCENTAGE(sprite.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+            PERCENTAGE(sprite.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;
@@ -97,8 +96,8 @@ void Graphic::SFML::drawText(Text text) {
         auto entity = new sf::Text();
         entity->setString(text.getText());
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
-        entity->setPosition(text.getPositionX() * Graphic::SFML::WINDOW_WIDTH,
-            text.getPositionY() * Graphic::SFML::WINDOW_HEIGHT);
+        entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+            PERCENTAGE(text.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         this->_entities.push_back(entity);
     } catch (const std::bad_alloc &e) {
         throw e;
@@ -134,6 +133,8 @@ std::string Graphic::SFML::handleEvent() {
                         return (IEventIterator::KEY_C);
                     case sf::Keyboard::D:
                         return (IEventIterator::KEY_D);
+                    case sf::Keyboard::R:
+                        return (IEventIterator::KEY_R);
                     case sf::Keyboard::Up:
                         return (IEventIterator::KEY_UP);
                     case sf::Keyboard::Down:
