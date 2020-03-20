@@ -28,13 +28,13 @@ extern "C" {
 
 Graphic::SFML::SFML() : _operational(true) {
     try {
-        auto font = new sf::Font();
+        this->_font = new sf::Font();
 
         this->_window = new sf::RenderWindow({
             Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
             }, "Arcade");
         this->_window->setFramerateLimit(60);
-        if (!font->loadFromFile(Graphic::SFML::FONT_PATH))
+        if (!this->_font->loadFromFile(Graphic::SFML::FONT_PATH))
             throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
     } catch (const Graphic::Exceptions::LoadFontFailed &e) {
         throw e;

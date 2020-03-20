@@ -110,7 +110,7 @@ void Game::Nibbler::handleRender(IGraphicRenderer &renderer) {
     renderer.drawText(Text {
         std::string("Score: " + std::to_string(this->_player.score)),
         {45.f, 0.f},
-        {0.f, 0.f},
+        {10.f, 5.f},
         Color::Black(),
     });
 }

@@ -11,7 +11,7 @@
 static Graphic::SDL2 *instance;
 
 extern "C" {
-    IGraphicRenderer *loadLibrary() {
+    IGraphic *loadLibrary() {
         return (instance);
     }
 
@@ -28,9 +28,11 @@ extern "C" {
 
 Graphic::SDL2::SDL2() {
     SDL_Init(SDL_INIT_EVERYTHING);
+    TTF_Init();
     _window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
+    _font = TTF_OpenFont(FONT_PATH, 18);
     _running = true;
 }
 
@@ -66,10 +68,10 @@ void Graphic::SDL2::drawCircle(Circle circle) {
 }
 
 void Graphic::SDL2::drawRect(Rect rect) {
-    SDL_Rect sdlRect = {(int) PERCENTAGE(rect.getPositionX() * Graphic::SDL2::WINDOW_WIDTH),
-                        (int) PERCENTAGE(rect.getPositionY() * Graphic::SDL2::WINDOW_HEIGHT),
-                        (int) PERCENTAGE(rect.getSizeX() * Graphic::SDL2::WINDOW_WIDTH),
-                        (int) PERCENTAGE(rect.getSizeY() * Graphic::SDL2::WINDOW_HEIGHT)};
+    SDL_Rect sdlRect = {static_cast<int>PERCENTAGE(rect.getPositionX() * Graphic::SDL2::WINDOW_WIDTH),
+                        static_cast<int>PERCENTAGE(rect.getPositionY() * Graphic::SDL2::WINDOW_HEIGHT),
+                        static_cast<int>PERCENTAGE(rect.getSizeX() * Graphic::SDL2::WINDOW_WIDTH),
+                        static_cast<int>PERCENTAGE(rect.getSizeY() * Graphic::SDL2::WINDOW_HEIGHT)};
 
     SDL_SetRenderDrawColor(_renderer, rect.getColor().red, rect.getColor().green, rect.getColor().blue, rect.getColor().alpha);
     SDL_RenderFillRect(_renderer, &sdlRect);
@@ -85,7 +87,14 @@ void Graphic::SDL2::drawSprite(Sprite sprite) {
 }
 
 void Graphic::SDL2::drawText(Text text) {
-
+    SDL_Color color = {text.getColor().red, text.getColor().green, text.getColor().blue};
+    SDL_Surface *surface = TTF_RenderText_Solid(_font, text.getText().c_str(), color);
+    SDL_Texture *message = SDL_CreateTextureFromSurface(_renderer, surface);
+    SDL_Rect sdlRect = {static_cast<int>(PERCENTAGE(text.getPositionX()) * Graphic::SDL2::WINDOW_WIDTH),
+                        static_cast<int>(PERCENTAGE(text.getPositionY()) * Graphic::SDL2::WINDOW_HEIGHT),
+                        static_cast<int>(PERCENTAGE(text.getSizeX()) * Graphic::SDL2::WINDOW_WIDTH),
+                        static_cast<int>(PERCENTAGE(text.getSizeY()) * Graphic::SDL2::WINDOW_HEIGHT)};
+    SDL_RenderCopy(_renderer, message, nullptr, &sdlRect);
 }
 
 std::string Graphic::SDL2::handleEvent() {

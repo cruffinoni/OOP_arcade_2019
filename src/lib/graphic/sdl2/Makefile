@@ -14,7 +14,7 @@ SRC				=	./SDL2.cpp 							\
 
 BIN_DIRECTORY	=	../../../../bin/
 
-CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared -lSDL2
+CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared -lSDL2 -lSDL2_ttf
 
 OBJ				=	$(SRC:.cpp=.o)
 

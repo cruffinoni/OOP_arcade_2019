@@ -9,12 +9,16 @@
 #define OOP_ARCADE_2019_SDL2_HPP
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <vector>
+#include <iostream>
 #include "graphic/IGraphic.hpp"
 
 namespace Graphic {
     class SDL2 : public IGraphic {
         public:
+            static const constexpr char *FONT_PATH = "./src/lib/graphic/sfml/arial.ttf";
+
             SDL2();
             ~SDL2();
 
@@ -40,7 +44,7 @@ namespace Graphic {
             SDL_Window *_window;
             SDL_Renderer *_renderer;
             bool _running;
-            std::vector<SDL_Texture *> _entities;
+            TTF_Font *_font;
     };
 }
 
