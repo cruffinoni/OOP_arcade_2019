@@ -30,8 +30,6 @@ extern "C" {
 }
 
 Game::Nibbler::Nibbler() : _reward(50.f, 50.f) {
-    this->_data["score"] = "0";
-    this->_data["time"] = "0";
     this->resetPlayer();
 
     for (ushort x = 0; x < this->MAX_MAP_SIZE; ++x) {
@@ -149,6 +147,7 @@ void Game::Nibbler::handleUpdate(int elapsedTime) {
             this->_player.position.front().y < DEFAULT_SQUARE_SIZE.y ||
             std::count(this->_player.position.begin(), this->_player.position.end(), this->_player.position.front()) > 1) {
             this->resetPlayer();
+            this->_player.death++;
         }
         if (this->_player.position.front() == this->_reward) {
             this->addNode();
@@ -159,9 +158,13 @@ void Game::Nibbler::handleUpdate(int elapsedTime) {
 
 void Game::Nibbler::setGameData(IGame::GameDataType &data) {
     // TODO: Score, XP, Death, lives, game state, etc.
+    //  What's for?
+    this->_data = data;
 }
 
 IGame::GameDataType Game::Nibbler::getGameData() {
+    this->_data["score"] = std::to_string(this->_player.score);
+    this->_data["death"] = std::to_string(this->_player.death);
     return (this->_data);
 }
 

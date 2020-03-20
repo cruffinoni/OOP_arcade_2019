@@ -82,8 +82,10 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
         auto texture = new sf::Texture();
         texture->loadFromFile(sprite.getTextureName(), sf::IntRect {
             {0, 0},
-            {static_cast<int>(PERCENTAGE(sprite.getSizeX()) * Graphic::SFML::WINDOW_WIDTH),
-             static_cast<int>(PERCENTAGE(sprite.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT)},
+            {
+                static_cast<int>(PERCENTAGE(sprite.getSizeX()) * Graphic::SFML::WINDOW_WIDTH),
+             static_cast<int>(PERCENTAGE(sprite.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT)
+             },
         });
 
         auto entity = new sf::Sprite(*texture);

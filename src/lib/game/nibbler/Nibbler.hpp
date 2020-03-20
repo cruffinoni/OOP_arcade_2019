@@ -30,7 +30,6 @@ namespace Game {
             void addNode();
             void resetPlayer();
             void spawnReward();
-            //void
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
@@ -52,6 +51,7 @@ namespace Game {
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
                 std::size_t score;
+                std::size_t death;
             };
 
             player_s _player;
