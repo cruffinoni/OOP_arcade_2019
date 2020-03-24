@@ -12,7 +12,7 @@ INCLUDE			=	../../..
 SRC				=	./Nibbler.cpp 	\
 					$(INCLUDE)/graphic/Drawables.cpp
 
-BIN_DIRECTORY	=	../../../../bin/
+BIN_DIRECTORY	=	../../../../games/
 
 CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared
 
