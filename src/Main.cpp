@@ -30,5 +30,8 @@ int main(const int ac, const char **av)
     } catch (const Core::Exceptions::ScoreFolder &e) {
         std::cerr << e.what();
         return (84);
+    } catch (const Core::Exceptions::MissingFolder &e) {
+        std::cerr << e.what();
+        return (84);
     }
 }

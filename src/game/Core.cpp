@@ -16,10 +16,37 @@
 
 using Clock = std::chrono::high_resolution_clock;
 
+void Core::Core::readFolder(const std::string &folderName) {
+    DIR *dir = opendir(folderName.c_str());
+    struct dirent *dirent;
+
+    if (dir == nullptr)
+        throw Exceptions::MissingFolder(folderName);
+    dirent = readdir(dir);
+    while (dirent != nullptr) {
+        // TODO: Remove prefix "lib_" ?
+        if (dirent->d_name[0] != '.')
+            this->_lib[folderName].push_back(std::string("./" + folderName + "/" + dirent->d_name));
+        dirent = readdir(dir);
+    }
+    closedir(dir);
+}
+
 Core::Core::Core() {
     try {
         Core::Core::createScoreFolder();
+
+        this->readFolder("bin");
+            std::cout << "bin folder" << std::endl;
+        for (auto &i: this->_lib["bin"])
+            std::cout << i << std::endl;
+        this->readFolder("games");
+            std::cout << "games folder" << std::endl;
+        for (auto &i: this->_lib["games"])
+            std::cout << i << std::endl;
     } catch (const Exceptions::ScoreFolder &e) {
+        throw e;
+    } catch (const Exceptions::MissingFolder &e) {
         throw e;
     }
 }
@@ -48,7 +75,6 @@ void Core::Core::useGame(const std::string &filename) {
 
 void Core::Core::run() {
     auto t1 = Clock::now();
-
     //auto high_score = Core::Core::loadScore("nibbler");
     while (this->_graphic->isOperational()) {
         try {
@@ -56,7 +82,8 @@ void Core::Core::run() {
             auto event = this->_graphic->handleEvent();
             if (event != IEventIterator::KEY_UNKNOWN) {
                 printf("Event: '%s'\n", event.c_str());
-                this->_game->handleEvent(event);
+                if (!this->handleInternalKey(event))
+                    this->_game->handleEvent(event);
             }
             this->_game->handleUpdate(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - t1).count());
             this->_game->handleRender(*this->_graphic.getInstance());
@@ -68,8 +95,14 @@ void Core::Core::run() {
         } catch (const Graphic::Exceptions::LoadFontFailed &e) {
             std::cerr << e.what();
             return;
+        } catch (const SoLoader::Exceptions::InvalidSO &e) {
+            std::cerr << e.what();
+            return;
+        } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
+            std::cerr << e.what();
+            return;
         } catch (...) {
-            std::cerr << "exception occurred ?" << std::endl;
+            std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;
             return;
         }
     }
@@ -95,10 +128,6 @@ std::string Core::Core::loadScore(const std::string &gameName) {
         return ("");
     oss << file.rdbuf();
     return (oss.str());
-}
-
-const char *Core::Exceptions::ScoreFolder::what() const noexcept {
-    return ("Unable to create score folder for the games.\n");
 }
 
 /*

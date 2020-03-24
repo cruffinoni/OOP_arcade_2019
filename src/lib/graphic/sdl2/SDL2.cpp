@@ -120,6 +120,10 @@ std::string Graphic::SDL2::handleEvent() {
                     return (IEventIterator::KEY_C);
                 case SDLK_d:
                     return (IEventIterator::KEY_D);
+                case SDLK_e:
+                    return (IEventIterator::KEY_E);
+                case SDLK_RETURN:
+                    return (IEventIterator::KEY_ENTER);
                 case SDLK_r:
                     return (IEventIterator::KEY_R);
                 case SDLK_UP:

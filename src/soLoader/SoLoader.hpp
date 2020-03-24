@@ -60,9 +60,14 @@ namespace SoLoader {
                 return (this->_instance);
             }
 
+            std::string getPath() const {
+                return (this->_path);
+            }
+
         private:
             T *_instance;
             void *_dll;
+            std::string _path;
 
             void loadSo(const std::string &DLLPath) {
                 EntryPointPtrFunc entryPointFunc;
@@ -74,6 +79,7 @@ namespace SoLoader {
                 if (entryPointFunc == nullptr)
                     throw Exceptions::InvalidEntryPoint(DLLPath);
                 this->_instance = entryPointFunc();
+                this->_path = DLLPath;
             }
     };
 }
