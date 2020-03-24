@@ -157,6 +157,8 @@ std::string Graphic::SFML::handleEvent() {
                         return (IEventIterator::KEY_LEFT);
                     case sf::Keyboard::Right:
                         return (IEventIterator::KEY_RIGHT);
+                    case sf::Keyboard::Return:
+                        return (IEventIterator::KEY_ENTER);
                     default:
                         return (IEventIterator::KEY_UNKNOWN);
                 }

@@ -25,9 +25,9 @@ namespace Core {
             void run();
 
             static std::string loadScore(const std::string &gameName);
+            constexpr static const char *SCORE_PATH = "./games/score/";
 
         private:
-            constexpr static const char *SCORE_PATH = "./games/score/";
             static void createScoreFolder();
 
             SoLoader::SoLoader<IGame> _game;

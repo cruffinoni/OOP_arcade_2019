@@ -12,6 +12,7 @@
 #include <list>
 #include "graphic/Drawables.hpp"
 #include "game/IGame.hpp"
+#include "lib/game/Score.hpp"
 
 namespace Game {
     class Nibbler : public IGame {
@@ -27,6 +28,9 @@ namespace Game {
 
         private:
             static void drawBackground(IGraphicRenderer &renderer);
+            void drawGame(IGraphicRenderer &renderer);
+            void drawScore(IGraphicRenderer &renderer);
+
             void addNode();
             void resetPlayer();
             void spawnReward();
@@ -46,18 +50,27 @@ namespace Game {
                 WEST
             };
 
+            enum GAME_STATE {
+                GAME,
+                SCORE
+            };
+
+            #define IS_GAME_IN_PROGRESS(a) (a->_state == Nibbler::GAME_STATE::GAME)
+
             struct player_s {
+                player_s() : score(0, "nibbler") {};
+
                 int elapsedTime;
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
-                std::size_t score;
                 std::size_t death;
+                Game::Score::Score score;
             };
-
             player_s _player;
             Vector2f _reward;
             GameDataType _data;
             std::vector<Vector2f> _map;
+            enum GAME_STATE _state;
     };
 }
 

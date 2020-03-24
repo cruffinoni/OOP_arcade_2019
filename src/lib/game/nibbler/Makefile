@@ -10,6 +10,8 @@ NAME			=	lib_arcade_nibbler.so
 INCLUDE			=	../../..
 
 SRC				=	./Nibbler.cpp 	\
+					./Draw.cpp		\
+					../Score.cpp	\
 					$(INCLUDE)/graphic/Drawables.cpp
 
 GAMES_DIRECTORY	=	../../../../games/
