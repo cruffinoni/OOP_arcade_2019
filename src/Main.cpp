@@ -16,15 +16,18 @@ int main(const int ac, const char **av)
         return (84);
     }
     try {
-        Core core;
+        Core::Core core;
         core.useGraphic(av[1]);
-        core.useGame("./bin/lib_arcade_nibbler.so");
+        core.useGame("./games/lib_arcade_nibbler.so");
         core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what();
         return (84);
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
+        std::cerr << e.what();
+        return (84);
+    } catch (const Core::Exceptions::ScoreFolder &e) {
         std::cerr << e.what();
         return (84);
     }

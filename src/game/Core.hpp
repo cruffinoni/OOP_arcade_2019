@@ -9,22 +9,39 @@
 #define CORE_HPP_
 
 #include <string>
+#include <dirent.h>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
 #include "soLoader/SoLoader.hpp"
 
-class Core {
-    public:
-        Core() = default;
-        ~Core() = default;
+namespace Core {
+    class Core {
+        public:
+            Core();
+            ~Core() = default;
 
-        void useGraphic(const std::string &filename);
-        void useGame(const std::string &filename);
-        void run();
+            void useGraphic(const std::string &filename);
+            void useGame(const std::string &filename);
+            void run();
 
-    private:
-        SoLoader::SoLoader<IGame> _game;
-        SoLoader::SoLoader<IGraphic> _graphic;
-};
+            static std::string loadScore(const std::string &gameName);
+
+        private:
+            constexpr static const char *SCORE_PATH = "./games/score/";
+            static void createScoreFolder();
+
+            SoLoader::SoLoader<IGame> _game;
+            SoLoader::SoLoader<IGraphic> _graphic;
+    };
+
+    namespace Exceptions {
+        class ScoreFolder : public std::exception {
+            public:
+                ScoreFolder() noexcept = default;
+
+                const char *what() const noexcept override;
+        };
+    }
+}
 
 #endif

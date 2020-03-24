@@ -11,6 +11,7 @@ NAME			=	arcade
 SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/game/Core.cpp					\
 					./src/graphic/Drawables.cpp			\
+					./src/lib/graphic/Exceptions.cpp	\
 
 INCLUDE			=	./src/
 
@@ -22,7 +23,7 @@ OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 GRAPHIC_PATH	=	./src/lib/graphic/
 GAME_PATH		=	./src/lib/game/
 
-all: core graphicals games
+all: core games graphicals
 
 core: $(OBJ) $(OBJ_MAIN)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
@@ -49,4 +50,4 @@ fclean:
 
 re:	fclean all
 
-.PHONY:	all clean fclean re debug graphicals core
+.PHONY:	all clean fclean re debug graphicals core games

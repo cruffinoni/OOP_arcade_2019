@@ -14,10 +14,14 @@ SoLoader::Exceptions::InvalidSO::InvalidSO(const std::string &DLLPath) noexcept 
 }
 
 const char *SoLoader::Exceptions::InvalidSO::what() const noexcept {
-    static const std::string message =
-        "SO file \"" + this->_dllName + "\" is invalid. Either it doesn't exists, "
-        "either it's not a shared library.\n"
-        "Error: " + dlerror() + "\n";
+    static std::string message =
+        "SO file \"" + this->_dllName + "\" is invalid. Either the file cannot be open, "
+        "either it's not a shared library." + "\nError: ";
+    if (dlerror() != nullptr)
+        message.append(dlerror());
+    else
+        message.append("unknown");
+    message.append("\n");
     return (message.c_str());
 }
 
@@ -31,10 +35,14 @@ SoLoader::Exceptions::InvalidEntryPoint::InvalidEntryPoint(const std::string &DL
 
 const char *SoLoader::Exceptions::InvalidEntryPoint::what() const noexcept {
 
-    static const std::string message =
+    static std::string message =
         "SO file '" + this->_dllName + "' doesn't have the entry point named: "
-        + std::string(SoLoader<void>::entryPointName) + "\n"
-        "Error: " + dlerror() + "\n";
+        + std::string(SoLoader<void>::entryPointName) + "\nError: ";
+    if (dlerror() != nullptr)
+        message.append(dlerror());
+    else
+        message.append("unknown");
+    message.append("\n");
     return (message.c_str());
 }
 

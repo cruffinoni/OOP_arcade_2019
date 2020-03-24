@@ -8,6 +8,7 @@
 #ifndef IGRAPHIC_HPP_
 #define IGRAPHIC_HPP_
 
+#include "lib/graphic/Exceptions.hpp"
 #include "Drawables.hpp"
 
 class IEventIterator {

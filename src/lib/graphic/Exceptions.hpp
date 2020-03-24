@@ -5,8 +5,8 @@
 ** TODO: CHANGE DESCRIPTION.
 */
 
-#ifndef OOP_ARCADE_2019_EXCEPTIONS_HPP
-#define OOP_ARCADE_2019_EXCEPTIONS_HPP
+#ifndef OOP_ARCADE_2019_EXCEPTIONS_GRAPHIC_HPP_
+#define OOP_ARCADE_2019_EXCEPTIONS_GRAPHIC_HPP_
 
 #include <string>
 
@@ -21,8 +21,6 @@ namespace Graphic {
             private:
                 std::string _font;
         };
-
-
     }
 }
 

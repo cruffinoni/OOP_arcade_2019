@@ -12,7 +12,7 @@ INCLUDE			=	../../..
 SRC				=	./Nibbler.cpp 	\
 					$(INCLUDE)/graphic/Drawables.cpp
 
-BIN_DIRECTORY	=	../../../../games/
+GAMES_DIRECTORY	=	../../../../games/
 
 CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared
 
@@ -22,11 +22,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
-	cp $(NAME) $(BIN_DIRECTORY)
+	cp $(NAME) $(GAMES_DIRECTORY)
 
 debug:
 	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
-	cp $(NAME) $(BIN_DIRECTORY)
+	cp $(NAME) $(GAMES_DIRECTORY)
 
 clean:
 	rm -f $(OBJ)
@@ -34,7 +34,7 @@ clean:
 fclean:
 	rm -f $(OBJ)
 	rm -f $(NAME)
-	rm -f $(BIN_DIRECTORY)$(NAME)
+	rm -f $(GAMES_DIRECTORY)$(NAME)
 
 re:	fclean all
 
