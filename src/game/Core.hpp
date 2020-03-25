@@ -38,11 +38,18 @@ namespace Core {
             void previousLib(bool graphical);
             void nextLib(bool graphical);
 
+            void menuEvents(std::string &event);
+            void renderMenu();
+
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
             std::map<std::string, std::list<std::string>> _lib;
             bool _gameRunning;
+            enum selectedGame {
+                NIBBLER,
+                PACMAN
+            } _selectedGame;
     };
 
     namespace Exceptions {
