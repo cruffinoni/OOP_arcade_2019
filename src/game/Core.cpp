@@ -50,6 +50,7 @@ Core::Core::Core() {
         throw e;
     }
     this->_gameRunning = false;
+    this->_selectedGame = NIBBLER;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -92,12 +93,9 @@ void Core::Core::run() {
                         Clock::now() - t1).count());
                 this->_game->handleRender(*this->_graphic.getInstance());
             } else {
-                if (event != IEventIterator::KEY_UNKNOWN) {
-                    printf("Event: '%s'\n", event.c_str());
-                    if (!this->handleInternalKey(event)) {
-
-                    }
-
+                if (!this->handleInternalKey(event)) {
+                    this->menuEvents(event);
+                    this->renderMenu();
                 }
             }
             this->_graphic->drawScreen();
