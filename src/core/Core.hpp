@@ -54,6 +54,7 @@ namespace Core {
             SoLoader::SoLoader<IGraphic> _graphic;
 
             std::map<std::string, std::list<std::string>> _lib;
+            bool _gameRunning;
     };
 
     namespace Exceptions {
