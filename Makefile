@@ -12,6 +12,7 @@ SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/core/Core.cpp					\
 					./src/core/SwitchLib.cpp			\
 					./src/core/Exceptions.cpp			\
+					./src/game/Menu.cpp					\
 					./src/graphic/Drawables.cpp			\
 					./src/lib/graphic/Exceptions.cpp	\
 

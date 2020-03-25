@@ -52,6 +52,7 @@ Core::Core::Core() {
         throw e;
     }
     this->_gameRunning = false;
+    this->_selectedGame = NIBBLER;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -95,12 +96,9 @@ void Core::Core::run() {
                 this->_game->handleRender(*this->_graphic.getInstance());
                 this->_graphic->drawScreen();
             } else {
-                if (event != IEventIterator::KEY_UNKNOWN) {
-                    printf("Event: '%s'\n", event.c_str());
-                    if (!this->handleInternalKey(event)) {
-
-                    }
-
+                if (!this->handleInternalKey(event)) {
+                    this->menuEvents(event);
+                    this->renderMenu();
                 }
             }
         } catch (const std::bad_alloc &e) {
