@@ -49,6 +49,7 @@ Core::Core::Core() {
     } catch (const Exceptions::MissingFolder &e) {
         throw e;
     }
+    this->_gameRunning = false;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -80,13 +81,25 @@ void Core::Core::run() {
         try {
             this->_graphic->clearScreen();
             auto event = this->_graphic->handleEvent();
-            if (event != IEventIterator::KEY_UNKNOWN) {
-                printf("Event: '%s'\n", event.c_str());
-                if (!this->handleInternalKey(event))
-                    this->_game->handleEvent(event);
+            if (this->_gameRunning) {
+                if (event != IEventIterator::KEY_UNKNOWN) {
+                    printf("Event: '%s'\n", event.c_str());
+                    if (!this->handleInternalKey(event))
+                        this->_game->handleEvent(event);
+                }
+                this->_game->handleUpdate(
+                    std::chrono::duration_cast<std::chrono::nanoseconds>(
+                        Clock::now() - t1).count());
+                this->_game->handleRender(*this->_graphic.getInstance());
+            } else {
+                if (event != IEventIterator::KEY_UNKNOWN) {
+                    printf("Event: '%s'\n", event.c_str());
+                    if (!this->handleInternalKey(event)) {
+
+                    }
+
+                }
             }
-            this->_game->handleUpdate(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - t1).count());
-            this->_game->handleRender(*this->_graphic.getInstance());
             this->_graphic->drawScreen();
             t1 = Clock::now();
         } catch (const std::bad_alloc &e) {
