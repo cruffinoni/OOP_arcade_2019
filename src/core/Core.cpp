@@ -52,7 +52,10 @@ Core::Core::Core() {
         throw e;
     }
     this->_gameRunning = false;
+<<<<<<< HEAD:src/core/Core.cpp
     this->_selectedGame = NIBBLER;
+=======
+>>>>>>> adding main code struct for game menu:src/game/Core.cpp
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
