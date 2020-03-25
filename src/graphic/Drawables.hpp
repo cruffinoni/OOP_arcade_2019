@@ -128,7 +128,7 @@ class Sprite : public APosition, public ASize {
                Vector2f size = Vector2f(0, 0));
         ~Sprite() = default;
 
-        const std::string &getTextureName(void) const;
+        std::string getTextureName(void) const;
 
     private:
         std::string _textureName;

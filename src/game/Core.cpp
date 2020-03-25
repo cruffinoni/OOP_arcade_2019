@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 #include "soLoader/SoLoader.hpp"
 #include "Core.hpp"
 
@@ -21,11 +22,10 @@ void Core::Core::readFolder(const std::string &folderName) {
     struct dirent *dirent;
 
     if (dir == nullptr)
-        throw Exceptions::MissingFolder(folderName);
+        throw Exceptions::MissingMandatoryFolder(folderName);
     dirent = readdir(dir);
     while (dirent != nullptr) {
-        // TODO: Remove prefix "lib_" ?
-        if (dirent->d_name[0] != '.')
+        if (strstr(dirent->d_name, ".so") != nullptr && dirent->d_type == DT_REG)
             this->_lib[folderName].push_back(std::string("./" + folderName + "/" + dirent->d_name));
         dirent = readdir(dir);
     }
@@ -36,17 +36,19 @@ Core::Core::Core() {
     try {
         Core::Core::createScoreFolder();
 
-        this->readFolder("bin");
-            std::cout << "bin folder" << std::endl;
-        for (auto &i: this->_lib["bin"])
-            std::cout << i << std::endl;
-        this->readFolder("games");
-            std::cout << "games folder" << std::endl;
-        for (auto &i: this->_lib["games"])
-            std::cout << i << std::endl;
-    } catch (const Exceptions::ScoreFolder &e) {
+        for (auto &i: this->NEEDED_FOLDERS) {
+            this->readFolder(i);
+            if (this->_lib[i].empty())
+                throw Exceptions::EmptyMandatoryFolder(i);
+            for (auto &k: this->_lib[i])
+                std::cout << k << std::endl;
+        }
+        this->useGame(this->_lib["games"].front());
+    } catch (const Exceptions::UnableCreateFolder &e) {
         throw e;
-    } catch (const Exceptions::MissingFolder &e) {
+    } catch (const Exceptions::MissingMandatoryFolder &e) {
+        throw e;
+    } catch (const Exceptions::EmptyMandatoryFolder &e) {
         throw e;
     }
 }
@@ -114,7 +116,7 @@ void Core::Core::createScoreFolder() {
     if (folder == nullptr) {
         int rtn = mkdir(SCORE_PATH, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
         if (rtn == -1)
-            throw Exceptions::ScoreFolder();
+            throw Exceptions::UnableCreateFolder();
         return (Core::Core::createScoreFolder());
     } else
         closedir(folder);
@@ -129,12 +131,3 @@ std::string Core::Core::loadScore(const std::string &gameName) {
     oss << file.rdbuf();
     return (oss.str());
 }
-
-/*
- * handleEvent  ++      handleEvent         ++      handleEvent
- *   LEAVE      -->     KEY_PRESSED_Q       -->         ""
- *
- *
- *   User -> Input -> Graphical -> Core | -> Game -> Core
- *                                      | -> Changement -> Game
- */

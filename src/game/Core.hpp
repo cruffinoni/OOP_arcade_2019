@@ -35,6 +35,10 @@ namespace Core {
             void readFolder(const std::string &folderName);
             bool handleInternalKey(const std::string &key);
 
+            const std::array<std::string, 2> NEEDED_FOLDERS = {
+                "games", "lib"
+            };
+
             void previousLib(bool graphical);
             void nextLib(bool graphical);
 
@@ -45,17 +49,26 @@ namespace Core {
     };
 
     namespace Exceptions {
-        class ScoreFolder : public std::exception {
+        class UnableCreateFolder : public std::exception {
             public:
-                ScoreFolder() noexcept = default;
+                UnableCreateFolder() noexcept = default;
 
                 const char *what() const noexcept override;
         };
-        class MissingFolder : public std::exception {
+        class MissingMandatoryFolder : public std::exception {
             public:
-                explicit MissingFolder(const std::string &name) noexcept;
-                MissingFolder(const MissingFolder &a) noexcept;
+                explicit MissingMandatoryFolder(const std::string &name) noexcept;
+                MissingMandatoryFolder(const MissingMandatoryFolder &a) noexcept;
 
+                const char *what() const noexcept override;
+
+            private:
+                std::string _name;
+        };
+        class EmptyMandatoryFolder : public std::exception {
+            public:
+                explicit EmptyMandatoryFolder(const std::string &name) noexcept;
+                EmptyMandatoryFolder(const EmptyMandatoryFolder &a) noexcept;
                 const char *what() const noexcept override;
 
             private:

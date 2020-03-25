@@ -12,13 +12,12 @@
 int main(const int ac, const char **av)
 {
     if (ac == 1) {
-        std::cerr << "Enter a dll name" << std::endl;
+        std::cerr << "Enter a so file which is a compatible graphical library" << std::endl;
         return (84);
     }
     try {
         Core::Core core;
         core.useGraphic(av[1]);
-        core.useGame("./games/lib_arcade_nibbler.so");
         core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
@@ -27,10 +26,13 @@ int main(const int ac, const char **av)
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
         std::cerr << e.what();
         return (84);
-    } catch (const Core::Exceptions::ScoreFolder &e) {
+    } catch (const Core::Exceptions::UnableCreateFolder &e) {
         std::cerr << e.what();
         return (84);
-    } catch (const Core::Exceptions::MissingFolder &e) {
+    } catch (const Core::Exceptions::MissingMandatoryFolder &e) {
+        std::cerr << e.what();
+        return (84);
+    } catch (const Core::Exceptions::EmptyMandatoryFolder &e) {
         std::cerr << e.what();
         return (84);
     }

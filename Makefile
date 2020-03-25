@@ -37,7 +37,9 @@ games:
 	$(MAKE) -C $(GAME_PATH)
 
 debug:
-	g++ -o $(NAME) $(ALL_SRC) $(MAIN_FILE) $(CXXFLAGS)
+	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
+	$(MAKE) -C $(GRAPHIC_PATH) debug
+	$(MAKE) -C $(GAME_PATH) debug
 
 clean:
 	rm -f $(OBJ) $(OBJ_MAIN)

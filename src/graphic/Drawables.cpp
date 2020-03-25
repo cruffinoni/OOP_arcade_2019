@@ -48,7 +48,7 @@ Sprite::Sprite(const std::string &name, Vector2f pos, Vector2f size) : APosition
     this->_textureName = name;
 }
 
-const std::string &Sprite::getTextureName(void) const {
+std::string Sprite::getTextureName(void) const {
     return (this->_textureName);
 }
 

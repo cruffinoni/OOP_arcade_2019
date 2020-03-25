@@ -87,7 +87,7 @@ void Graphic::SDL2::drawSprite(Sprite sprite) {
 }
 
 void Graphic::SDL2::drawText(Text text) {
-    SDL_Color color = {text.getColor().red, text.getColor().green, text.getColor().blue};
+    SDL_Color color = {text.getColorRed(), text.getColorGreen(), text.getColorBlue(), text.getColorAlpha()};
     SDL_Surface *surface = TTF_RenderText_Solid(_font, text.getText().c_str(), color);
     SDL_Texture *message = SDL_CreateTextureFromSurface(_renderer, surface);
     SDL_Rect sdlRect = {static_cast<int>(PERCENTAGE(text.getPositionX()) * Graphic::SDL2::WINDOW_WIDTH),

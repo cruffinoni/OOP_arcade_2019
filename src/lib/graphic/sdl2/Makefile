@@ -12,7 +12,7 @@ INCLUDE			=	../../..
 SRC				=	./SDL2.cpp 							\
 					$(INCLUDE)/graphic/Drawables.cpp
 
-BIN_DIRECTORY	=	../../../../bin/
+BIN_DIRECTORY	=	../../../../lib/
 
 CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -fPIC -shared -lSDL2 -lSDL2_ttf
 
