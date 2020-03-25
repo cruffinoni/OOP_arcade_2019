@@ -33,7 +33,7 @@ bool Core::Core::handleInternalKey(const std::string &key) {
 }
 
 void Core::Core::previousLib(bool graphical) {
-    std::string categoryName = this->NEEDED_FOLDERS[graphical];
+    std::string categoryName = this->MANDATORY_FOLDERS[graphical];
     std::string libName = this->_lib[categoryName].back();
 
     this->_lib[categoryName].pop_back();
@@ -52,7 +52,7 @@ void Core::Core::previousLib(bool graphical) {
 }
 
 void Core::Core::nextLib(bool graphical) {
-    std::string categoryName = this->NEEDED_FOLDERS[graphical];
+    std::string categoryName = this->MANDATORY_FOLDERS[graphical];
     this->_lib[categoryName].emplace_back(this->_lib[categoryName].front());
     this->_lib[categoryName].pop_front();
 

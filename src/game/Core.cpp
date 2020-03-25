@@ -36,7 +36,7 @@ Core::Core::Core() {
     try {
         Core::Core::createScoreFolder();
 
-        for (auto &i: this->NEEDED_FOLDERS) {
+        for (auto &i: this->MANDATORY_FOLDERS) {
             this->readFolder(i);
             if (this->_lib[i].empty())
                 throw Exceptions::EmptyMandatoryFolder(i);

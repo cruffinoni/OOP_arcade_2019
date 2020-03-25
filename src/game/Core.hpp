@@ -35,7 +35,7 @@ namespace Core {
             void readFolder(const std::string &folderName);
             bool handleInternalKey(const std::string &key);
 
-            const std::array<std::string, 2> NEEDED_FOLDERS = {
+            const std::array<std::string, 2> MANDATORY_FOLDERS = {
                 "games", "lib"
             };
 
