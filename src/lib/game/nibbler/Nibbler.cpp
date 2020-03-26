@@ -83,7 +83,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
         if (i < middle) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
-        } else {
+        } else if (keys[i] != IEventIterator::KEY_ENTER) {
             printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
             (this->*gameCheatsFunc[i - middle])();
             return;
@@ -92,10 +92,11 @@ void Game::Nibbler::handleEvent(std::string &name) {
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
+    //std::cout << "Tick: " << elapsedTime << std::endl;
     if (!IS_GAME_IN_PROGRESS(this))
         return;
     this->_player.elapsedTime += elapsedTime;
-    if (this->_player.elapsedTime > 1e+6) {
+    if (this->_player.elapsedTime > 250) {
         Vector2f prev = this->_player.position.front();
         Vector2f next(0.f, 0.f);
         for (auto &iter: this->_player.position) {

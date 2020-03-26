@@ -43,6 +43,7 @@ Graphic::SDL2::~SDL2() {
 }
 
 void Graphic::SDL2::clearScreen() {
+    this->_ticks = SDL_GetTicks();
     SDL_RenderClear(_renderer);
 }
 
@@ -80,6 +81,12 @@ void Graphic::SDL2::drawRect(Rect rect) {
 void Graphic::SDL2::drawScreen() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderPresent(_renderer);
+    uint32_t now = SDL_GetTicks();
+    uint32_t delta = now - this->_ticks;
+
+    if (delta < TIME_PER_FRAME)
+        SDL_Delay(TIME_PER_FRAME - delta);
+    this->_ticks = now;
 }
 
 void Graphic::SDL2::drawSprite(Sprite sprite) {
@@ -122,6 +129,8 @@ std::string Graphic::SDL2::handleEvent() {
                     return (IEventIterator::KEY_D);
                 case SDLK_e:
                     return (IEventIterator::KEY_E);
+                case SDLK_w:
+                    return (IEventIterator::KEY_W);
                 case SDLK_RETURN:
                     return (IEventIterator::KEY_ENTER);
                 case SDLK_r:

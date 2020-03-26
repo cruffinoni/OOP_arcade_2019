@@ -29,7 +29,6 @@ extern "C" {
 Graphic::SFML::SFML() : _operational(true) {
     try {
         this->_font = new sf::Font();
-
         this->_window = new sf::RenderWindow({
             Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
             }, "Arcade");
