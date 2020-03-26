@@ -9,8 +9,6 @@
 #include <chrono>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <fstream>
-#include <sstream>
 #include <cstring>
 #include "soLoader/SoLoader.hpp"
 #include "Core.hpp"
@@ -32,7 +30,7 @@ void Core::Core::readFolder(const std::string &folderName) {
     closedir(dir);
 }
 
-Core::Core::Core() {
+Core::Core::Core() : _gameRunning(false), _gameSelected(0) {
     try {
         Core::Core::createScoreFolder();
 
@@ -51,7 +49,7 @@ Core::Core::Core() {
     } catch (const Exceptions::EmptyMandatoryFolder &e) {
         throw e;
     }
-    this->_gameRunning = true;
+    this->_gameRunning = false;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -159,6 +157,7 @@ void Core::Core::run() {
                     this->renderMenu();
                     createStripMenu();
                 }
+                this->renderMenu();
             }
             this->_graphic->drawScreen();
         } catch (const std::bad_alloc &e) {
@@ -200,13 +199,3 @@ std::string Core::Core::loadScore(const std::string &gameName) {
     oss << file.rdbuf();
     return (oss.str());
 }
-
-
-/*
- * handleEvent  ++      handleEvent         ++      handleEvent
- *   LEAVE      -->     KEY_PRESSED_Q       -->         ""
- *
- *
- *   User -> Input -> Graphical -> Core | -> Game -> Core
- *                                      | -> Changement -> Game
- */
