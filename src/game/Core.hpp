@@ -26,6 +26,7 @@ namespace Core {
             void useGraphic(const std::string &filename);
             void useGame(const std::string &filename);
             void run();
+            void createStrip();
 
             static std::string loadScore(const std::string &gameName);
             constexpr static const char *SCORE_PATH = "./games/score/";

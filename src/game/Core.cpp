@@ -77,7 +77,7 @@ void Core::Core::useGame(const std::string &filename) {
 
 void Core::Core::run() {
     auto t1 = Clock::now();
-    //auto high_score = Core::Core::loadScore("nibbler");
+//    auto high_score = Core::Core::loadScore("nibbler");
     while (this->_graphic->isOperational()) {
         try {
             this->_graphic->clearScreen();
@@ -108,6 +108,7 @@ void Core::Core::run() {
             return;
         }
     }
+//    createStrip();
 }
 
 void Core::Core::createScoreFolder() {
@@ -131,3 +132,62 @@ std::string Core::Core::loadScore(const std::string &gameName) {
     oss << file.rdbuf();
     return (oss.str());
 }
+
+//mettre les explications dans une sorte de help dans le menu
+// draw rect ???????
+
+//void Core::Core::createStrip() {
+//
+//}
+//    this->_graphic->drawText(Text {
+//            std::string("PUTAIN DE TEST DE MORT FILS DE PUTE"),
+//            {40.f, 40.f},
+//            {10.f, 5.f},
+//            Color::Black(),
+//    });
+//
+//    auto node;
+//    this->_graphic->drawRect(Rect {
+//            node,
+//            {5.f, 5.f},
+//            {0x00, 0x66, 0x00, 0xFF},
+//    });
+
+//    this->_graphic->drawRect();
+//    auto t1 = Clock::now();
+//    auto high_score = Core::Core::loadScore("nibbler");
+//    while (this->_graphic->isOperational()) {
+//        try {
+//            this->_graphic->clearScreen();
+//            auto event = this->_graphic->handleEvent();
+//            this->_game->handleUpdate(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - t1).count());
+//            this->_game->handleRender(*this->_graphic.getInstance());
+//            this->_graphic->drawScreen();
+//            t1 = Clock::now();
+//        } catch (const std::bad_alloc &e) {
+//            std::cerr << e.what();
+//            return;
+//        } catch (const Graphic::Exceptions::LoadFontFailed &e) {
+//            std::cerr << e.what();
+//            return;
+//        } catch (const SoLoader::Exceptions::InvalidSO &e) {
+//            std::cerr << e.what();
+//            return;
+//        } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
+//            std::cerr << e.what();
+//            return;
+//        } catch (...) {
+//            std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;
+//            return;
+//        }
+//    }
+//}
+
+/*
+ * handleEvent  ++      handleEvent         ++      handleEvent
+ *   LEAVE      -->     KEY_PRESSED_Q       -->         ""
+ *
+ *
+ *   User -> Input -> Graphical -> Core | -> Game -> Core
+ *                                      | -> Changement -> Game
+ */
