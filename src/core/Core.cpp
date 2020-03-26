@@ -32,7 +32,7 @@ void Core::Core::readFolder(const std::string &folderName) {
     closedir(dir);
 }
 
-Core::Core::Core() {
+Core::Core::Core() : _gameRunning(false), _gameSelected(0) {
     try {
         Core::Core::createScoreFolder();
 
@@ -51,7 +51,6 @@ Core::Core::Core() {
     } catch (const Exceptions::EmptyMandatoryFolder &e) {
         throw e;
     }
-    this->_gameRunning = false;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -97,8 +96,8 @@ void Core::Core::run() {
             } else {
                 if (!this->handleInternalKey(event)) {
                     this->menuEvents(event);
-                    this->renderMenu();
                 }
+                this->renderMenu();
             }
             this->_graphic->drawScreen();
         } catch (const std::bad_alloc &e) {

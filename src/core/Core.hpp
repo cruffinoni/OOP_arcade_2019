@@ -58,6 +58,7 @@ namespace Core {
 
             std::map<std::string, std::list<std::string>> _lib;
             bool _gameRunning;
+            unsigned short _gameSelected;
     };
 
     namespace Exceptions {
