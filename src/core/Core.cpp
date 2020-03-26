@@ -9,8 +9,6 @@
 #include <chrono>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <fstream>
-#include <sstream>
 #include <cstring>
 #include "soLoader/SoLoader.hpp"
 #include "Core.hpp"
@@ -130,12 +128,3 @@ void Core::Core::createScoreFolder() {
         closedir(folder);
 }
 
-std::string Core::Core::loadScore(const std::string &gameName) {
-    std::ifstream file(Core::SCORE_PATH + gameName + ".score");
-    std::ostringstream oss;
-
-    if (!file.is_open())
-        return ("");
-    oss << file.rdbuf();
-    return (oss.str());
-}

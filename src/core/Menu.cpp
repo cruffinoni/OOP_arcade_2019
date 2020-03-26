@@ -5,6 +5,8 @@
 ** Menu.c - File used to handle menu
 */
 
+#include <fstream>
+#include <sstream>
 #include "Core.hpp"
 
 std::string getGameName(std::string &libName) {
@@ -72,4 +74,16 @@ void Core::Core::renderMenu() {
             textPos, {20.f, 10.f}, Color::White()));
         textPos.y += 20;
     }
+    this->_graphic->drawText(Text(std::string("Scores du jeu"),
+        {47.f, 25.f}, {35.f, 15.f}, Color::White()))
+}
+
+std::string Core::Core::loadScore(const std::string &gameName) {
+    std::ifstream file(Core::SCORE_PATH + gameName + ".score");
+    std::ostringstream oss;
+
+    if (!file.is_open())
+        return ("");
+    oss << file.rdbuf();
+    return (oss.str());
 }
