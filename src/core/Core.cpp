@@ -51,7 +51,7 @@ Core::Core::Core() {
     } catch (const Exceptions::EmptyMandatoryFolder &e) {
         throw e;
     }
-    this->_gameRunning = false;
+    this->_gameRunning = true;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -79,10 +79,57 @@ void Core::Core::useGame(const std::string &filename) {
 //mettre les explications dans une sorte de help dans le menu
 // draw rect ???????
 
-void Core::Core::createStrip() {
+void Core::Core::createStripGame() {
+    this->_graphic->drawRect(Rect{
+            {05.0f, 96.f},
+            {30.f, 5.f},
+            Color::Blue(),
+    });
+
     this->_graphic->drawText(Text {
-            std::string("LIB = SOMETHING GAME = OTHER"),
+            std::string("Lib = Sfml Game = Nibble"),
             {05.f, 96.f},
+            {10.f, 5.f},
+            Color::Black(),
+    });
+
+    this->_graphic->drawRect(Rect{
+            {50.0f, 96.f},
+            {47.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("A: Next graphic lib  E: Previous graphic lib"),
+            {50.f, 96.f},
+            {10.f, 5.f},
+            Color::Black(),
+    });
+}
+
+void Core::Core::createStripMenu() {
+    this->_graphic->drawRect(Rect{
+            {05.0f, 96.f},
+            {30.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("Lib = Sfml"),
+            {05.f, 96.f},
+            {10.f, 5.f},
+            Color::White(),
+    });
+
+    this->_graphic->drawRect(Rect{
+            {50.0f, 96.f},
+            {47.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("A: Next graphic lib  E: Previous graphic lib"),
+            {50.f, 96.f},
             {10.f, 5.f},
             Color::White(),
     });
@@ -105,14 +152,14 @@ void Core::Core::run() {
                     std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - t1).count());
                 t1 = Clock::now();
                 this->_game->handleRender(*this->_graphic.getInstance());
+                createStripGame();
             } else {
                 if (!this->handleInternalKey(event)) {
                     this->menuEvents(event);
                     this->renderMenu();
+                    createStripMenu();
                 }
             }
-//            printf("UN MOMENT OKLM ---------------------");
-            createStrip();
             this->_graphic->drawScreen();
         } catch (const std::bad_alloc &e) {
             std::cerr << e.what();
