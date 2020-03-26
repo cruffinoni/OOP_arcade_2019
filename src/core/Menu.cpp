@@ -57,6 +57,8 @@ void Core::Core::menuEvents(std::string &event) {
 }
 
 void Core::Core::renderMenu() {
+    std::string gameName;
+    std::string scoreBuff;
     Vector2f textPos(12.f, 50.f);
     Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
 
@@ -69,13 +71,17 @@ void Core::Core::renderMenu() {
     this->_graphic->drawRect(Rect(selectPos,
         {26, 16}, Color::Red()));
     for (auto &libName : this->_lib["games"]) {
-        std::string gameName = getGameName(libName);
+        gameName = getGameName(libName);
         this->_graphic->drawText(Text(std::string(gameName),
             textPos, {20.f, 10.f}, Color::White()));
         textPos.y += 20;
     }
     this->_graphic->drawText(Text(std::string("Scores du jeu"),
-        {47.f, 25.f}, {35.f, 15.f}, Color::White()))
+        {57.f, 25.f}, {35.f, 15.f}, Color::White()));
+    gameName[0] += 32;
+    scoreBuff = Core::Core::loadScore(gameName);
+    if (scoreBuff.empty())
+        return;
 }
 
 std::string Core::Core::loadScore(const std::string &gameName) {
