@@ -52,14 +52,6 @@ Core::Core::Core() {
         throw e;
     }
     this->_gameRunning = false;
-<<<<<<< HEAD:src/core/Core.cpp
-<<<<<<< HEAD:src/core/Core.cpp
-    this->_selectedGame = NIBBLER;
-=======
->>>>>>> adding main code struct for game menu:src/game/Core.cpp
-=======
-    this->_selectedGame = NIBBLER;
->>>>>>> adding first main menu with game selection:src/game/Core.cpp
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -102,13 +94,13 @@ void Core::Core::run() {
                     std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - t1).count());
                 t1 = Clock::now();
                 this->_game->handleRender(*this->_graphic.getInstance());
-                this->_graphic->drawScreen();
             } else {
                 if (!this->handleInternalKey(event)) {
                     this->menuEvents(event);
                     this->renderMenu();
                 }
             }
+            this->_graphic->drawScreen();
         } catch (const std::bad_alloc &e) {
             std::cerr << e.what();
             return;
