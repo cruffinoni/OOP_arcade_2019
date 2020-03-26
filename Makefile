@@ -9,9 +9,10 @@ MAIN_FILE		=	./src/Main.cpp
 NAME			=	arcade
 
 SRC				=	./src/soLoader/Exceptions.cpp		\
-					./src/game/Core.cpp					\
-					./src/game/SwitchLib.cpp			\
-					./src/game/Exceptions.cpp			\
+					./src/core/Core.cpp					\
+					./src/core/SwitchLib.cpp			\
+					./src/core/Exceptions.cpp			\
+					./src/core/Menu.cpp					\
 					./src/graphic/Drawables.cpp			\
 					./src/lib/graphic/Exceptions.cpp	\
 

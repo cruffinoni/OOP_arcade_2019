@@ -45,6 +45,7 @@ namespace Graphic {
             SDL_Renderer *_renderer;
             bool _running;
             TTF_Font *_font;
+            uint32_t _ticks;
     };
 }
 

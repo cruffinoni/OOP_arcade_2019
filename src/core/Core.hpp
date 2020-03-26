@@ -31,6 +31,14 @@ namespace Core {
             static std::string loadScore(const std::string &gameName);
             constexpr static const char *SCORE_PATH = "./games/score/";
 
+            /* 1000 / 60 = 17 (~ 16,666666667)
+                - 1000 milliseconds = 1 sec
+                - 60 FPS (frame per seconds) or the number of total images that we want per second
+                -> 17 = number of frame / millisecond
+                + We choose millisecond as the architecture stipulate it
+            */
+            const static uint TIME_PER_FRAME = 17;
+
         private:
             static void createScoreFolder();
             void readFolder(const std::string &folderName);
@@ -43,10 +51,14 @@ namespace Core {
             void previousLib(bool graphical);
             void nextLib(bool graphical);
 
+            void menuEvents(std::string &event);
+            void renderMenu();
+
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
             std::map<std::string, std::list<std::string>> _lib;
+            bool _gameRunning;
     };
 
     namespace Exceptions {

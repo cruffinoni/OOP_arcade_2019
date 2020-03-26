@@ -51,6 +51,7 @@ Core::Core::Core() {
     } catch (const Exceptions::EmptyMandatoryFolder &e) {
         throw e;
     }
+    this->_gameRunning = false;
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
@@ -77,20 +78,28 @@ void Core::Core::useGame(const std::string &filename) {
 
 void Core::Core::run() {
     auto t1 = Clock::now();
-//    auto high_score = Core::Core::loadScore("nibbler");
+    //auto high_score = Core::Core::loadScore("nibbler");
     while (this->_graphic->isOperational()) {
         try {
             this->_graphic->clearScreen();
             auto event = this->_graphic->handleEvent();
-            if (event != IEventIterator::KEY_UNKNOWN) {
-                printf("Event: '%s'\n", event.c_str());
-                if (!this->handleInternalKey(event))
-                    this->_game->handleEvent(event);
+            if (this->_gameRunning) {
+                if (event != IEventIterator::KEY_UNKNOWN) {
+                    printf("Event: '%s'\n", event.c_str());
+                    if (!this->handleInternalKey(event))
+                        this->_game->handleEvent(event);
+                }
+                this->_game->handleUpdate(
+                    std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - t1).count());
+                t1 = Clock::now();
+                this->_game->handleRender(*this->_graphic.getInstance());
+            } else {
+                if (!this->handleInternalKey(event)) {
+                    this->menuEvents(event);
+                    this->renderMenu();
+                }
             }
-            this->_game->handleUpdate(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now() - t1).count());
-            this->_game->handleRender(*this->_graphic.getInstance());
             this->_graphic->drawScreen();
-            t1 = Clock::now();
         } catch (const std::bad_alloc &e) {
             std::cerr << e.what();
             return;
@@ -112,11 +121,10 @@ void Core::Core::run() {
 }
 
 void Core::Core::createScoreFolder() {
-    DIR *folder = opendir(SCORE_PATH);
+    DIR *folder = opendir(Core::SCORE_PATH);
 
     if (folder == nullptr) {
-        int rtn = mkdir(SCORE_PATH, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-        if (rtn == -1)
+        if (mkdir(Core::SCORE_PATH, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1)
             throw Exceptions::UnableCreateFolder();
         return (Core::Core::createScoreFolder());
     } else
@@ -124,7 +132,7 @@ void Core::Core::createScoreFolder() {
 }
 
 std::string Core::Core::loadScore(const std::string &gameName) {
-    std::ifstream file(SCORE_PATH + gameName + ".score");
+    std::ifstream file(Core::SCORE_PATH + gameName + ".score");
     std::ostringstream oss;
 
     if (!file.is_open())

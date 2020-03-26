@@ -35,6 +35,7 @@ namespace Graphic {
 
         private:
             //WINDOW *_window;
+            std::chrono::time_point<std::chrono::high_resolution_clock> _tick;
             bool _alive;
     };
 }
