@@ -30,6 +30,14 @@ namespace Core {
             static std::string loadScore(const std::string &gameName);
             constexpr static const char *SCORE_PATH = "./games/score/";
 
+            /* 1000 / 60 = 17 (~ 16,666666667)
+                - 1000 milliseconds = 1 sec
+                - 60 FPS (frame per seconds) or the number of total images that we want per second
+                -> 17 = number of frame / millisecond
+                + We choose millisecond as the architecture stipulate it
+            */
+            const static uint TIME_PER_FRAME = 17;
+
         private:
             static void createScoreFolder();
             void readFolder(const std::string &folderName);

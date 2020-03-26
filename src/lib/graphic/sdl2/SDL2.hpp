@@ -39,7 +39,6 @@ namespace Graphic {
 
             static const uint WINDOW_WIDTH = 800;
             static const uint WINDOW_HEIGHT = 600;
-            static const uint TIME_PER_FRAME = 16;
 
         private:
             SDL_Window *_window;

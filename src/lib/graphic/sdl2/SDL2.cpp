@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include "core/Core.hpp"
 #include "SDL2.hpp"
 
 static Graphic::SDL2 *instance;
@@ -84,8 +85,8 @@ void Graphic::SDL2::drawScreen() {
     uint32_t now = SDL_GetTicks();
     uint32_t delta = now - this->_ticks;
 
-    if (delta < TIME_PER_FRAME)
-        SDL_Delay(TIME_PER_FRAME - delta);
+    if (delta < Core::Core::TIME_PER_FRAME)
+        SDL_Delay(Core::Core::TIME_PER_FRAME - delta);
     this->_ticks = now;
 }
 

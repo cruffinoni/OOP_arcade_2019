@@ -6,7 +6,7 @@
 */
 
 #include <fstream>
-#include "game/Core.hpp"
+#include "core/Core.hpp"
 #include "Score.hpp"
 
 Game::Score::Score::Score(const int amount, const std::string &gameName) {

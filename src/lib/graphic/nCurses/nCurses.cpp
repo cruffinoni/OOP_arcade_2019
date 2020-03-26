@@ -6,7 +6,9 @@
 */
 
 #include <cstring>
+#include <chrono>
 //#include <cstdlib>
+#include "core/Core.hpp"
 #include "nCurses.hpp"
 
 static Graphic::nCurses *instance;
@@ -43,9 +45,10 @@ Graphic::nCurses::~nCurses() {
 }
 
 void Graphic::nCurses::clearScreen() {
+    this->_tick = std::chrono::high_resolution_clock::now();
     //werase(this->_window);
-    erase();
     //wclear(this->_window);
+    erase();
     clear();
 }
 
@@ -92,8 +95,18 @@ void Graphic::nCurses::drawRect(Rect rect) {
     attroff(color);
 }
 
+#include <thread>
+
 void Graphic::nCurses::drawScreen() {
     refresh();
+    auto now = std::chrono::high_resolution_clock::now();
+    auto delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_tick).count();
+
+    std::cerr << delta << std::endl;
+    if (delta < Core::Core::TIME_PER_FRAME)
+        std::this_thread::sleep_for(std::chrono::milliseconds(Core::Core::TIME_PER_FRAME - delta));
+    this->_tick = now;
+    //exit(0);
 }
 
 void Graphic::nCurses::drawSprite(Sprite sprite) {
