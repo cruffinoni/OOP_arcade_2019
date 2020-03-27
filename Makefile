@@ -10,7 +10,7 @@ NAME			=	arcade
 
 SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/core/Core.cpp					\
-					./src/core/SwitchLib.cpp			\
+					./src/core/KeyEvents.cpp			\
 					./src/core/Exceptions.cpp			\
 					./src/core/score/Exceptions.cpp		\
 					./src/core/score/File.cpp			\

@@ -61,7 +61,7 @@ void Game::Nibbler::drawScore(IGraphicRenderer &renderer) {
         Color::Black(),
     });
     renderer.drawText(Text {
-        std::string("Press enter ton confirm"),
+        std::string("Press enter to confirm"),
         {40.f, 60.f},
         DEFAULT_TEXT_SIZE,
         Color::Black(),

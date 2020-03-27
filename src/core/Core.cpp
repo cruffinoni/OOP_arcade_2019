@@ -55,14 +55,12 @@ void Core::Core::useGame(const std::string &filename) {
 
 void Core::Core::run() {
     auto t1 = Clock::now();
-    //auto high_score = Core::Core::loadScore("nibbler");
     for (auto &libName : this->_lib["games"]) {
         try {
             this->_scores[libName] = Core::Core::loadScore(
                 Core::Core::getLibName(libName, false));
-            //std::cout << "Score loaded: " << libName << " -> " << this->_scores[libName] << std::endl;
-        } catch (const Exceptions::InvalidScorePath &e) {
-            std::cerr << e.what();
+        } catch (const Exceptions::InvalidScorePath &) {
+            // This is a minor error, we don't need to do anything with it
         }
     }
     while (this->_graphic->isOperational()) {
@@ -100,6 +98,9 @@ void Core::Core::run() {
             return;
         } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
             std::cerr << e.what();
+            return;
+        } catch (const Exceptions::ExitGame &e) {
+            std::cout << "Exit arcade project gracefully" << std::endl;
             return;
         } catch (...) {
             std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;

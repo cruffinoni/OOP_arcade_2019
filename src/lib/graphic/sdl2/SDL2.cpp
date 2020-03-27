@@ -122,8 +122,8 @@ std::string Graphic::SDL2::handleEvent() {
                 case SDLK_b:
                     return (IEventIterator::KEY_B);
                 case SDLK_ESCAPE:
-                    this->_running = false;
-                    return (IEventIterator::KEY_UNKNOWN);
+                    //this->_running = false;
+                    return (IEventIterator::KEY_ESCAPE);
                 case SDLK_c:
                     return (IEventIterator::KEY_C);
                 case SDLK_d:

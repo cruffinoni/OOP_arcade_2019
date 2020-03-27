@@ -47,8 +47,10 @@ namespace Core {
                 "games", "lib"
             };
 
+            // Handling key
             void previousLib(bool graphical);
             void nextLib(bool graphical);
+            void exitKey(bool);
 
             void menuEvents(std::string &event);
             void renderMenu();
@@ -108,6 +110,13 @@ namespace Core {
 
             private:
                 std::string _name;
+        };
+
+        class ExitGame : public std::exception {
+            public:
+                ExitGame() noexcept = default;
+
+                const char *what() const noexcept override;
         };
     }
 }

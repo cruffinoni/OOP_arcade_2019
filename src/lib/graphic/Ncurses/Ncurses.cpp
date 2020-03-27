@@ -95,6 +95,7 @@ void Graphic::Ncurses::drawScreen() {
 }
 
 void Graphic::Ncurses::drawSprite(Sprite sprite) {
+    (void) sprite;
     std::cerr << "Draw sprite cannot be implemented in ncurses" << std::endl;
 }
 
@@ -115,8 +116,8 @@ std::string Graphic::Ncurses::handleEvent() {
     }
     switch (c) {
         case KEY_ESCAPE:
-            this->_alive = false;
-            return (IEventIterator::KEY_UNKNOWN);
+            //this->_alive = false;
+            return ("EVENT_KEY_ESCAPE");
         case KEY_UP:
             return "EVENT_KEY_UP";//(IEventIterator::KEY_UP);
         case KEY_DOWN:
@@ -130,7 +131,6 @@ std::string Graphic::Ncurses::handleEvent() {
         default:
             return (IEventIterator::KEY_UNKNOWN);
     }
-    return (IEventIterator::KEY_UNKNOWN);
 }
 
 bool Graphic::Ncurses::isOperational() {

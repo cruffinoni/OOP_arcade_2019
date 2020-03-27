@@ -136,8 +136,8 @@ std::string Graphic::SFML::handleEvent() {
             case sf::Event::KeyReleased:
                 switch (event.key.code) {
                     case sf::Keyboard::Escape:
-                        this->_operational = false;
-                        return (IEventIterator::KEY_UNKNOWN);
+                        //this->_operational = false;
+                        return (IEventIterator::KEY_ESCAPE);
                     case sf::Keyboard::A:
                         return (IEventIterator::KEY_A);
                     case sf::Keyboard::B:

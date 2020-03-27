@@ -62,3 +62,8 @@ const char *Core::Exceptions::InvalidScorePath::what() const noexcept {
 
     return (msg.c_str());
 }
+
+
+const char *Core::Exceptions::ExitGame::what() const noexcept {
+    return ("Exit game gracefully\n");
+}

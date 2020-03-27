@@ -28,6 +28,7 @@ class IEventIterator {
         static constexpr const char *KEY_LEFT = "EVENT_KEY_LEFT";
         static constexpr const char *KEY_RIGHT = "EVENT_KEY_RIGHT";
         static constexpr const char *KEY_ENTER = "EVENT_KEY_ENTER";
+        static constexpr const char *KEY_ESCAPE = "EVENT_KEY_ESCAPE";
         static constexpr const char *KEY_UNKNOWN = "EVENT_KEY_UNKNWON";
         static const std::string key;
 };

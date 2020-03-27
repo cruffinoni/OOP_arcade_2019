@@ -8,7 +8,7 @@
 #include "Core.hpp"
 
 bool Core::Core::handleInternalKey(const std::string &key) {
-    std::array<std::pair<const char *, Core::libChanger>, 4> keys = {
+    std::array<std::pair<const char *, Core::libChanger>, 5> keys = {
         // Graphic lib
         std::make_pair(IEventIterator::KEY_A, &Core::Core::nextLib),
         std::make_pair(IEventIterator::KEY_W, &Core::Core::previousLib),
@@ -16,17 +16,13 @@ bool Core::Core::handleInternalKey(const std::string &key) {
         // Game lib
         std::make_pair(IEventIterator::KEY_E, &Core::Core::nextLib),
         std::make_pair(IEventIterator::KEY_C, &Core::Core::previousLib),
+
+        std::make_pair(IEventIterator::KEY_ESCAPE, &Core::Core::exitKey),
     };
     for (std::size_t i = 0; i != keys.size(); i++) {
         if (keys[i].first == key) {
-            try {
-                (this->*keys[i].second)(i < 2);
-                return (true);
-            } catch (const SoLoader::Exceptions::InvalidSO &e) {
-                throw e;
-            } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-                throw e;
-            }
+            (this->*keys[i].second)(i < 2);
+            return (true);
         }
     }
     return (false);
@@ -68,4 +64,11 @@ void Core::Core::nextLib(bool graphical) {
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
         throw e;
     }
+}
+
+void Core::Core::exitKey(bool) {
+    if (this->_gameSelected == -1)
+        this->_gameSelected = 0;
+    else
+        throw Exceptions::ExitGame();
 }
