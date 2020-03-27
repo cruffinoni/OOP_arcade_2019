@@ -40,6 +40,7 @@ Core::Core::Core() : _gameSelected(0) {
         for (auto &k: this->_lib[i])
             std::cout << k << std::endl;
     }
+    this->_gameRunning = false;
     this->useGame(this->_lib["games"].front());
 }
 
@@ -53,9 +54,68 @@ void Core::Core::useGame(const std::string &filename) {
     std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
+//mettre les explications dans une sorte de help dans le menu
+// draw rect ???????
+
+void Core::Core::createStripGame() {
+    this->_graphic->drawRect(Rect{
+            {05.0f, 96.f},
+            {30.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("Lib = Sfml Game = Nibble"),
+            {05.f, 96.f},
+            {10.f, 5.f},
+            Color::Black(),
+    });
+
+    this->_graphic->drawRect(Rect{
+            {50.0f, 96.f},
+            {47.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("A: Next graphic lib  E: Previous graphic lib"),
+            {50.f, 96.f},
+            {10.f, 5.f},
+            Color::Black(),
+    });
+}
+
+void Core::Core::createStripMenu() {
+    this->_graphic->drawRect(Rect{
+            {05.0f, 96.f},
+            {30.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("Lib = Sfml"),
+            {05.f, 96.f},
+            {10.f, 5.f},
+            Color::White(),
+    });
+
+    this->_graphic->drawRect(Rect{
+            {50.0f, 96.f},
+            {47.f, 5.f},
+            Color::Blue(),
+    });
+
+    this->_graphic->drawText(Text {
+            std::string("A: Next graphic lib  E: Previous graphic lib"),
+            {50.f, 96.f},
+            {10.f, 5.f},
+            Color::White(),
+    });
+}
+
 void Core::Core::run() {
     auto t1 = Clock::now();
-
+    //auto high_score = Core::Core::loadScore("nibbler");
     for (auto &libName : this->_lib["games"]) {
         try {
             this->_scores[libName] = Core::Core::loadScore(Core::Core::getGameName(libName, false));
@@ -78,9 +138,12 @@ void Core::Core::run() {
                     std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - t1).count());
                 t1 = Clock::now();
                 this->_game->handleRender(*this->_graphic.getInstance());
+                createStripGame();
             } else {
                 if (!this->handleInternalKey(event)) {
                     this->menuEvents(event);
+                    this->renderMenu();
+                    createStripMenu();
                 }
                 this->renderMenu();
             }
@@ -113,4 +176,14 @@ void Core::Core::createScoreFolder() {
         return (Core::Core::createScoreFolder());
     } else
         closedir(folder);
+}
+
+std::string Core::Core::loadScore(const std::string &gameName) {
+    std::ifstream file(Core::SCORE_PATH + gameName + ".score");
+    std::ostringstream oss;
+
+    if (!file.is_open())
+        return ("");
+    oss << file.rdbuf();
+    return (oss.str());
 }
