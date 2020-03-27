@@ -102,8 +102,14 @@ CMakeLists.txt
 a.out
 .vscode
 
+# Project local file
 test_arcade
 arcade
 
+# Generated criterion files
 *.gcda
 *.gcno
+
+# Generated documentation file
+html/
+rtf/

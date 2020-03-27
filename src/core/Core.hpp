@@ -9,15 +9,20 @@
 #define CORE_HPP_
 
 #include <string>
-#include <dirent.h>
 #include <list>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
 #include "soLoader/SoLoader.hpp"
 
 namespace Core {
+    /**
+     * BLABLA class CORE
+     */
     class Core {
         public:
+            /**
+             * typedef changer
+             */
             typedef void (Core::Core::*libChanger)(bool);
 
             Core();

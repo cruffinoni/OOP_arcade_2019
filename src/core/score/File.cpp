@@ -20,7 +20,6 @@ Score::File::File(const std::string &content) noexcept {
         idx = i.find('=');
         if (idx != std::string::npos)
             i.replace(idx, 1, " -> ");
-        //std::cout << "Line: '" << i << "'" << std::endl;
     }
 }
 

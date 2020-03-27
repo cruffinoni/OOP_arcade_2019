@@ -10,10 +10,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <cstring>
+#include <dirent.h>
 #include "soLoader/SoLoader.hpp"
 #include "Core.hpp"
-
-using Clock = std::chrono::high_resolution_clock;
 
 void Core::Core::readFolder(const std::string &folderName) {
     DIR *dir = opendir(folderName.c_str());
@@ -54,7 +53,7 @@ void Core::Core::useGame(const std::string &filename) {
 }
 
 void Core::Core::run() {
-    auto t1 = Clock::now();
+    auto t1 = std::chrono::high_resolution_clock::now();
     for (auto &libName : this->_lib["games"]) {
         try {
             this->_scores[libName] = Core::Core::loadScore(
@@ -73,9 +72,10 @@ void Core::Core::run() {
                     if (!this->handleInternalKey(event))
                         this->_game->handleEvent(event);
                 }
+                auto now = std::chrono::high_resolution_clock::now();
                 this->_game->handleUpdate(
-                    std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - t1).count());
-                t1 = Clock::now();
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - t1).count());
+                t1 = now;
                 this->_game->handleRender(*this->_graphic.getInstance());
                 createStripGame();
             } else {
@@ -99,7 +99,7 @@ void Core::Core::run() {
         } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
             std::cerr << e.what();
             return;
-        } catch (const Exceptions::ExitGame &e) {
+        } catch (const Exceptions::ExitGame &) {
             std::cout << "Exit arcade project gracefully" << std::endl;
             return;
         } catch (...) {
