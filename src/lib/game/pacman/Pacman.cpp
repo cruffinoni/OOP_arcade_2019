@@ -15,12 +15,12 @@ extern "C" {
     }
     
     __attribute__((constructor)) void load() {
-        printf("[game] constructor Nibbler called\n");
+        printf("[game] constructor Pacman called\n");
         instance = new Game::Pacman();
     }
     
     __attribute__((destructor)) void unload() {
-        printf("[game] destructor Nibbler called\n");
+        printf("[game] destructor Pacman called\n");
         delete instance;
     }
 }
