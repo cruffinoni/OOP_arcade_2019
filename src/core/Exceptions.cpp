@@ -44,3 +44,21 @@ const char *Core::Exceptions::EmptyMandatoryFolder::what() const noexcept {
 
     return (msg.c_str());
 }
+
+
+
+Core::Exceptions::InvalidScorePath::InvalidScorePath(
+    const std::string &name) noexcept {
+    this->_name = name;
+}
+
+Core::Exceptions::InvalidScorePath::InvalidScorePath(
+    const Exceptions::InvalidScorePath &a) noexcept {
+    this->_name = a._name;
+}
+
+const char *Core::Exceptions::InvalidScorePath::what() const noexcept {
+    const static std::string msg = "The path below is invalid: '" + this->_name + "'\n";
+
+    return (msg.c_str());
+}

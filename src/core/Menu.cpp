@@ -7,89 +7,100 @@
 
 #include <fstream>
 #include <sstream>
+#include <cstring>
 #include "Core.hpp"
 
-std::string getGameName(std::string &libName) {
-    int start = 0;
-    int len = 0;
-    int i = 0;
-    std::string gameName;
+std::string Core::Core::getGameName(std::string libName, bool uppercase) {
+    const std::size_t prefixLen = std::strlen("lib_arcade_");
+    const char *rtn = std::strstr(libName.c_str(), "lib_arcade_");
 
-    for (start = libName.length(); start > -1 && libName[start] != '_'; --start);
-    if (start <= 0) {
-        //TODO: throw here out of bounds
+    if (rtn == nullptr || libName.size() < prefixLen) {
+        std::cerr << "The lib name " << libName << " might be invalid" << std::endl;
+        return "";
     }
-    for (i = start; libName[i] != '.' && libName[i]; ++i, ++len);
-    if (libName[i] == '\0') {
-        //TODO: throw here out of bounds
-    }
-    gameName.append(libName, start + 1, len - 1);
-    if (gameName[0] >= 'a' && gameName[0] <= 'z')
-        gameName[0] -= 32;
-    return (gameName);
+    libName = rtn;
+    libName.erase(0, prefixLen);
+    libName.erase(libName.size() - 3);
+    if (uppercase)
+        libName[0] = std::toupper(libName[0]);
+    return (libName);
 }
 
 void Core::Core::menuEvents(std::string &event) {
-    unsigned short i = 0;
-
     if (event == IEventIterator::KEY_UP) {
         if (this->_gameSelected == 0)
-            this->_gameSelected = this->_lib["games"].size() - 1;
+            this->_gameSelected = static_cast<short>(this->_lib["games"].size() - 1);
         else
             this->_gameSelected--;
     }
     if (event == IEventIterator::KEY_DOWN) {
-        if (this->_gameSelected == this->_lib["games"].size() - 1)
+        if (this->_gameSelected == static_cast<short>(this->_lib["games"].size() - 1))
             this->_gameSelected = 0;
         else
             this->_gameSelected++;
     }
     if (event == IEventIterator::KEY_ENTER) {
+        unsigned short i = 0;
+
         for (std::string &libName : this->_lib["games"]) {
-            if (i == _gameSelected) {
+            if (i++ == _gameSelected) {
+                this->_gameSelected = -1;
                 this->useGame(libName);
-                this->_gameRunning = true;
                 return;
             }
-            ++i;
         }
     }
+    // TODO: Echap to exit the arcade
 }
 
 void Core::Core::renderMenu() {
     std::string gameName;
     std::string scoreBuff;
     Vector2f textPos(12.f, 50.f);
+    Vector2f scorePos(57.f, 25.f);
     Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
 
-    this->_graphic->drawText(Text(std::string("Arcade"),
-        {25.f, 3.f}, {50.f, 20.f}, Color::Green()));
+    this->_graphic->drawText(Text {
+        std::string("Arcade"),
+        {25.f, 3.f},
+        {50.f, 20.f},
+        Color::Green()
+    });
     this->_graphic->drawRect(Rect({48.f, 25.f},
         {2.f, 70.f}, Color::Red()));
     this->_graphic->drawText(Text(std::string("Selection de jeu"),
         {7.f, 25.f}, {35.f, 15.f}, Color::White()));
     this->_graphic->drawRect(Rect(selectPos,
         {26, 16}, Color::Red()));
+
+    this->_graphic->drawText(Text {
+        "Scores du jeu",
+        scorePos,
+        {35.f, 15.f},
+        Color::White()
+    });
     for (auto &libName : this->_lib["games"]) {
-        gameName = getGameName(libName);
-        this->_graphic->drawText(Text(std::string(gameName),
-            textPos, {20.f, 10.f}, Color::White()));
+        this->_graphic->drawText(Text {
+            this->getGameName(libName),
+            textPos,
+            {20.f, 10.f},
+            Color::Black()
+        });
         textPos.y += 20;
+        if (this->_scores.find(libName) != this->_scores.end()) {
+            // TODO: Display score for the current lib!
+        }
     }
-    this->_graphic->drawText(Text(std::string("Scores du jeu"),
-        {57.f, 25.f}, {35.f, 15.f}, Color::White()));
-    gameName[0] += 32;
-    scoreBuff = Core::Core::loadScore(gameName);
-    if (scoreBuff.empty())
-        return;
 }
 
 std::string Core::Core::loadScore(const std::string &gameName) {
-    std::ifstream file(Core::SCORE_PATH + gameName + ".score");
+    std::string path = Core::SCORE_PATH + gameName + ".score";
+    std::ifstream file(path);
     std::ostringstream oss;
 
+    printf("Game: '%s / Path: '%s'\n", gameName.c_str(), path.c_str());
     if (!file.is_open())
-        return ("");
+        throw Exceptions::InvalidScorePath(path);
     oss << file.rdbuf();
     return (oss.str());
 }

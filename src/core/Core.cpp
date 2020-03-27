@@ -30,48 +30,28 @@ void Core::Core::readFolder(const std::string &folderName) {
     closedir(dir);
 }
 
-Core::Core::Core() : _gameRunning(false), _gameSelected(0) {
-    try {
-        Core::Core::createScoreFolder();
+Core::Core::Core() : _gameSelected(0) {
+    Core::Core::createScoreFolder();
 
-        for (auto &i: this->MANDATORY_FOLDERS) {
-            this->readFolder(i);
-            if (this->_lib[i].empty())
-                throw Exceptions::EmptyMandatoryFolder(i);
-            for (auto &k: this->_lib[i])
-                std::cout << k << std::endl;
-        }
-        this->useGame(this->_lib["games"].front());
-    } catch (const Exceptions::UnableCreateFolder &e) {
-        throw e;
-    } catch (const Exceptions::MissingMandatoryFolder &e) {
-        throw e;
-    } catch (const Exceptions::EmptyMandatoryFolder &e) {
-        throw e;
+    for (auto &i: this->MANDATORY_FOLDERS) {
+        this->readFolder(i);
+        if (this->_lib[i].empty())
+            throw Exceptions::EmptyMandatoryFolder(i);
+        for (auto &k: this->_lib[i])
+            std::cout << k << std::endl;
     }
     this->_gameRunning = false;
+    this->useGame(this->_lib["games"].front());
 }
 
 void Core::Core::useGraphic(const std::string &filename) {
-    try {
-        _graphic.changeDLL(filename);
-        std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
-    } catch (const SoLoader::Exceptions::InvalidSO &e) {
-        throw e;
-    } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-        throw e;
-    }
+    _graphic.changeDLL(filename);
+    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
 void Core::Core::useGame(const std::string &filename) {
-    try {
-        _game.changeDLL(filename);
-        std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
-    } catch (const SoLoader::Exceptions::InvalidSO &e) {
-        throw e;
-    } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-        throw e;
-    }
+    _game.changeDLL(filename);
+    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
 //mettre les explications dans une sorte de help dans le menu
@@ -136,11 +116,19 @@ void Core::Core::createStripMenu() {
 void Core::Core::run() {
     auto t1 = Clock::now();
     //auto high_score = Core::Core::loadScore("nibbler");
+    for (auto &libName : this->_lib["games"]) {
+        try {
+            this->_scores[libName] = Core::Core::loadScore(Core::Core::getGameName(libName, false));
+            //std::cout << "Score loaded: " << libName << " -> " << this->_scores[libName] << std::endl;
+        } catch (const Exceptions::InvalidScorePath &e) {
+            std::cerr << e.what();
+        }
+    }
     while (this->_graphic->isOperational()) {
         try {
             this->_graphic->clearScreen();
             auto event = this->_graphic->handleEvent();
-            if (this->_gameRunning) {
+            if (this->_gameSelected == -1) {
                 if (event != IEventIterator::KEY_UNKNOWN) {
                     printf("Event: '%s'\n", event.c_str());
                     if (!this->handleInternalKey(event))

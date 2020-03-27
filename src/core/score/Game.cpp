@@ -9,13 +9,13 @@
 #include "core/Core.hpp"
 #include "Score.hpp"
 
-Game::Score::Score::Score(const int amount, const std::string &gameName) {
+Score::Game::Game(const int amount, const std::string &gameName) {
     // Load scores like core does it
     this->_amount = amount;
     this->_game = gameName;
 }
 
-void Game::Score::Score::addLetter(std::string &letter) {
+void Score::Game::addLetter(std::string &letter) {
     std::size_t idx = letter.find("EVENT_KEY_");
     const std::size_t len = std::string("EVENT_KEY_").size();
 
@@ -27,40 +27,40 @@ void Game::Score::Score::addLetter(std::string &letter) {
     this->_author.append(letter);
 }
 
-void Game::Score::Score::saveScore() const {
+void Score::Game::saveScore() const {
     std::ofstream file;
 
     file.open(Core::Core::SCORE_PATH + this->_game + ".score", std::fstream::app);
     if (!file.is_open())
-        throw Game::Score::Exceptions::InvalidFile();
+        throw Score::Exceptions::InvalidFile();
     if (this->_author.empty())
         file << std::string("Unknown=" + std::to_string(this->_amount)) << std::endl;
     else
         file << std::string(this->_author + "=" + std::to_string(this->_amount)) << std::endl;
 }
 
-Game::Score::Score Game::Score::Score::operator++(const int) {
+Score::Game Score::Game::operator++(const int) {
     this->_amount++;
     return (*this);
 }
 
-Game::Score::Score &Game::Score::Score::operator=(const int amount) {
+Score::Game &Score::Game::operator=(const int amount) {
     this->_amount = amount;
     return (*this);
 }
 
-int Game::Score::Score::operator*() {
+int Score::Game::operator*() {
     return (this->_amount);
 }
 
-void Game::Score::Score::handleEvent(std::string &letter) {
+void Score::Game::handleEvent(std::string &letter) {
     if (letter == IEventIterator::KEY_ENTER) {
         try {
             this->saveScore();
-        } catch (const Game::Score::Exceptions::InvalidFile &e) {
+        } catch (const Score::Exceptions::InvalidFile &e) {
             throw e;
         }
-        throw Game::Score::Exceptions::FileSaved();
+        throw Score::Exceptions::FileSaved();
     }
     else {
         const std::size_t maxAuthorName = 6;
@@ -71,19 +71,11 @@ void Game::Score::Score::handleEvent(std::string &letter) {
     }
 }
 
-std::string Game::Score::Score::getAuthor() const {
+std::string Score::Game::getAuthor() const {
     return (this->_author);
 }
 
-void Game::Score::Score::reset() {
+void Score::Game::reset() {
     this->_author.clear();
     this->_amount = 0;
-}
-
-const char *Game::Score::Exceptions::InvalidFile::what() const noexcept {
-    return ("Unable to create or write inside the score file.\n");
-}
-
-const char *Game::Score::Exceptions::FileSaved::what() const noexcept {
-    return ("No error so far, you may not display that\n");
 }

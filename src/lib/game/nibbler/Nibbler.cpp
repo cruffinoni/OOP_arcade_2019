@@ -71,9 +71,9 @@ void Game::Nibbler::handleEvent(std::string &name) {
         if (!IS_GAME_IN_PROGRESS(this)) {
             try {
                 return (this->_player.score.handleEvent(keys[i]));
-            } catch (const Game::Score::Exceptions::InvalidFile &e) {
+            } catch (const Score::Exceptions::InvalidFile &e) {
                 std::cerr << e.what();
-            } catch (const Game::Score::Exceptions::FileSaved &) {
+            } catch (const Score::Exceptions::FileSaved &) {
                 std::cout << "File successfully saved!" << std::endl;
             }
             this->_state = GAME_STATE::GAME;
@@ -92,7 +92,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
-    std::cerr << "Tick: " << elapsedTime << std::endl;
+    //std::cerr << "Tick: " << elapsedTime << std::endl;
     if (!IS_GAME_IN_PROGRESS(this))
         return;
     this->_player.elapsedTime += elapsedTime;
@@ -147,14 +147,6 @@ IGame::GameDataType Game::Nibbler::getGameData() {
     this->_data["score"] = std::to_string(*this->_player.score);
     this->_data["death"] = std::to_string(this->_player.death);
     return (this->_data);
-}
-
-void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
-    renderer.drawRect(Rect({
-       {0.f, 0.f},
-       {100.f, 100.f},
-       Color::White()
-    }));
 }
 
 void Game::Nibbler::addNode() {

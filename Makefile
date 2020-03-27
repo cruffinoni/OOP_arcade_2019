@@ -23,19 +23,25 @@ CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl -fPIC
 OBJ				=	$(SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 
-GRAPHIC_PATH	=	./src/lib/graphic/
-GAME_PATH		=	./src/lib/game/
+GRAPHIC_PATH	=	./src/lib/graphic
+GAME_PATH		=	./src/lib/game
 
 all: core games graphicals
 
 core: $(OBJ) $(OBJ_MAIN)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
 
+test: core
+	$(MAKE) -C $(GAME_PATH)/test
+
 graphicals:
 	$(MAKE) -C $(GRAPHIC_PATH)
 
 games:
 	$(MAKE) -C $(GAME_PATH)
+
+test: core
+	$(MAKE) -C $(GAME_PATH)/test
 
 debug:
 	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
@@ -52,7 +58,8 @@ fclean:
 	rm -f $(NAME) $(NAME_TEST)
 	$(MAKE) -C $(GRAPHIC_PATH) fclean
 	$(MAKE) -C $(GAME_PATH) fclean
+	$(MAKE) -C $(GAME_PATH)/test fclean
 
 re:	fclean all
 
-.PHONY:	all clean fclean re debug graphicals core games
+.PHONY:	all clean fclean re debug graphicals core games test

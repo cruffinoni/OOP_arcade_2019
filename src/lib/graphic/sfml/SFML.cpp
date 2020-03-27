@@ -48,7 +48,7 @@ Graphic::SFML::~SFML() {
 }
 
 void Graphic::SFML::clearScreen() {
-    this->_window->clear();
+    this->_window->clear(sf::Color::White);
     for (auto &i: this->_entities) {
         delete i;
     }

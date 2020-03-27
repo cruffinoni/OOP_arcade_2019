@@ -54,13 +54,14 @@ namespace Core {
 
             void menuEvents(std::string &event);
             void renderMenu();
+            static std::string getGameName(std::string libName, bool uppercase = true);
+            short _gameSelected;
 
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
+            std::map<std::string, std::string> _scores;
             std::map<std::string, std::list<std::string>> _lib;
-            bool _gameRunning;
-            unsigned short _gameSelected;
     };
 
     namespace Exceptions {
@@ -70,20 +71,37 @@ namespace Core {
 
                 const char *what() const noexcept override;
         };
+
         class MissingMandatoryFolder : public std::exception {
             public:
                 explicit MissingMandatoryFolder(const std::string &name) noexcept;
                 MissingMandatoryFolder(const MissingMandatoryFolder &a) noexcept;
+                MissingMandatoryFolder() = delete;
 
                 const char *what() const noexcept override;
 
             private:
                 std::string _name;
         };
+
         class EmptyMandatoryFolder : public std::exception {
             public:
                 explicit EmptyMandatoryFolder(const std::string &name) noexcept;
                 EmptyMandatoryFolder(const EmptyMandatoryFolder &a) noexcept;
+                EmptyMandatoryFolder() = delete;
+
+                const char *what() const noexcept override;
+
+            private:
+                std::string _name;
+        };
+
+        class InvalidScorePath : public std::exception {
+            public:
+                explicit InvalidScorePath(const std::string &name) noexcept;
+                InvalidScorePath(const InvalidScorePath &a) noexcept;
+                InvalidScorePath() = delete;
+
                 const char *what() const noexcept override;
 
             private:

@@ -80,7 +80,7 @@ void Graphic::SDL2::drawRect(Rect rect) {
 }
 
 void Graphic::SDL2::drawScreen() {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderPresent(_renderer);
     uint32_t now = SDL_GetTicks();
     uint32_t delta = now - this->_ticks;

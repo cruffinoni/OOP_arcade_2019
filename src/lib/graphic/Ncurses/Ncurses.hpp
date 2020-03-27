@@ -12,10 +12,10 @@
 #include <curses.h>
 
 namespace Graphic {
-    class nCurses : public IGraphic {
+    class Ncurses : public IGraphic {
         public:
-            nCurses();
-            ~nCurses() override;
+            Ncurses();
+            ~Ncurses() override;
 
             #define KEY_ESCAPE  27
 
@@ -33,8 +33,19 @@ namespace Graphic {
             std::string handleEvent() override;
             bool isOperational() override;
 
+            std::array<Color, 8> TRANSLATE_COLORS = {
+                Color {Color::Black().red, Color::Black().green, Color::Black().blue, Color::Black().alpha},
+                Color {Color::Red().red, Color::Red().green, Color::Red().blue, Color::Red().alpha},
+                Color {Color::Green().red, Color::Green().green, Color::Green().blue, Color::Green().alpha},
+                Color {230, 230, 0, 255},
+                Color {Color::Blue().red, Color::Blue().green, Color::Blue().blue, Color::Blue().alpha},
+                Color {255, 0, 255, Color::Blue().alpha},
+                Color {0, 255, 255, Color::Blue().alpha},
+                Color {Color::White().red, Color::White().green, Color::White().blue, Color::White().alpha},
+            };
+
         private:
-            //WINDOW *_window;
+            int getNcursesColor(Color color);
             std::chrono::time_point<std::chrono::high_resolution_clock> _tick;
             bool _alive;
     };
