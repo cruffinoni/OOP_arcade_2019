@@ -33,7 +33,6 @@ Graphic::SFML::SFML() : _operational(true) {
             Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
             }, "Arcade");
         this->_window->setFramerateLimit(60);
-        printf("FONT PATH: %s\n", Graphic::SFML::FONT_PATH);
         if (!this->_font->loadFromFile(Graphic::SFML::FONT_PATH))
             throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
     } catch (const Graphic::Exceptions::LoadFontFailed &e) {

@@ -10,7 +10,19 @@
 static const Vector2f DEFAULT_TEXT_SIZE = {10.f, 5.f};
 
 void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
-
+    for (auto &mapNode : this->_map) {
+        renderer.drawRect(Rect {
+            mapNode,
+            this->DEFAULT_SQUARE_SIZE,
+            Game::Pacman::WALL_COLOR,
+        });
+    }
+    renderer.drawText(Text {
+        std::string("Score: " + std::to_string(*this->_player.score)),
+        {45.f, 0.f},
+        DEFAULT_TEXT_SIZE,
+        Color::Black(),
+    });
 }
 
 void Game::Pacman::drawScore(IGraphicRenderer &renderer) {
