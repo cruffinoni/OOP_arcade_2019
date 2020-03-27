@@ -92,7 +92,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
-    std::cerr << "Tick: " << elapsedTime << std::endl;
+    //std::cerr << "Tick: " << elapsedTime << std::endl;
     if (!IS_GAME_IN_PROGRESS(this))
         return;
     this->_player.elapsedTime += elapsedTime;
