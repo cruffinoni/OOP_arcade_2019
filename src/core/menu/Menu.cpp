@@ -8,10 +8,10 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
-#include "Core.hpp"
-#include "score/Score.hpp"
+#include "core/Core.hpp"
+#include "core/score/Score.hpp"
 
-std::string Core::Core::getGameName(std::string libName, bool uppercase) {
+std::string Core::Core::getLibName(std::string libName, bool uppercase) {
     const std::size_t prefixLen = std::strlen("lib_arcade_");
     const char *rtn = std::strstr(libName.c_str(), "lib_arcade_");
 
@@ -101,7 +101,7 @@ void Core::Core::renderMenu() {
         if (i++ == this->_gameSelected)
             selectedGameName = libName;
         this->_graphic->drawText(Text {
-            this->getGameName(libName),
+            this->getLibName(libName),
             textPos,
             {20.f, 10.f},
             Color::Black()

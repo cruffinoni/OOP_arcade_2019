@@ -26,8 +26,6 @@ namespace Core {
             void useGraphic(const std::string &filename);
             void useGame(const std::string &filename);
             void run();
-            void createStripGame();
-            void createStripMenu();
 
             static std::string loadScore(const std::string &gameName);
             constexpr static const char *SCORE_PATH = "./games/score/";
@@ -54,9 +52,12 @@ namespace Core {
 
             void menuEvents(std::string &event);
             void renderMenu();
-            static std::string getGameName(std::string libName, bool uppercase = true);
+            static std::string getLibName(std::string libName, bool uppercase = true);
             short _gameSelected;
             void displayScore(const std::string &game, Vector2f &base);
+
+            void createStripGame();
+            void createStripMenu();
 
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
