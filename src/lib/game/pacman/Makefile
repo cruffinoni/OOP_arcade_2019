@@ -10,6 +10,7 @@ NAME			=	lib_arcade_pacman.so
 INCLUDE			=	../../..
 
 SRC				=	./Pacman.cpp 							\
+					./Draw.cpp								\
 					$(INCLUDE)/graphic/Drawables.cpp		\
 					$(INCLUDE)/core/score/Game.cpp			\
 					$(INCLUDE)/core/score/Exceptions.cpp	\

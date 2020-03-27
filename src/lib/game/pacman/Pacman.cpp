@@ -33,10 +33,6 @@ void Game::Pacman::handleEvent(std::string &name) {
 
 }
 
-void Game::Pacman::handleRender(IGraphicRenderer &renderer) {
-
-}
-
 void Game::Pacman::handleUpdate(int elapsedTime) {
 
 }
