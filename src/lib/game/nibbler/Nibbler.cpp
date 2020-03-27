@@ -71,9 +71,9 @@ void Game::Nibbler::handleEvent(std::string &name) {
         if (!IS_GAME_IN_PROGRESS(this)) {
             try {
                 return (this->_player.score.handleEvent(keys[i]));
-            } catch (const Game::Score::Exceptions::InvalidFile &e) {
+            } catch (const Score::Exceptions::InvalidFile &e) {
                 std::cerr << e.what();
-            } catch (const Game::Score::Exceptions::FileSaved &) {
+            } catch (const Score::Exceptions::FileSaved &) {
                 std::cout << "File successfully saved!" << std::endl;
             }
             this->_state = GAME_STATE::GAME;

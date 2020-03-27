@@ -12,7 +12,7 @@
 #include <list>
 #include "graphic/Drawables.hpp"
 #include "game/IGame.hpp"
-#include "lib/game/Score.hpp"
+#include "core/score/Score.hpp"
 
 namespace Game {
     class Nibbler : public IGame {
@@ -63,7 +63,7 @@ namespace Game {
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;
-                Game::Score::Score score;
+                Score::Game score;
             };
             player_s _player;
             Vector2f _reward;

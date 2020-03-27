@@ -55,7 +55,6 @@ void Core::Core::useGame(const std::string &filename) {
 
 void Core::Core::run() {
     auto t1 = Clock::now();
-    //auto high_score = Core::Core::loadScore("nibbler");
 
     for (auto &libName : this->_lib["games"]) {
         try {

@@ -11,8 +11,9 @@ INCLUDE			=	../../..
 
 SRC				=	./Nibbler.cpp 	\
 					./Draw.cpp		\
-					../Score.cpp	\
-					$(INCLUDE)/graphic/Drawables.cpp
+					$(INCLUDE)/graphic/Drawables.cpp		\
+					$(INCLUDE)/core/score/Game.cpp			\
+					$(INCLUDE)/core/score/Exceptions.cpp	\
 
 GAMES_DIRECTORY	=	../../../../games/
 

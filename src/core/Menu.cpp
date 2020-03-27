@@ -34,8 +34,8 @@ void Core::Core::menuEvents(std::string &event) {
             this->_gameSelected--;
     }
     if (event == IEventIterator::KEY_DOWN) {
-        if (this->_gameSelected == 0)
-            this->_gameSelected = static_cast<short>(this->_lib["games"].size() - 1);
+        if (this->_gameSelected == static_cast<short>(this->_lib["games"].size() - 1))
+            this->_gameSelected = 0;
         else
             this->_gameSelected++;
     }
@@ -57,6 +57,7 @@ void Core::Core::renderMenu() {
     std::string gameName;
     std::string scoreBuff;
     Vector2f textPos(12.f, 50.f);
+    Vector2f scorePos(57.f, 25.f);
     Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
 
     this->_graphic->drawText(Text {
@@ -71,27 +72,25 @@ void Core::Core::renderMenu() {
         {7.f, 25.f}, {35.f, 15.f}, Color::White()));
     this->_graphic->drawRect(Rect(selectPos,
         {26, 16}, Color::Red()));
+
+    this->_graphic->drawText(Text {
+        "Scores du jeu",
+        scorePos,
+        {35.f, 15.f},
+        Color::White()
+    });
     for (auto &libName : this->_lib["games"]) {
         this->_graphic->drawText(Text {
             this->getGameName(libName),
             textPos,
             {20.f, 10.f},
-            Color::White()
+            Color::Black()
         });
         textPos.y += 20;
+        if (this->_scores.find(libName) != this->_scores.end()) {
+            // TODO: Display score for the current lib!
+        }
     }
-    this->_graphic->drawText(Text(std::string("Scores du jeu"),
-        {57.f, 25.f}, {35.f, 15.f}, Color::White()));
-
-    //auto a = this->_lib["games"].begin();
-    //std::advance(a, this->_gameSelected);
-    //printf("Game selected: '%s'\n", a->c_str());
-    // TODO: Score en fonction de _gameSelected
-    //gameName[0] += 32;
-    //scoreBuff = Core::Core::loadScore(this->getGameName(*a, false));
-    //printf("Score: '%s'\n", scoreBuff.c_str());
-    //if (scoreBuff.empty())
-    //    return;
 }
 
 std::string Core::Core::loadScore(const std::string &gameName) {

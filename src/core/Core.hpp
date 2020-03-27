@@ -53,12 +53,12 @@ namespace Core {
             void menuEvents(std::string &event);
             void renderMenu();
             static std::string getGameName(std::string libName, bool uppercase = true);
-            std::map<std::string, std::string> _scores;
             short _gameSelected;
 
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
+            std::map<std::string, std::string> _scores;
             std::map<std::string, std::list<std::string>> _lib;
     };
 
