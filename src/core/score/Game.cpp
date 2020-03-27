@@ -63,9 +63,8 @@ void Score::Game::handleEvent(std::string &letter) {
         throw Score::Exceptions::FileSaved();
     }
     else {
-        const std::size_t maxAuthorName = 6;
-        if (this->_author.size() > maxAuthorName)
-            std::cerr << "Your name cannot exceed " + std::to_string(maxAuthorName) + " characters" << std::endl;
+        if (this->_author.size() > MAX_AUTHOR_NAME)
+            std::cerr << "Your name cannot exceed " + std::to_string(MAX_AUTHOR_NAME) + " characters" << std::endl;
         else
             this->addLetter(letter);
     }

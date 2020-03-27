@@ -89,8 +89,8 @@ void Graphic::Ncurses::drawScreen() {
     auto delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_tick).count();
 
     std::cerr << delta << std::endl;
-    if (delta < Core::Core::TIME_PER_FRAME)
-        std::this_thread::sleep_for(std::chrono::milliseconds(Core::Core::TIME_PER_FRAME - delta));
+    if (delta < Core::Core::FRAME_PER_TIME)
+        std::this_thread::sleep_for(std::chrono::milliseconds(Core::Core::FRAME_PER_TIME - delta));
     this->_tick = now;
 }
 

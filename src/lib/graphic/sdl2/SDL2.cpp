@@ -85,8 +85,8 @@ void Graphic::SDL2::drawScreen() {
     uint32_t now = SDL_GetTicks();
     uint32_t delta = now - this->_ticks;
 
-    if (delta < Core::Core::TIME_PER_FRAME)
-        SDL_Delay(Core::Core::TIME_PER_FRAME - delta);
+    if (delta < Core::Core::FRAME_PER_TIME)
+        SDL_Delay(Core::Core::FRAME_PER_TIME - delta);
     this->_ticks = now;
 }
 

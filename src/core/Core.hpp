@@ -36,7 +36,7 @@ namespace Core {
                 -> 17 = number of frame / millisecond
                 + We choose millisecond as the architecture stipulate it
             */
-            const static uint TIME_PER_FRAME = 17;
+            const static uint FRAME_PER_TIME = 17;
 
         private:
             static void createScoreFolder();
@@ -54,6 +54,7 @@ namespace Core {
             void renderMenu();
             static std::string getGameName(std::string libName, bool uppercase = true);
             short _gameSelected;
+            void displayScore(const std::string &game, Vector2f &base);
 
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;

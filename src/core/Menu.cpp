@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cstring>
 #include "Core.hpp"
+#include "score/Score.hpp"
 
 std::string Core::Core::getGameName(std::string libName, bool uppercase) {
     const std::size_t prefixLen = std::strlen("lib_arcade_");
@@ -53,9 +54,25 @@ void Core::Core::menuEvents(std::string &event) {
     // TODO: Echap to exit the arcade
 }
 
+
+void Core::Core::displayScore(const std::string &game, Vector2f &base) {
+    Score::File scoreBuffer(this->_scores[game]);
+
+    base.y += 15.f;
+    for (auto &i : scoreBuffer.getFormattedBuffer()) {
+        this->_graphic->drawText(Text {
+            i,
+            base,
+            {20.f, 10.f},
+            Color::Blue()
+        });
+        base.y += 10.f;
+    }
+}
+
 void Core::Core::renderMenu() {
     std::string gameName;
-    std::string scoreBuff;
+    std::string selectedGameName;
     Vector2f textPos(12.f, 50.f);
     Vector2f scorePos(57.f, 25.f);
     Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
@@ -77,9 +94,12 @@ void Core::Core::renderMenu() {
         "Scores du jeu",
         scorePos,
         {35.f, 15.f},
-        Color::White()
+        Color::Black()
     });
+    short i = 0;
     for (auto &libName : this->_lib["games"]) {
+        if (i++ == this->_gameSelected)
+            selectedGameName = libName;
         this->_graphic->drawText(Text {
             this->getGameName(libName),
             textPos,
@@ -87,9 +107,16 @@ void Core::Core::renderMenu() {
             Color::Black()
         });
         textPos.y += 20;
-        if (this->_scores.find(libName) != this->_scores.end()) {
-            // TODO: Display score for the current lib!
-        }
+    }
+    if (this->_scores.find(selectedGameName) != this->_scores.end())
+        this->displayScore(selectedGameName, scorePos);
+    else {
+        this->_graphic->drawText(Text {
+            "Aucun score",
+            {scorePos.x, scorePos.y + 15.f},
+            {20.f, 10.f},
+            Color::Blue()
+        });
     }
 }
 
@@ -98,7 +125,6 @@ std::string Core::Core::loadScore(const std::string &gameName) {
     std::ifstream file(path);
     std::ostringstream oss;
 
-    printf("Game: '%s / Path: '%s'\n", gameName.c_str(), path.c_str());
     if (!file.is_open())
         throw Exceptions::InvalidScorePath(path);
     oss << file.rdbuf();

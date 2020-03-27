@@ -13,6 +13,9 @@ SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/core/SwitchLib.cpp			\
 					./src/core/Exceptions.cpp			\
 					./src/core/Menu.cpp					\
+					./src/core/score/Exceptions.cpp		\
+					./src/core/score/File.cpp			\
+					./src/core/score/Game.cpp			\
 					./src/graphic/Drawables.cpp			\
 					./src/lib/graphic/Exceptions.cpp	\
 
@@ -39,9 +42,6 @@ graphicals:
 
 games:
 	$(MAKE) -C $(GAME_PATH)
-
-test: core
-	$(MAKE) -C $(GAME_PATH)/test
 
 debug:
 	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)

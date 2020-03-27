@@ -9,6 +9,7 @@
 #define OOP_ARCADE_2019_SCORE_HPP_
 
 #include <string>
+#include <list>
 
 namespace Score {
     class Game {
@@ -25,6 +26,8 @@ namespace Score {
             Game &operator=(const int);
             int operator*();
 
+            const std::size_t MAX_AUTHOR_NAME = 6;
+
         private:
             std::string _author;
             std::string _game;
@@ -33,10 +36,13 @@ namespace Score {
 
     class File {
         public:
-            File(const std::string &file);
+            explicit File(const std::string &content) noexcept;
+            std::list<std::string> getFormattedBuffer();
 
-
+        private:
+            std::list<std::string> _formatted;
     };
+
 
     namespace Exceptions {
         class InvalidFile : public std::exception {
@@ -44,6 +50,7 @@ namespace Score {
                 InvalidFile() = default;
                 const char *what() const noexcept override;
         };
+
         class FileSaved : public std::exception {
             public:
                 FileSaved() = default;
