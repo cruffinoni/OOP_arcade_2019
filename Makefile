@@ -23,13 +23,16 @@ CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl -fPIC
 OBJ				=	$(SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)
 
-GRAPHIC_PATH	=	./src/lib/graphic/
+GRAPHIC_PATH	=	./src/lib/graphic
 GAME_PATH		=	./src/lib/game
 
 all: core games graphicals
 
 core: $(OBJ) $(OBJ_MAIN)
 	g++ -o $(NAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS)
+
+test: core
+	$(MAKE) -C $(GAME_PATH)/test
 
 graphicals:
 	$(MAKE) -C $(GRAPHIC_PATH)

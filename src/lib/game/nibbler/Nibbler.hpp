@@ -27,7 +27,6 @@ namespace Game {
             GameDataType getGameData() override;
 
         private:
-            static void drawBackground(IGraphicRenderer &renderer);
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
 

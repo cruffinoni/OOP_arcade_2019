@@ -75,7 +75,6 @@ void Game::Nibbler::drawScore(IGraphicRenderer &renderer) {
 }
 
 void Game::Nibbler::handleRender(IGraphicRenderer &renderer) {
-    Game::Nibbler::drawBackground(renderer);
     if (this->_state == Nibbler::GAME_STATE::GAME)
         this->drawGame(renderer);
     else

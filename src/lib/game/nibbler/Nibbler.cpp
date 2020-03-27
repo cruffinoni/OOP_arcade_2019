@@ -149,14 +149,6 @@ IGame::GameDataType Game::Nibbler::getGameData() {
     return (this->_data);
 }
 
-void Game::Nibbler::drawBackground(IGraphicRenderer &renderer) {
-    renderer.drawRect(Rect({
-       {0.f, 0.f},
-       {100.f, 100.f},
-       Color::White()
-    }));
-}
-
 void Game::Nibbler::addNode() {
     this->_player.score++;
     this->_player.position.emplace_back(this->_player.position.back());
