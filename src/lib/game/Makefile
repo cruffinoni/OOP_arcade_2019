@@ -7,15 +7,19 @@
 
 all:
 	$(MAKE) -C ./nibbler/
+	$(MAKE) -C ./pacman/
 
 debug:
 	$(MAKE) -C ./nibbler/ debug
+	$(MAKE) -C ./pacman/ debug
 
 clean:
 	$(MAKE) -C ./nibbler/ clean
+	$(MAKE) -C ./pacman/ clean
 
 fclean:
 	$(MAKE) -C ./nibbler/ fclean
+	$(MAKE) -C ./pacman/ fclean
 
 re:	fclean all
 
