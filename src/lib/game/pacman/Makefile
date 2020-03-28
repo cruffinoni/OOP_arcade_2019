@@ -11,6 +11,7 @@ INCLUDE			=	../../..
 
 SRC				=	./Pacman.cpp 							\
 					./Draw.cpp								\
+					./Map.cpp								\
 					$(INCLUDE)/graphic/Drawables.cpp		\
 					$(INCLUDE)/core/score/Game.cpp			\
 					$(INCLUDE)/core/score/Exceptions.cpp	\

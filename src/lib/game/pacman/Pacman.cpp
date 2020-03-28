@@ -26,15 +26,7 @@ extern "C" {
 }
 
 Game::Pacman::Pacman() {
-    for (ushort x = 0; x < this->MAX_MAP_SIZE; ++x) {
-        for (ushort y = 0; y < this->MAX_MAP_SIZE; ++y) {
-            if (y == 0 || y == this->MAX_MAP_SIZE - 1 ||
-                x == 0 || x == this->MAX_MAP_SIZE - 1)
-                this->_map.emplace_back(
-                    (static_cast<float>(x) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
-                    (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
-        }
-    }
+    this->generateMap();
     this->_state = GAME;
 }
 
