@@ -24,8 +24,12 @@
 
 int main(const int ac, const char **av)
 {
-    if (ac == 1) {
+    if (ac < 2) {
         std::cerr << "Enter a so file which is a compatible graphical library" << std::endl;
+        return (84);
+    }
+    if (ac > 2) {
+        std::cerr << "Too much argument" << std::endl;
         return (84);
     }
     try {
