@@ -51,73 +51,142 @@ void Core::Core::menuEvents(std::string &event) {
             }
         }
     }
-    // TODO: Echap to exit the arcade
 }
 
+std::string Core::Core::drawGames(Vector2f &final_pos) {
+    Vector2f pos(5.f, 45.f);
+    std::string selectedGameName;
 
-void Core::Core::displayScore(const std::string &game, Vector2f &base) {
-    Score::File scoreBuffer(this->_scores[game]);
-
-    base.y += 15.f;
-    for (auto &i : scoreBuffer.getFormattedBuffer()) {
+    short i = 0;
+    this->_graphic->drawText(Text {
+        "Available games",
+        {pos.x + 3.5f, pos.y - 18.f},
+        this->DEFAULT_MEDIUM_TEXT_SIZE,
+        Color::Blue()
+    });
+    for (auto &libName : this->_lib["games"]) {
+        if (i++ == this->_gameSelected) {
+            this->_graphic->drawRect(Rect {
+                pos,
+                this->DEFAULT_SMALL_TEXT_SIZE,
+                Color::Red()
+            });
+            selectedGameName = libName;
+        }
         this->_graphic->drawText(Text {
-            i,
-            base,
-            {20.f, 10.f},
-            Color::Blue()
+            this->getLibName(libName),
+            pos,
+            this->DEFAULT_SMALL_TEXT_SIZE,
+            Color::Black()
         });
-        base.y += 10.f;
+        pos.x += 15.f;
+    }
+    this->_graphic->drawRect(Rect{
+        {0.f, (pos.y += 10.f)},
+        {100.f, 2.5f},
+        Color::Black(),
+    });
+    pos.x = 5.f;
+    pos.y += 25.f;
+    final_pos = pos;
+    return (selectedGameName);
+}
+
+void Core::Core::drawGraphicalLib(Vector2f &position) {
+    short i = 0;
+
+    this->_graphic->drawText(Text {
+        "Available graphic",
+        {position.x, position.y - 18.f},
+        this->DEFAULT_MEDIUM_TEXT_SIZE,
+        Color::Blue()
+    });
+    for (auto &libName : this->_lib["lib"]) {
+        if (i++ == this->_gameSelected) {
+            this->_graphic->drawRect(Rect {
+                position,
+                this->DEFAULT_SMALL_TEXT_SIZE,
+                Color::Red()
+            });
+        }
+        this->_graphic->drawText(Text {
+            this->getLibName(libName),
+            position,
+            this->DEFAULT_SMALL_TEXT_SIZE,
+            Color::Black()
+        });
+        position.x += 15.f;
     }
 }
 
-void Core::Core::renderMenu() {
-    std::string gameName;
-    std::string selectedGameName;
-    Vector2f textPos(12.f, 50.f);
-    Vector2f scorePos(57.f, 25.f);
-    Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
-
-    this->_graphic->drawText(Text {
-        std::string("Arcade"),
-        {25.f, 3.f},
-        {50.f, 20.f},
-        Color::Green()
-    });
-    this->_graphic->drawRect(Rect({48.f, 25.f},
-        {2.f, 70.f}, Color::Red()));
-    this->_graphic->drawText(Text(std::string("Selection de jeu"),
-        {7.f, 25.f}, {35.f, 15.f}, Color::White()));
-    this->_graphic->drawRect(Rect(selectPos,
-        {26, 16}, Color::Red()));
+void Core::Core::drawScore(const std::string &game, Vector2f &pos) {
+    Vector2f scorePos(57.f, 27.f);
 
     this->_graphic->drawText(Text {
         "Scores du jeu",
         scorePos,
-        {35.f, 15.f},
+        this->DEFAULT_TEXT_SIZE,
         Color::Black()
     });
-    short i = 0;
-    for (auto &libName : this->_lib["games"]) {
-        if (i++ == this->_gameSelected)
-            selectedGameName = libName;
-        this->_graphic->drawText(Text {
-            this->getLibName(libName),
-            textPos,
-            {20.f, 10.f},
-            Color::Black()
-        });
-        textPos.y += 20;
+    if (this->_scores.find(game) != this->_scores.end()) {
+        // TODO: Changer la position des scores I guess
+        Score::File scoreBuffer(this->_scores[game]);
+        scorePos.y += 10.f;
+        for (auto &i : scoreBuffer.getFormattedBuffer()) {
+            this->_graphic->drawText(Text {
+                i.toStr(),
+                scorePos,
+                this->DEFAULT_SMALL_TEXT_SIZE,
+                Color::Green()
+            });
+            scorePos.y += 5.f;
+        }
     }
-    if (this->_scores.find(selectedGameName) != this->_scores.end())
-        this->displayScore(selectedGameName, scorePos);
     else {
         this->_graphic->drawText(Text {
-            "Aucun score",
+            "No score",
             {scorePos.x, scorePos.y + 15.f},
-            {20.f, 10.f},
+            this->DEFAULT_TEXT_SIZE,
             Color::Blue()
         });
     }
+    pos = scorePos;
+}
+
+void Core::Core::drawPlayerName(Vector2f &position) {
+    position.y += 10.f;
+    this->_graphic->drawText(Text {
+        "Enter your name",
+        position,
+        this->DEFAULT_MEDIUM_TEXT_SIZE,
+        Color::Blue()
+    });
+    position.y += 5.f;
+    this->_graphic->drawText(Text {
+        this->_score.getAuthor(),
+        position,
+        this->DEFAULT_MEDIUM_TEXT_SIZE,
+        Color::Red()
+    });
+}
+
+void Core::Core::renderMenu() {
+    Vector2f selectPos(8.f,47.f + static_cast<float>(20 * _gameSelected));
+    Vector2f graphicalLibPos(0.0, 0.0);
+    Vector2f playerNamePos(0.0, 0.0);
+    std::string selectedGameName = this->drawGames(graphicalLibPos);
+
+    this->drawGraphicalLib(graphicalLibPos);
+    this->_graphic->drawText(Text {
+        "Arcade",
+        {30.f, 2.f},
+        this->DEFAULT_TITLE_SIZE,
+        Color::Green()
+    });
+    this->drawScore(selectedGameName, playerNamePos);
+    this->_graphic->drawRect(Rect({48.f, 25.f},
+        {2.f, 70.f}, Color::Black()));
+    this->drawPlayerName(playerNamePos);
 }
 
 std::string Core::Core::loadScore(const std::string &gameName) {

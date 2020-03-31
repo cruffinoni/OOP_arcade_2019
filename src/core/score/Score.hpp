@@ -37,10 +37,22 @@ namespace Score {
     class File {
         public:
             explicit File(const std::string &content) noexcept;
-            std::list<std::string> getFormattedBuffer();
 
+            class PlayerData {
+                public:
+                    PlayerData(const std::string &name, const long score);
+                    std::string toStr() const;
+
+                    bool operator>(const PlayerData &a) const {
+                        return (this->_score < a._score);
+                    }
+                    std::string _name;
+                    long _score;
+            };
+
+                std::list<PlayerData> getFormattedBuffer();
         private:
-            std::list<std::string> _formatted;
+            std::list<PlayerData> _formatted;
     };
 
 

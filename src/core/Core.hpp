@@ -10,6 +10,7 @@
 
 #include <string>
 #include <list>
+#include <core/score/Score.hpp>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
 #include "soLoader/SoLoader.hpp"
@@ -59,18 +60,27 @@ namespace Core {
 
             void menuEvents(std::string &event);
             void renderMenu();
+            std::string drawGames(Vector2f &final_pos);
+            void drawGraphicalLib(Vector2f &position);
+            void drawScore(const std::string &game, Vector2f &pos);
+            void drawPlayerName(Vector2f &position);
             static std::string getLibName(std::string libName, bool uppercase = true);
             short _gameSelected;
-            void displayScore(const std::string &game, Vector2f &base);
 
             void createStripGame();
             void createStripMenu();
+
+            const Vector2f DEFAULT_SMALL_TEXT_SIZE = {10.f, 7.5f};
+            const Vector2f DEFAULT_TEXT_SIZE = {20.f, 15.f};
+            const Vector2f DEFAULT_MEDIUM_TEXT_SIZE = {25.f, 20.f};
+            const Vector2f DEFAULT_TITLE_SIZE = {40.f, 30.f};
 
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
             std::map<std::string, std::string> _scores;
             std::map<std::string, std::list<std::string>> _lib;
+            Score::Game _score;
     };
 
     namespace Exceptions {

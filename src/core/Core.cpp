@@ -29,7 +29,7 @@ void Core::Core::readFolder(const std::string &folderName) {
     closedir(dir);
 }
 
-Core::Core::Core() : _gameSelected(0) {
+Core::Core::Core() : _gameSelected(0), _score(0, "none") {
     Core::Core::createScoreFolder();
 
     for (auto &i: this->MANDATORY_FOLDERS) {

@@ -106,7 +106,8 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 void Graphic::SFML::drawText(Text text) {
     try {
         auto entity = new sf::Text(text.getText(), *this->_font);
-        entity->setCharacterSize(18);
+        entity->setCharacterSize(static_cast<int>((PERCENTAGE(text.getSizeX()) + 0.8) * 25));
+        //entity->setCharacterSize(25);
         entity->setStyle(sf::Text::Bold);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
         entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
