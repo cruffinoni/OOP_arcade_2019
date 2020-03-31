@@ -22,7 +22,7 @@ namespace Score {
             std::string getAuthor() const;
             void reset();
 
-            Game operator++(const int);
+            void operator++(const int);
             Game &operator=(const int);
             int operator*();
 

@@ -33,7 +33,9 @@ Graphic::SDL2::SDL2() {
     _window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     _renderer = SDL_CreateRenderer(_window, -1, 0);
-    _font = TTF_OpenFont(FONT_PATH, 18);
+    _font = TTF_OpenFont(FONT_FILENAME, 18);
+    if (this->_font == nullptr)
+        throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
     _running = true;
 }
 
@@ -112,45 +114,45 @@ std::string Graphic::SDL2::handleEvent() {
     switch (events.type) {
         case SDL_QUIT:
             _running = false;
-            return (IEventIterator::KEY_UNKNOWN);
+            return (KeyboardEvent_s::KEY_UNKNOWN);
         case SDL_KEYDOWN:
             if (events.key.repeat)
-                return (IEventIterator::KEY_UNKNOWN);
+                return (KeyboardEvent_s::KEY_UNKNOWN);
             switch (events.key.keysym.sym) {
                 case SDLK_a:
-                    return (IEventIterator::KEY_A);
+                    return (KeyboardEvent_s::KEY_A);
                 case SDLK_b:
-                    return (IEventIterator::KEY_B);
+                    return (KeyboardEvent_s::KEY_B);
                 case SDLK_ESCAPE:
                     //this->_running = false;
-                    return (IEventIterator::KEY_ESCAPE);
+                    return (KeyboardEvent_s::KEY_ESCAPE);
                 case SDLK_c:
-                    return (IEventIterator::KEY_C);
+                    return (KeyboardEvent_s::KEY_C);
                 case SDLK_d:
-                    return (IEventIterator::KEY_D);
+                    return (KeyboardEvent_s::KEY_D);
                 case SDLK_e:
-                    return (IEventIterator::KEY_E);
+                    return (KeyboardEvent_s::KEY_E);
                 case SDLK_w:
-                    return (IEventIterator::KEY_W);
+                    return (KeyboardEvent_s::KEY_W);
                 case SDLK_RETURN:
-                    return (IEventIterator::KEY_ENTER);
+                    return (KeyboardEvent_s::KEY_ENTER);
                 case SDLK_r:
-                    return (IEventIterator::KEY_R);
+                    return (KeyboardEvent_s::KEY_R);
                 case SDLK_UP:
-                    return (IEventIterator::KEY_UP);
+                    return (KeyboardEvent_s::KEY_UP);
                 case SDLK_DOWN:
-                    return (IEventIterator::KEY_DOWN);
+                    return (KeyboardEvent_s::KEY_DOWN);
                 case SDLK_LEFT:
-                    return (IEventIterator::KEY_LEFT);
+                    return (KeyboardEvent_s::KEY_LEFT);
                 case SDLK_RIGHT:
-                    return (IEventIterator::KEY_RIGHT);
+                    return (KeyboardEvent_s::KEY_RIGHT);
                 default:
-                    return (IEventIterator::KEY_UNKNOWN);
+                    return (KeyboardEvent_s::KEY_UNKNOWN);
             }
         default:
             break;
     }
-    return (IEventIterator::KEY_UNKNOWN);
+    return (KeyboardEvent_s::KEY_UNKNOWN);
 }
 
 bool Graphic::SDL2::isOperational() {

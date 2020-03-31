@@ -9,9 +9,7 @@ NAME			=	lib_arcade_sfml.so
 
 INCLUDE			=	../../..
 
-SRC				=	./SFML.cpp 	\
-					$(INCLUDE)/graphic/Drawables.cpp	\
-					../Exceptions.cpp
+SRC				=	./SFML.cpp
 
 BIN_DIRECTORY	=	../../../../lib/
 
@@ -26,7 +24,7 @@ $(NAME): $(OBJ)
 	cp $(NAME) $(BIN_DIRECTORY)
 
 debug:
-	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
+	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS) -g
 	cp $(NAME) $(BIN_DIRECTORY)
 
 clean:

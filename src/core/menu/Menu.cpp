@@ -28,19 +28,19 @@ std::string Core::Core::getLibName(std::string libName, bool uppercase) {
 }
 
 void Core::Core::menuEvents(std::string &event) {
-    if (event == IEventIterator::KEY_UP) {
+    if (event == KeyboardEvent_s::KEY_UP) {
         if (this->_gameSelected == 0)
             this->_gameSelected = static_cast<short>(this->_lib["games"].size() - 1);
         else
             this->_gameSelected--;
     }
-    if (event == IEventIterator::KEY_DOWN) {
+    if (event == KeyboardEvent_s::KEY_DOWN) {
         if (this->_gameSelected == static_cast<short>(this->_lib["games"].size() - 1))
             this->_gameSelected = 0;
         else
             this->_gameSelected++;
     }
-    if (event == IEventIterator::KEY_ENTER) {
+    if (event == KeyboardEvent_s::KEY_ENTER) {
         unsigned short i = 0;
 
         for (std::string &libName : this->_lib["games"]) {

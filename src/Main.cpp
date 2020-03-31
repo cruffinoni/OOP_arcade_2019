@@ -19,7 +19,7 @@
  */
 
 #include <iostream>
-#include <core/Core.hpp>
+#include "core/Core.hpp"
 #include "soLoader/SoLoader.hpp"
 
 int main(const int ac, const char **av)

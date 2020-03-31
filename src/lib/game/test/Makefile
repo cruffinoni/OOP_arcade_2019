@@ -9,8 +9,7 @@ NAME			=	lib_arcade_gametest.so
 
 INCLUDE			=	../../..
 
-SRC				=	./TestGame.cpp \
-					$(INCLUDE)/graphic/Drawables.cpp
+SRC				=	./TestGame.cpp
 
 GAMES_DIRECTORY	=	../../../../games/
 

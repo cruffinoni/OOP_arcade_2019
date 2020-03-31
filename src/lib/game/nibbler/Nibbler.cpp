@@ -47,17 +47,17 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f), _state(Nibbler::GAME_STATE::GAME
 void Game::Nibbler::handleEvent(std::string &name) {
     std::array<std::string, 8> keys = {
         // Default keys
-        IEventIterator::KEY_UP,
-        IEventIterator::KEY_DOWN,
-        IEventIterator::KEY_RIGHT,
-        IEventIterator::KEY_LEFT,
+        KeyboardEvent_s::KEY_UP,
+        KeyboardEvent_s::KEY_DOWN,
+        KeyboardEvent_s::KEY_RIGHT,
+        KeyboardEvent_s::KEY_LEFT,
         // Cheats
-        IEventIterator::KEY_A,
-        IEventIterator::KEY_B,
-        IEventIterator::KEY_R,
+        KeyboardEvent_s::KEY_A,
+        KeyboardEvent_s::KEY_B,
+        KeyboardEvent_s::KEY_R,
 
         // Special key
-        IEventIterator::KEY_ENTER,
+        KeyboardEvent_s::KEY_ENTER,
     };
     void (Game::Nibbler::*gameCheatsFunc[])() = {
         &Game::Nibbler::addNode,
@@ -83,7 +83,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
         if (i < middle) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
-        } else if (keys[i] != IEventIterator::KEY_ENTER) {
+        } else if (keys[i] != KeyboardEvent_s::KEY_ENTER) {
             printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
             (this->*gameCheatsFunc[i - middle])();
             return;

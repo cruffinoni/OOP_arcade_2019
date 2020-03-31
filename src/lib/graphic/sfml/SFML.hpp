@@ -14,8 +14,6 @@
 namespace Graphic {
     class SFML : public IGraphic {
         public:
-            static const constexpr char *FONT_PATH = "./src/lib/graphic/sfml/font.ttf";
-
             SFML();
             ~SFML();
 

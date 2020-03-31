@@ -67,7 +67,7 @@ void Core::Core::run() {
             this->_graphic->clearScreen();
             auto event = this->_graphic->handleEvent();
             if (this->_gameSelected == -1) {
-                if (event != IEventIterator::KEY_UNKNOWN) {
+                if (event != KeyboardEvent_s::KEY_UNKNOWN) {
                     printf("Event: '%s'\n", event.c_str());
                     if (!this->handleInternalKey(event))
                         this->_game->handleEvent(event);

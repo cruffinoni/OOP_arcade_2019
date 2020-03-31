@@ -30,11 +30,11 @@ Graphic::SFML::SFML() : _operational(true) {
     try {
         this->_font = new sf::Font();
         this->_window = new sf::RenderWindow({
-            Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
-            }, "Arcade");
+                Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
+            },"Arcade");
         this->_window->setFramerateLimit(60);
-        if (!this->_font->loadFromFile(Graphic::SFML::FONT_PATH))
-            throw Graphic::Exceptions::LoadFontFailed(Graphic::SFML::FONT_PATH);
+        if (!this->_font->loadFromFile(FONT_FILENAME))
+            throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
     } catch (const Graphic::Exceptions::LoadFontFailed &e) {
         throw e;
     } catch (const std::bad_alloc &e) {
@@ -43,8 +43,8 @@ Graphic::SFML::SFML() : _operational(true) {
 }
 
 Graphic::SFML::~SFML() {
-    delete this->_window;
-    delete this->_font;
+    //delete this->_font;
+    //delete this->_window;
 }
 
 void Graphic::SFML::clearScreen() {
@@ -132,42 +132,42 @@ std::string Graphic::SFML::handleEvent() {
         switch (event.type) {
             case sf::Event::Closed:
                 this->_operational = false;
-                return (IEventIterator::KEY_UNKNOWN);
+                return (KeyboardEvent_s::KEY_UNKNOWN);
             case sf::Event::KeyReleased:
                 switch (event.key.code) {
                     case sf::Keyboard::Escape:
                         //this->_operational = false;
-                        return (IEventIterator::KEY_ESCAPE);
+                        return (KeyboardEvent_s::KEY_ESCAPE);
                     case sf::Keyboard::A:
-                        return (IEventIterator::KEY_A);
+                        return (KeyboardEvent_s::KEY_A);
                     case sf::Keyboard::B:
-                        return (IEventIterator::KEY_B);
+                        return (KeyboardEvent_s::KEY_B);
                     case sf::Keyboard::C:
-                        return (IEventIterator::KEY_C);
+                        return (KeyboardEvent_s::KEY_C);
                     case sf::Keyboard::D:
-                        return (IEventIterator::KEY_D);
+                        return (KeyboardEvent_s::KEY_D);
                     case sf::Keyboard::E:
-                        return (IEventIterator::KEY_E);
+                        return (KeyboardEvent_s::KEY_E);
                     case sf::Keyboard::R:
-                        return (IEventIterator::KEY_R);
+                        return (KeyboardEvent_s::KEY_R);
                     case sf::Keyboard::Up:
-                        return (IEventIterator::KEY_UP);
+                        return (KeyboardEvent_s::KEY_UP);
                     case sf::Keyboard::Down:
-                        return (IEventIterator::KEY_DOWN);
+                        return (KeyboardEvent_s::KEY_DOWN);
                     case sf::Keyboard::Left:
-                        return (IEventIterator::KEY_LEFT);
+                        return (KeyboardEvent_s::KEY_LEFT);
                     case sf::Keyboard::Right:
-                        return (IEventIterator::KEY_RIGHT);
+                        return (KeyboardEvent_s::KEY_RIGHT);
                     case sf::Keyboard::Return:
-                        return (IEventIterator::KEY_ENTER);
+                        return (KeyboardEvent_s::KEY_ENTER);
                     default:
-                        return (IEventIterator::KEY_UNKNOWN);
+                        return (KeyboardEvent_s::KEY_UNKNOWN);
                 }
             default:
                 break;
         }
     }
-    return (IEventIterator::KEY_UNKNOWN);
+    return (KeyboardEvent_s::KEY_UNKNOWN);
 }
 
 bool Graphic::SFML::isOperational() {

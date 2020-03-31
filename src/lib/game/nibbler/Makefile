@@ -11,7 +11,6 @@ INCLUDE			=	../../..
 
 SRC				=	./Nibbler.cpp 	\
 					./Draw.cpp		\
-					$(INCLUDE)/graphic/Drawables.cpp		\
 					$(INCLUDE)/core/score/Game.cpp			\
 					$(INCLUDE)/core/score/Exceptions.cpp	\
 
@@ -28,7 +27,7 @@ $(NAME): $(OBJ)
 	cp $(NAME) $(GAMES_DIRECTORY)
 
 debug:
-	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
+	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS) -g
 	cp $(NAME) $(GAMES_DIRECTORY)
 
 clean:

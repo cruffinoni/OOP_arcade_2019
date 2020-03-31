@@ -17,8 +17,6 @@ SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/core/score/Game.cpp			\
 					./src/core/menu/Menu.cpp			\
 					./src/core/menu/Strip.cpp			\
-					./src/graphic/Drawables.cpp			\
-					./src/lib/graphic/Exceptions.cpp	\
 
 INCLUDE			=	./src/
 
@@ -45,7 +43,7 @@ games:
 	$(MAKE) -C $(GAME_PATH)
 
 debug:
-	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
+	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS) -g
 	$(MAKE) -C $(GRAPHIC_PATH) debug
 	$(MAKE) -C $(GAME_PATH) debug
 

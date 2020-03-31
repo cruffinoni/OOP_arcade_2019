@@ -39,9 +39,8 @@ void Score::Game::saveScore() const {
         file << std::string(this->_author + "=" + std::to_string(this->_amount)) << std::endl;
 }
 
-Score::Game Score::Game::operator++(const int) {
+void Score::Game::operator++(const int) {
     this->_amount++;
-    return (*this);
 }
 
 Score::Game &Score::Game::operator=(const int amount) {
@@ -54,7 +53,7 @@ int Score::Game::operator*() {
 }
 
 void Score::Game::handleEvent(std::string &letter) {
-    if (letter == IEventIterator::KEY_ENTER) {
+    if (letter == KeyboardEvent_s::KEY_ENTER) {
         try {
             this->saveScore();
         } catch (const Score::Exceptions::InvalidFile &e) {

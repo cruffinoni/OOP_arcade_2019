@@ -36,10 +36,10 @@ namespace Game {
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
-            const Color SNAKE_COLOR_1 = {0x00, 0x66, 0x00, 0xFF};
-            const Color SNAKE_COLOR_2 = {0x33, 0xCC, 0x33, 0xFF};
+            const Color SNAKE_COLOR_1 = {0x00, 0x00, 0x66, 0xFF};
+            const Color SNAKE_COLOR_2 = {0x33, 0x33, 0xCC, 0xFF};
             const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
-            const Color REWARD_COLOR = {0x00, 0xcc, 0xff, 0xFF};
+            const Color REWARD_COLOR = {0x00, 0xff, 0xcc, 0xFF};
 
 
             enum PLAYER_DIRECTION {
@@ -57,7 +57,11 @@ namespace Game {
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Nibbler::GAME_STATE::GAME)
 
             struct player_s {
-                player_s() : score(0, "nibbler") {};
+                player_s() : score(0, "nibbler") {
+                    this->elapsedTime = 0;
+                    this->direction = SOUTH;
+                    this->death = 0;
+                };
 
                 int elapsedTime;
                 std::list<Vector2f> position;

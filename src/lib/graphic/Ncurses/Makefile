@@ -9,8 +9,7 @@ NAME			=	lib_arcade_ncurses.so
 
 INCLUDE			=	../../..
 
-SRC				=	./Ncurses.cpp 	\
-					$(INCLUDE)/graphic/Drawables.cpp
+SRC				=	./Ncurses.cpp
 
 BIN_DIRECTORY	=	../../../../lib/
 

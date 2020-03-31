@@ -17,8 +17,6 @@
 namespace Graphic {
     class SDL2 : public IGraphic {
         public:
-            static const constexpr char *FONT_PATH = "./src/lib/graphic/sfml/arial.ttf";
-
             SDL2();
             ~SDL2();
 

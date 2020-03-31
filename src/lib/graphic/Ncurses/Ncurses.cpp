@@ -129,7 +129,7 @@ std::string Graphic::Ncurses::handleEvent() {
         case KEY_ENTER:
             return "EVENT_KEY_ENTER";
         default:
-            return (IEventIterator::KEY_UNKNOWN);
+            return (KeyboardEvent_s::KEY_UNKNOWN);
     }
 }
 

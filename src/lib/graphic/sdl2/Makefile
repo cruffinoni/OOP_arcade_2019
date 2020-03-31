@@ -9,8 +9,7 @@ NAME			=	lib_arcade_sdl2.so
 
 INCLUDE			=	../../..
 
-SRC				=	./SDL2.cpp 							\
-					$(INCLUDE)/graphic/Drawables.cpp
+SRC				=	./SDL2.cpp
 
 BIN_DIRECTORY	=	../../../../lib/
 
@@ -25,7 +24,7 @@ $(NAME): $(OBJ)
 	cp $(NAME) $(BIN_DIRECTORY)
 
 debug:
-	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS)
+	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS) -g
 	cp $(NAME) $(BIN_DIRECTORY)
 
 clean:
