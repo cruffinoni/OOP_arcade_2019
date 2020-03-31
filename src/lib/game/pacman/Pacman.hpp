@@ -26,6 +26,13 @@ namespace Game {
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
             void generateMap();
+            void readMap();
+
+            void drawLine(int x, int y, int size);
+            void drawColumn(int x, int y, int size);
+            void drawSquare(int x, int y, int size, int size2);
+//            void drawDiag(int size, int start);
+//            void pacGomeTEST();
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
