@@ -19,28 +19,22 @@ void Game::Pacman::generateMap() {
     this->drawSquare(this->MAX_MAP_SIZE / 2 - 1, 1, 2, 3);
     this->drawSquare(2, 2, this->MAX_MAP_SIZE / 3, 2);
     this->drawSquare(this->MAX_MAP_SIZE / 2 + 2, 2, this->MAX_MAP_SIZE / 3, 2);
-    this->drawSquare(2, 5, 2, this->MAX_MAP_SIZE / 2 + 2);
+    this->drawSquare(2, 5, 2, 7);
+    this->drawSquare(2, 13, 2, 4);
     this->drawSquare(5, 5, this->MAX_MAP_SIZE / 4, 2);
     this->drawSquare(11, 5, this->MAX_MAP_SIZE / 4, 2);
     this->drawSquare(17, 5, 2, 2);
-}
-
-void Game::Pacman::drawLine(int x, int y, int size) {
-    size = size + x;
-    for (; x < size; ++x) {
-        this->_map.emplace_back(
-                (static_cast<float>(x) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
-                (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
-    }
-}
-
-void Game::Pacman::drawColumn(int x, int y, int size) {
-    size = size + y;
-    for (; y < size; ++y) {
-        this->_map.emplace_back(
-                (static_cast<float>(x) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
-                (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
-    }
+    this->drawSquare(4, 8, 4, 2);
+    this->drawSquare(9, 8, 2, 4);
+    this->drawSquare(9, 13, 2,1);
+    this->drawSquare(5, 11, 3, 2);
+    this->drawSquare(5, 14, 6, 2);
+    this->drawSquare(5, 17, 14, 1);
+    this->drawSquare(12, 8, 2, 5);
+    this->drawSquare(15, 8, 3, 2);
+    this->drawSquare(15, 11, 4, 2);
+    this->drawSquare(15, 14, 3, 2);
+    this->drawSquare(12, 14, 2, 2);
 }
 
 void Game::Pacman::drawSquare(int x, int y, int sizeX, int sizeY) {

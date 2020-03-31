@@ -27,8 +27,6 @@ namespace Game {
             void drawScore(IGraphicRenderer &renderer);
             void generateMap();
 
-            void drawLine(int x, int y, int size);
-            void drawColumn(int x, int y, int size);
             void drawSquare(int x, int y, int sizeX, int sizeY);
 
             const ushort MAX_MAP_SIZE = 20;
