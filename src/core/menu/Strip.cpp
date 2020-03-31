@@ -8,9 +8,6 @@
 #include <cstring>
 #include "core/Core.hpp"
 
-//mettre les explications dans une sorte de help dans le menu
-// draw rect ???????
-
 void Core::Core::createStripGame() {
     this->_graphic->drawRect(Rect{
         {0.0f, 95.f},
