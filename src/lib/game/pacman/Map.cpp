@@ -16,7 +16,13 @@ void Game::Pacman::generateMap() {
                     (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
         }
     }
-    readMap();
+    this->drawSquare(this->MAX_MAP_SIZE / 2 - 1, 1, 2, 3);
+    this->drawSquare(2, 2, this->MAX_MAP_SIZE / 3, 2);
+    this->drawSquare(this->MAX_MAP_SIZE / 2 + 2, 2, this->MAX_MAP_SIZE / 3, 2);
+    this->drawSquare(2, 5, 2, this->MAX_MAP_SIZE / 2 + 2);
+    this->drawSquare(5, 5, this->MAX_MAP_SIZE / 4, 2);
+    this->drawSquare(11, 5, this->MAX_MAP_SIZE / 4, 2);
+    this->drawSquare(17, 5, 2, 2);
 }
 
 void Game::Pacman::drawLine(int x, int y, int size) {
@@ -37,32 +43,12 @@ void Game::Pacman::drawColumn(int x, int y, int size) {
     }
 }
 
-void Game::Pacman::drawSquare(int x, int y, int size, int size2) {
-    for (; x < 10; ++x) {
-        for (; y < 10; ++y) {
-                this->_map.emplace_back(
-                        (static_cast<float>(x) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
-                        (static_cast<float>(y) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
+void Game::Pacman::drawSquare(int x, int y, int sizeX, int sizeY) {
+    for (int i = 0; i < sizeY; ++i) {
+        for (int z = 0; z < sizeX; ++z) {
+            this->_map.emplace_back(
+                (static_cast<float>(x + z) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
+                (static_cast<float>(y + i) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
         }
     }
-}
-
-//void Game::Pacman::drawDiag(int size, int start) {
-//    size = size + start;
-//    for (; start < size; ++start) {
-//        this->_map.emplace_back(
-//                (static_cast<float>(size - start) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
-//                (static_cast<float>(start) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
-//    }
-//}
-
-//void Game::Pacman::pacGomeTEST() {
-//
-//}
-
-void Game::Pacman::readMap() {
-//    drawDiag(1, 5);
-    drawSquare(5, 5, 10, 10);
-//    drawLine(5, 5, 10);
-//    drawColumn(5, 5, 10);
 }
