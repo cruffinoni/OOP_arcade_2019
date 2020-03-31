@@ -8,22 +8,22 @@
 all:
 	$(MAKE) -C ./sfml/
 	$(MAKE) -C ./sdl2/
-	$(MAKE) -C ./Ncurses/
+	$(MAKE) -C ./ncurses/
 
 debug:
 	$(MAKE) -C ./sfml/ debug
 	$(MAKE) -C ./sdl2/ debug
-	$(MAKE) -C ./Ncurses/ debug
+	$(MAKE) -C ./ncurses/ debug
 
 clean:
 	$(MAKE) -C ./sfml/ clean
 	$(MAKE) -C ./sdl2/ clean
-	$(MAKE) -C ./Ncurses/ clean
+	$(MAKE) -C ./ncurses/ clean
 
 fclean:
 	$(MAKE) -C ./sfml/ fclean
 	$(MAKE) -C ./sdl2/ fclean
-	$(MAKE) -C ./Ncurses/ fclean
+	$(MAKE) -C ./ncurses/ fclean
 
 re:	fclean all
 
