@@ -81,7 +81,7 @@ namespace Game {
             const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
             const Color PACGOM_COLOR = Color::Green();
             const Color ENEMY_COLOR = Color::Blue();
-            const Color PACMAN_COLOR = {245, 189, 31, 0};
+            const Color PACMAN_COLOR = Color(245, 189, 31, 0);
 
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
 
