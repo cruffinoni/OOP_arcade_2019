@@ -27,12 +27,10 @@ extern "C" {
 
 Game::Pacman::Pacman() {
     this->generateMap();
-    this->resetPlayer();
     this->_state = GAME;
 }
 
 void Game::Pacman::handleEvent(std::string &name) {
-
 }
 
 void Game::Pacman::handleUpdate(int elapsedTime) {
@@ -40,26 +38,18 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
         return;
     this->_player.elapsedTime += elapsedTime;
     if (this->_player.elapsedTime > 250) {
-        Vector2f prev = this->_player.position.front();
-        Vector2f next(0.f, 0.f);
-        for (auto &iter: this->_player.position) {
-            next = iter;
-            iter.x = prev.x;
-            iter.y = prev.y;
-            prev = next;
-        }
         switch (this->_player.direction) {
             case NORTH:
-                this->_player.position.front().y -= DEFAULT_SQUARE_SIZE.y;
+                this->_player.position.y -= DEFAULT_SQUARE_SIZE.y;
                 break;
             case SOUTH:
-                this->_player.position.front().y += DEFAULT_SQUARE_SIZE.y;
+                this->_player.position.y += DEFAULT_SQUARE_SIZE.y;
                 break;
             case EAST:
-                this->_player.position.front().x += DEFAULT_SQUARE_SIZE.x;
+                this->_player.position.x += DEFAULT_SQUARE_SIZE.x;
                 break;
             case WEST:
-                this->_player.position.front().x -= DEFAULT_SQUARE_SIZE.x;
+                this->_player.position.x -= DEFAULT_SQUARE_SIZE.x;
                 break;
             case IDLE:
                 break;
@@ -68,22 +58,14 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
     }
 }
 
-void Game::Pacman::resetPlayer() {
-    this->_player.position.clear();
-    this->_player.score.reset();
-    this->_player.position.emplace_back(10.f, 10.f);
-    this->_player.direction = IDLE;
-}
-
 void Game::Pacman::setGameData(IGame::GameDataType &data) {
     // TODO: Score, XP, Death, lives, game state, etc.
     //  What's for?
     this->_data = data;
-    this->_player.score = 54;
 }
 
 IGame::GameDataType Game::Pacman::getGameData() {
-    this->_data["score"] = std::to_string(*this->_player.score);
+    this->_data["score"] = std::to_string(this->_player.score);
     this->_data["death"] = std::to_string(this->_player.death);
     return (this->_data);
 }

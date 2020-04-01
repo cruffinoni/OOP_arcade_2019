@@ -25,7 +25,7 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
         });
     }
     renderer.drawText(Text {
-        std::string("Score: " + std::to_string(*this->_player.score)),
+        std::string("Score: " + std::to_string(this->_player.score)),
         {45.f, 0.f},
         DEFAULT_TEXT_SIZE,
         Color::Black(),
@@ -39,7 +39,7 @@ void Game::Pacman::drawScore(IGraphicRenderer &renderer) {
         {0xBF, 0xBF, 0xBF, 0xFF},
     });
     renderer.drawText(Text {
-        std::string("Your score: " + std::to_string(*this->_player.score) +
+        std::string("Your score: " + std::to_string(this->_player.score) +
                     "\nEnter you name:"),
         {40.f, 40.f},
         DEFAULT_TEXT_SIZE,
@@ -52,7 +52,7 @@ void Game::Pacman::drawScore(IGraphicRenderer &renderer) {
         Color::Black(),
     });
     renderer.drawText(Text {
-        this->_player.score.getAuthor(),
+        "this->_player.score.getAuthor()", //TODO : change for new score owner
         {40.f, 49.f},
         DEFAULT_TEXT_SIZE,
         Color::Black(),
