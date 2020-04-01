@@ -63,7 +63,7 @@ namespace Game {
                     this->death = 0;
                 };
 
-                int elapsedTime;
+                long elapsedTime;
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;

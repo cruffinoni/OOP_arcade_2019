@@ -65,7 +65,7 @@ void Core::Core::run() {
     while (this->_graphic->isOperational()) {
         try {
             this->_graphic->clearScreen();
-            auto event = this->_graphic->handleEvent();
+            std::string event = this->_graphic->handleEvent();
             if (IS_IN_GAME(this)) {
                 if (event != KeyboardEvent_s::UNKNOWN) {
                     printf("Event: '%s'\n", event.c_str());

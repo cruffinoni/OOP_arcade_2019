@@ -32,9 +32,9 @@ Graphic::SFML::SFML() : _operational(true) {
     try {
         this->_font = std::make_shared<sf::Font>();
         this->_window = std::make_shared<sf::RenderWindow>();
-        this->_window->setSize({Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT});
-        this->_window->setTitle("Arcade");
         this->_window->setFramerateLimit(60);
+        this->_window->create({Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT},
+            "Arcade", sf::Style::Titlebar);
         if (!this->_font->loadFromFile(FONT_FILENAME))
             throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
     } catch (const Graphic::Exceptions::LoadFontFailed &e) {
@@ -110,7 +110,6 @@ void Graphic::SFML::drawText(Text text) {
     try {
         auto entity = new sf::Text(text.getText(), *this->_font);
         entity->setCharacterSize(static_cast<int>((PERCENTAGE(text.getSizeX()) + 0.8) * 25));
-        //entity->setCharacterSize(25);
         entity->setStyle(sf::Text::Bold);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
         entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
@@ -140,7 +139,6 @@ std::string Graphic::SFML::handleEvent() {
             case sf::Event::KeyReleased:
                 switch (event.key.code) {
                     case sf::Keyboard::Escape:
-                        //this->_operational = false;
                         return (KeyboardEvent_s::ESC);
                     case sf::Keyboard::A:
                         return (KeyboardEvent_s::NEXT_GRAPHIC);
