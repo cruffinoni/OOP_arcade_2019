@@ -52,13 +52,11 @@ namespace Game {
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
 
             struct player_s {
-                player_s() : score(0, "pacman") {};
-
                 int elapsedTime;
                 Vector2f position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;
-                Score::Game score;
+                std::size_t score;
             };
             player_s _player;
             GameDataType _data;
