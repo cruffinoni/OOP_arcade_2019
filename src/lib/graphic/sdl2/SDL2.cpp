@@ -27,7 +27,7 @@ extern "C" {
     }
 }
 
-Graphic::SDL2::SDL2() {
+Graphic::SDL2::SDL2() : _ticks(0) {
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
     _window = SDL_CreateWindow("Arcade", SDL_WINDOWPOS_CENTERED,

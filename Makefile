@@ -40,8 +40,20 @@ test: core
 graphicals:
 	$(MAKE) -C $(GRAPHIC_PATH)
 
+graphicals_re:
+	$(MAKE) -C $(GRAPHIC_PATH) re
+
+graphicals_debug:
+	$(MAKE) -C $(GRAPHIC_PATH) debug
+
 games:
 	$(MAKE) -C $(GAME_PATH)
+
+games_re:
+	$(MAKE) -C $(GAME_PATH) re
+
+games_debug:
+	$(MAKE) -C $(GAME_PATH) debug
 
 debug:
 	g++ -o $(NAME) $(SRC) $(MAIN_FILE) $(CXXFLAGS) -g

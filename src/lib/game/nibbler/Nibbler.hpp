@@ -49,9 +49,6 @@ namespace Game {
                 WEST
             };
 
-            // 1100
-            // 0011
-
             enum GAME_STATE {
                 GAME,
                 SCORE

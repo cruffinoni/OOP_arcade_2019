@@ -8,6 +8,7 @@
 #ifndef OOP_ARCADE_2019_SFML_HPP
 #define OOP_ARCADE_2019_SFML_HPP
 
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include "graphic/IGraphic.hpp"
 
@@ -15,7 +16,7 @@ namespace Graphic {
     class SFML : public IGraphic {
         public:
             SFML();
-            ~SFML();
+            ~SFML() = default;
 
             #ifndef PERCENTAGE
                 #define PERCENTAGE(a) (a / 100.f)
@@ -36,9 +37,9 @@ namespace Graphic {
             static const uint WINDOW_HEIGHT = 800;
 
         private:
-            sf::RenderWindow *_window;
+            std::shared_ptr<sf::RenderWindow> _window;
             std::vector<sf::Drawable *> _entities;
-            sf::Font *_font;
+            std::shared_ptr<sf::Font> _font;
             bool _operational;
     };
 }
