@@ -43,6 +43,7 @@ Graphic::SFML::SFML() : _operational(true) {
 }
 
 Graphic::SFML::~SFML() {
+    //this->_window->close();
     //delete this->_font;
     //delete this->_window;
 }
@@ -133,42 +134,46 @@ std::string Graphic::SFML::handleEvent() {
         switch (event.type) {
             case sf::Event::Closed:
                 this->_operational = false;
-                return (KeyboardEvent_s::KEY_UNKNOWN);
+                return (KeyboardEvent_s::UNKNOWN);
             case sf::Event::KeyReleased:
                 switch (event.key.code) {
                     case sf::Keyboard::Escape:
                         //this->_operational = false;
-                        return (KeyboardEvent_s::KEY_ESCAPE);
+                        return (KeyboardEvent_s::ESC);
                     case sf::Keyboard::A:
-                        return (KeyboardEvent_s::KEY_A);
-                    case sf::Keyboard::B:
-                        return (KeyboardEvent_s::KEY_B);
+                        return (KeyboardEvent_s::NEXT_GRAPHIC);
                     case sf::Keyboard::C:
-                        return (KeyboardEvent_s::KEY_C);
-                    case sf::Keyboard::D:
-                        return (KeyboardEvent_s::KEY_D);
+                        return (KeyboardEvent_s::PREV_GAME);
                     case sf::Keyboard::E:
-                        return (KeyboardEvent_s::KEY_E);
+                        return (KeyboardEvent_s::NEXT_GAME);
                     case sf::Keyboard::R:
-                        return (KeyboardEvent_s::KEY_R);
+                        return (KeyboardEvent_s::RESTART);
+                    case sf::Keyboard::W:
+                        return (KeyboardEvent_s::PREV_GRAPHIC);
                     case sf::Keyboard::Up:
-                        return (KeyboardEvent_s::KEY_UP);
+                    case sf::Keyboard::Z:
+                        return (KeyboardEvent_s::UP);
                     case sf::Keyboard::Down:
-                        return (KeyboardEvent_s::KEY_DOWN);
+                    case sf::Keyboard::S:
+                        return (KeyboardEvent_s::DOWN);
                     case sf::Keyboard::Left:
-                        return (KeyboardEvent_s::KEY_LEFT);
+                    case sf::Keyboard::Q:
+                        return (KeyboardEvent_s::LEFT);
                     case sf::Keyboard::Right:
-                        return (KeyboardEvent_s::KEY_RIGHT);
+                    case sf::Keyboard::D:
+                        return (KeyboardEvent_s::RIGHT);
                     case sf::Keyboard::Return:
-                        return (KeyboardEvent_s::KEY_ENTER);
+                        return (KeyboardEvent_s::ENTER);
+                    case sf::Keyboard::Space:
+                        return (KeyboardEvent_s::SPACE);
                     default:
-                        return (KeyboardEvent_s::KEY_UNKNOWN);
+                        return (KeyboardEvent_s::UNKNOWN);
                 }
             default:
                 break;
         }
     }
-    return (KeyboardEvent_s::KEY_UNKNOWN);
+    return (KeyboardEvent_s::UNKNOWN);
 }
 
 bool Graphic::SFML::isOperational() {

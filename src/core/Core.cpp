@@ -6,10 +6,10 @@
 */
 
 #include <iostream>
+#include <algorithm>
 #include <chrono>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <cstring>
 #include <dirent.h>
 #include "soLoader/SoLoader.hpp"
 #include "Core.hpp"
@@ -22,34 +22,33 @@ void Core::Core::readFolder(const std::string &folderName) {
         throw Exceptions::MissingMandatoryFolder(folderName);
     dirent = readdir(dir);
     while (dirent != nullptr) {
-        if (strstr(dirent->d_name, ".so") != nullptr && dirent->d_type == DT_REG)
-            this->_lib[folderName].push_back(std::string("./" + folderName + "/" + dirent->d_name));
+        std::experimental::filesystem::path file("./" + folderName + "/" + dirent->d_name);
+        if (file.extension() == ".so" && dirent->d_type == DT_REG)
+            this->_lib[folderName].push_back(std::experimental::filesystem::canonical(file));
         dirent = readdir(dir);
     }
     closedir(dir);
 }
 
-Core::Core::Core() : _gameSelected(0), _score(0, "none") {
+Core::Core::Core(const std::string &graphicalLib) : _score(0, "none") {
     Core::Core::createScoreFolder();
-
+    this->useGraphic(graphicalLib);
     for (auto &i: this->MANDATORY_FOLDERS) {
+        this->_selection[i] = 0;
         this->readFolder(i);
         if (this->_lib[i].empty())
             throw Exceptions::EmptyMandatoryFolder(i);
         for (auto &k: this->_lib[i])
             std::cout << k << std::endl;
     }
-    this->useGame(this->_lib["games"].front());
-}
-
-void Core::Core::useGraphic(const std::string &filename) {
-    _graphic.changeDLL(filename);
-    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
-}
-
-void Core::Core::useGame(const std::string &filename) {
-    _game.changeDLL(filename);
-    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
+    this->useGame( this->_lib["games"].front());
+    auto iterator = std::find(this->_lib["lib"].begin(),
+                              this->_lib["lib"].end(),
+                              std::experimental::filesystem::canonical(this->_graphic.getLibPath()));
+    if (iterator == this->_lib["lib"].end())
+        throw Exceptions::UnknownGraphicalLib(this->_graphic.getLibPath());
+    else
+        this->_selection["lib"] = std::distance(this->_lib["lib"].begin(), iterator);
 }
 
 void Core::Core::run() {
@@ -66,8 +65,8 @@ void Core::Core::run() {
         try {
             this->_graphic->clearScreen();
             auto event = this->_graphic->handleEvent();
-            if (this->_gameSelected == -1) {
-                if (event != KeyboardEvent_s::KEY_UNKNOWN) {
+            if (IS_IN_GAME(this)) {
+                if (event != KeyboardEvent_s::UNKNOWN) {
                     printf("Event: '%s'\n", event.c_str());
                     if (!this->handleInternalKey(event))
                         this->_game->handleEvent(event);
@@ -79,11 +78,8 @@ void Core::Core::run() {
                 this->_game->handleRender(*this->_graphic.getInstance());
                 createStripGame();
             } else {
-                if (!this->handleInternalKey(event)) {
-                    this->menuEvents(event);
-                    this->renderMenu();
-                    createStripMenu();
-                }
+                this->handleInternalKey(event);
+                createStripMenu();
                 this->renderMenu();
             }
             this->_graphic->drawScreen();

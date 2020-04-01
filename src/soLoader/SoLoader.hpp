@@ -33,7 +33,7 @@ namespace SoLoader {
             SoLoader() : _instance(nullptr), _dll(nullptr) {
             }
 
-            void changeDLL(const std::string &DLLPath) {
+            void changeSo(const std::string &DLLPath) {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
                 try {

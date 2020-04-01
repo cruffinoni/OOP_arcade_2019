@@ -33,8 +33,7 @@ int main(const int ac, const char **av)
         return (84);
     }
     try {
-        Core::Core core;
-        core.useGraphic(av[1]);
+        Core::Core core(av[1]);
         core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
@@ -50,6 +49,9 @@ int main(const int ac, const char **av)
         std::cerr << e.what();
         return (84);
     } catch (const Core::Exceptions::EmptyMandatoryFolder &e) {
+        std::cerr << e.what();
+        return (84);
+    } catch (const Core::Exceptions::UnknownGraphicalLib &e) {
         std::cerr << e.what();
         return (84);
     }

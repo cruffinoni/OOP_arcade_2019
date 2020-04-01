@@ -8,16 +8,18 @@
 #include "Core.hpp"
 
 bool Core::Core::handleInternalKey(const std::string &key) {
-    std::array<std::pair<const char *, Core::libChanger>, 5> keys = {
+    std::array<std::pair<const char *, Core::libChanger>, 6> keys = {
         // Graphic lib
-        std::make_pair(KeyboardEvent_s::KEY_A, &Core::Core::nextLib),
-        std::make_pair(KeyboardEvent_s::KEY_W, &Core::Core::previousLib),
+        std::make_pair(KeyboardEvent_s::NEXT_GRAPHIC, &Core::Core::nextLib),
+        std::make_pair(KeyboardEvent_s::PREV_GRAPHIC, &Core::Core::previousLib),
 
         // Game lib
-        std::make_pair(KeyboardEvent_s::KEY_E, &Core::Core::nextLib),
-        std::make_pair(KeyboardEvent_s::KEY_C, &Core::Core::previousLib),
+        std::make_pair(KeyboardEvent_s::NEXT_GAME, &Core::Core::nextLib),
+        std::make_pair(KeyboardEvent_s::PREV_GAME, &Core::Core::previousLib),
 
-        std::make_pair(KeyboardEvent_s::KEY_ESCAPE, &Core::Core::exitKey),
+        // Important key
+        std::make_pair(KeyboardEvent_s::ESC, &Core::Core::exitKey),
+        std::make_pair(KeyboardEvent_s::ENTER, &Core::Core::enterGame),
     };
     for (std::size_t i = 0; i != keys.size(); i++) {
         if (keys[i].first == key) {
@@ -29,17 +31,20 @@ bool Core::Core::handleInternalKey(const std::string &key) {
 }
 
 void Core::Core::previousLib(bool graphical) {
-    std::string categoryName = this->MANDATORY_FOLDERS[graphical];
-    std::string libName = this->_lib[categoryName].back();
+    const std::string categoryName = this->MANDATORY_FOLDERS[graphical];
+    auto iterator = this->_lib[categoryName].begin();
 
-    this->_lib[categoryName].pop_back();
-    this->_lib[categoryName].emplace_front(libName);
-    std::cout << "Changing backward [\"" << categoryName << "\"] dll to: " << libName << std::endl;
+    if (this->_selection[categoryName] == 0)
+        this->_selection[categoryName] = static_cast<short>(this->_lib[categoryName].size() - 1);
+    else
+        this->_selection[categoryName]--;
+    std::advance(iterator, this->_selection[categoryName]);
+    std::cout << "Changing backward [\"" << categoryName << "\"] dll to: " << *iterator << std::endl;
     try {
         if (graphical)
-            this->_graphic.changeDLL(libName);
+            this->useGraphic(*iterator);
         else
-            this->_game.changeDLL(libName);
+            this->useGame(*iterator);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         throw e;
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
@@ -49,16 +54,19 @@ void Core::Core::previousLib(bool graphical) {
 
 void Core::Core::nextLib(bool graphical) {
     std::string categoryName = this->MANDATORY_FOLDERS[graphical];
-    this->_lib[categoryName].emplace_back(this->_lib[categoryName].front());
-    this->_lib[categoryName].pop_front();
+    auto iterator = this->_lib[categoryName].begin();
 
-    std::string libName = this->_lib[categoryName].front();
-    std::cout << "Changing forward [\"" << categoryName << "\"] dll to: " << libName << std::endl;
+    if (this->_selection[categoryName] == static_cast<short>(this->_lib[categoryName].size() - 1))
+        this->_selection[categoryName] = 0;
+    else
+        this->_selection[categoryName]++;
+    std::advance(iterator, this->_selection[categoryName]);
+    std::cout << "Changing forward [\"" << categoryName << "\"] dll to: " << *iterator << std::endl;
     try {
         if (graphical)
-            this->_graphic.changeDLL(libName);
+            this->useGraphic(*iterator);
         else
-            this->_game.changeDLL(libName);
+            this->useGame(*iterator);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         throw e;
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
@@ -67,8 +75,15 @@ void Core::Core::nextLib(bool graphical) {
 }
 
 void Core::Core::exitKey(bool) {
-    if (this->_gameSelected == -1)
-        this->_gameSelected = 0;
+    if (IS_IN_GAME(this)) {
+        for (auto &i : this->MANDATORY_FOLDERS)
+            this->_selection[i] = 0;
+    }
     else
         throw Exceptions::ExitGame();
+}
+
+void Core::Core::enterGame(bool) {
+    for (auto &i : this->MANDATORY_FOLDERS)
+        this->_selection[i] = -1;
 }

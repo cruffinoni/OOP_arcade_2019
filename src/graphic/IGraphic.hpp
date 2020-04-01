@@ -12,20 +12,22 @@
 #include "Drawables.hpp"
 
 struct KeyboardEvent_s {
-    static constexpr const char *KEY_A = "EVENT_KEY_A";
-    static constexpr const char *KEY_B = "EVENT_KEY_B";
-    static constexpr const char *KEY_C = "EVENT_KEY_C";
-    static constexpr const char *KEY_D = "EVENT_KEY_D";
-    static constexpr const char *KEY_E = "EVENT_KEY_E";
-    static constexpr const char *KEY_R = "EVENT_KEY_R";
-    static constexpr const char *KEY_W = "EVENT_KEY_W";
-    static constexpr const char *KEY_UP = "EVENT_KEY_UP";
-    static constexpr const char *KEY_DOWN = "EVENT_KEY_DOWN";
-    static constexpr const char *KEY_LEFT = "EVENT_KEY_LEFT";
-    static constexpr const char *KEY_RIGHT = "EVENT_KEY_RIGHT";
-    static constexpr const char *KEY_ENTER = "EVENT_KEY_ENTER";
-    static constexpr const char *KEY_ESCAPE = "EVENT_KEY_ESCAPE";
-    static constexpr const char *KEY_UNKNOWN = "EVENT_KEY_UNKNWON";
+    static constexpr const char *NEXT_GAME = "next_game";
+    static constexpr const char *PREV_GAME = "prev_game";
+    static constexpr const char *RESTART = "restart";
+    static constexpr const char *NEXT_GRAPHIC = "next_graphic";
+    static constexpr const char *PREV_GRAPHIC = "prev_graphic";
+
+    static constexpr const char *RIGHT = "right";
+    static constexpr const char *UP = "up";
+    static constexpr const char *DOWN = "down";
+    static constexpr const char *LEFT = "left";
+
+    static constexpr const char *ENTER = "enter";
+    static constexpr const char *ESC = "menu";
+    static constexpr const char *SPACE = "space";
+
+    static constexpr const char *UNKNOWN = "unknown";
 };
 
 #define FONT_FILENAME "/usr/share/fonts/liberation/LiberationMono-Regular.ttf"

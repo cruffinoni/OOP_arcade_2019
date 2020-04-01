@@ -53,7 +53,7 @@ int Score::Game::operator*() {
 }
 
 void Score::Game::handleEvent(std::string &letter) {
-    if (letter == KeyboardEvent_s::KEY_ENTER) {
+    if (letter == KeyboardEvent_s::ENTER) {
         try {
             this->saveScore();
         } catch (const Score::Exceptions::InvalidFile &e) {

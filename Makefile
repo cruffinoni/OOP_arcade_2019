@@ -17,10 +17,11 @@ SRC				=	./src/soLoader/Exceptions.cpp		\
 					./src/core/score/Game.cpp			\
 					./src/core/menu/Menu.cpp			\
 					./src/core/menu/Strip.cpp			\
+					./src/core/menu/Utils.cpp			\
 
 INCLUDE			=	./src/
 
-CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl -fPIC
+CXXFLAGS		=	-Wall -Wextra -I $(INCLUDE) -ldl -fPIC -lstdc++fs
 
 OBJ				=	$(SRC:.cpp=.o)
 OBJ_MAIN		=	$(MAIN_FILE:.cpp=.o)

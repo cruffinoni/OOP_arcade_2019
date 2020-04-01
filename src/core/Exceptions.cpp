@@ -23,19 +23,9 @@ const char *Core::Exceptions::MissingMandatoryFolder::what() const noexcept {
     return (msg.c_str());
 }
 
-Core::Exceptions::MissingMandatoryFolder::MissingMandatoryFolder(
-    const Exceptions::MissingMandatoryFolder &a) noexcept {
-    this->_name = a._name;
-}
-
 Core::Exceptions::EmptyMandatoryFolder::EmptyMandatoryFolder(
     const std::string &name) noexcept {
     this->_name = name;
-}
-
-Core::Exceptions::EmptyMandatoryFolder::EmptyMandatoryFolder(
-    const Exceptions::EmptyMandatoryFolder &a) noexcept {
-    this->_name = a._name;
 }
 
 const char *Core::Exceptions::EmptyMandatoryFolder::what() const noexcept {
@@ -45,16 +35,9 @@ const char *Core::Exceptions::EmptyMandatoryFolder::what() const noexcept {
     return (msg.c_str());
 }
 
-
-
 Core::Exceptions::InvalidScorePath::InvalidScorePath(
     const std::string &name) noexcept {
     this->_name = name;
-}
-
-Core::Exceptions::InvalidScorePath::InvalidScorePath(
-    const Exceptions::InvalidScorePath &a) noexcept {
-    this->_name = a._name;
 }
 
 const char *Core::Exceptions::InvalidScorePath::what() const noexcept {
@@ -66,4 +49,17 @@ const char *Core::Exceptions::InvalidScorePath::what() const noexcept {
 
 const char *Core::Exceptions::ExitGame::what() const noexcept {
     return ("Exit game gracefully\n");
+}
+
+
+Core::Exceptions::UnknownGraphicalLib::UnknownGraphicalLib(
+    const std::string &name) noexcept {
+    this->_name = name;
+}
+
+const char *Core::Exceptions::UnknownGraphicalLib::what() const noexcept {
+    const static std::string msg = "The graphical library below '" + this->_name + "'"
+           "has been loaded but the file is not available anymore. It can be an internal error\n";
+
+    return (msg.c_str());
 }

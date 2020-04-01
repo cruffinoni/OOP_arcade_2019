@@ -47,23 +47,23 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f), _state(Nibbler::GAME_STATE::GAME
 void Game::Nibbler::handleEvent(std::string &name) {
     std::array<std::string, 8> keys = {
         // Default keys
-        KeyboardEvent_s::KEY_UP,
-        KeyboardEvent_s::KEY_DOWN,
-        KeyboardEvent_s::KEY_RIGHT,
-        KeyboardEvent_s::KEY_LEFT,
+        KeyboardEvent_s::UP,
+        KeyboardEvent_s::DOWN,
+        KeyboardEvent_s::RIGHT,
+        KeyboardEvent_s::LEFT,
         // Cheats
-        KeyboardEvent_s::KEY_A,
-        KeyboardEvent_s::KEY_B,
-        KeyboardEvent_s::KEY_R,
-
-        // Special key
-        KeyboardEvent_s::KEY_ENTER,
+        //KeyboardEvent_s::NEXT_GRAPHIC,
+        //KeyboardEvent_s::KEY_B,
+        //KeyboardEvent_s::RESTART,
+        //
+        //// Special key
+        //KeyboardEvent_s::ENTER,
     };
-    void (Game::Nibbler::*gameCheatsFunc[])() = {
-        &Game::Nibbler::addNode,
-        &Game::Nibbler::spawnReward,
-        &Game::Nibbler::resetPlayer,
-    };
+    //void (Game::Nibbler::*gameCheatsFunc[])() = {
+    //    &Game::Nibbler::addNode,
+    //    &Game::Nibbler::spawnReward,
+    //    &Game::Nibbler::resetPlayer,
+    //};
 
     for (std::size_t i = 0, j = keys.size(), middle = (keys.size() + 1) / 2; i < j; i++) {
         if (keys[i] != name)
@@ -83,11 +83,12 @@ void Game::Nibbler::handleEvent(std::string &name) {
         if (i < middle) {
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
-        } else if (keys[i] != KeyboardEvent_s::KEY_ENTER) {
-            printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
-            (this->*gameCheatsFunc[i - middle])();
-            return;
         }
+        //} else if (keys[i] != KeyboardEvent_s::ENTER) {
+        //    printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
+        //    (this->*gameCheatsFunc[i - middle])();
+        //    return;
+        //}
     }
 }
 
@@ -140,7 +141,6 @@ void Game::Nibbler::setGameData(IGame::GameDataType &data) {
     // TODO: Score, XP, Death, lives, game state, etc.
     //  What's for?
     this->_data = data;
-    this->_player.score = 54;
 }
 
 IGame::GameDataType Game::Nibbler::getGameData() {

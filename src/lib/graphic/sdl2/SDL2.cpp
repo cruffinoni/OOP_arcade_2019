@@ -114,45 +114,46 @@ std::string Graphic::SDL2::handleEvent() {
     switch (events.type) {
         case SDL_QUIT:
             _running = false;
-            return (KeyboardEvent_s::KEY_UNKNOWN);
+            return (KeyboardEvent_s::UNKNOWN);
         case SDL_KEYDOWN:
             if (events.key.repeat)
-                return (KeyboardEvent_s::KEY_UNKNOWN);
+                return (KeyboardEvent_s::UNKNOWN);
             switch (events.key.keysym.sym) {
                 case SDLK_a:
-                    return (KeyboardEvent_s::KEY_A);
-                case SDLK_b:
-                    return (KeyboardEvent_s::KEY_B);
+                    return (KeyboardEvent_s::NEXT_GRAPHIC);
                 case SDLK_ESCAPE:
-                    //this->_running = false;
-                    return (KeyboardEvent_s::KEY_ESCAPE);
+                    return (KeyboardEvent_s::ESC);
                 case SDLK_c:
-                    return (KeyboardEvent_s::KEY_C);
-                case SDLK_d:
-                    return (KeyboardEvent_s::KEY_D);
+                    return (KeyboardEvent_s::PREV_GAME);
                 case SDLK_e:
-                    return (KeyboardEvent_s::KEY_E);
+                    return (KeyboardEvent_s::NEXT_GAME);
                 case SDLK_w:
-                    return (KeyboardEvent_s::KEY_W);
+                    return (KeyboardEvent_s::PREV_GRAPHIC);
                 case SDLK_RETURN:
-                    return (KeyboardEvent_s::KEY_ENTER);
+                    return (KeyboardEvent_s::ENTER);
                 case SDLK_r:
-                    return (KeyboardEvent_s::KEY_R);
+                    return (KeyboardEvent_s::RESTART);
                 case SDLK_UP:
-                    return (KeyboardEvent_s::KEY_UP);
+                case SDLK_z:
+                    return (KeyboardEvent_s::UP);
                 case SDLK_DOWN:
-                    return (KeyboardEvent_s::KEY_DOWN);
+                case SDLK_s:
+                    return (KeyboardEvent_s::DOWN);
                 case SDLK_LEFT:
-                    return (KeyboardEvent_s::KEY_LEFT);
+                case SDLK_q:
+                    return (KeyboardEvent_s::LEFT);
                 case SDLK_RIGHT:
-                    return (KeyboardEvent_s::KEY_RIGHT);
+                case SDLK_d:
+                    return (KeyboardEvent_s::RIGHT);
+                case SDLK_SPACE:
+                    return (KeyboardEvent_s::SPACE);
                 default:
-                    return (KeyboardEvent_s::KEY_UNKNOWN);
+                    return (KeyboardEvent_s::UNKNOWN);
             }
         default:
             break;
     }
-    return (KeyboardEvent_s::KEY_UNKNOWN);
+    return (KeyboardEvent_s::UNKNOWN);
 }
 
 bool Graphic::SDL2::isOperational() {

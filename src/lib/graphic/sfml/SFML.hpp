@@ -33,7 +33,7 @@ namespace Graphic {
             bool isOperational() override;
 
             static const uint WINDOW_WIDTH = 800;
-            static const uint WINDOW_HEIGHT = 600;
+            static const uint WINDOW_HEIGHT = 800;
 
         private:
             sf::RenderWindow *_window;

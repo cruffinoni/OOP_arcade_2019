@@ -109,27 +109,35 @@ void Graphic::Ncurses::drawText(Text text) {
 std::string Graphic::Ncurses::handleEvent() {
     int c = getch();
 
-    if (c >= 97 && c <= 122) {
-        std::string key = "EVENT_KEY_";
-        key.push_back(c - 32);
-        return (key);
-    }
     switch (c) {
+        case 'r':
+            return (KeyboardEvent_s::RESTART);
+        case 'c':
+            return (KeyboardEvent_s::PREV_GAME);
+        case 'a':
+            return (KeyboardEvent_s::NEXT_GRAPHIC);
+        case 'w':
+            return (KeyboardEvent_s::PREV_GRAPHIC);
+        case 'e':
+            return (KeyboardEvent_s::NEXT_GAME);
         case KEY_ESCAPE:
-            //this->_alive = false;
-            return ("EVENT_KEY_ESCAPE");
+            return (KeyboardEvent_s::ESC);
         case KEY_UP:
-            return "EVENT_KEY_UP";//(IEventIterator::KEY_UP);
+        case 'z':
+            return (KeyboardEvent_s::UP);
         case KEY_DOWN:
-            return "EVENT_KEY_DOWN";//(IEventIterator::KEY_DOWN);
+        case 's':
+            return (KeyboardEvent_s::DOWN);
         case KEY_LEFT:
-            return "EVENT_KEY_LEFT";//(IEventIterator::KEY_LEFT);
+        case 'q':
+            return (KeyboardEvent_s::LEFT);
         case KEY_RIGHT:
-            return "EVENT_KEY_RIGHT";//(IEventIterator::KEY_RIGHT);
+        case 'd':
+            return (KeyboardEvent_s::RIGHT);
         case KEY_ENTER:
-            return "EVENT_KEY_ENTER";
+            return (KeyboardEvent_s::ENTER);
         default:
-            return (KeyboardEvent_s::KEY_UNKNOWN);
+            return (KeyboardEvent_s::UNKNOWN);
     }
 }
 

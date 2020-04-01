@@ -11,6 +11,7 @@
 #include <string>
 #include <list>
 #include <core/score/Score.hpp>
+#include <experimental/filesystem>
 #include "game/IGame.hpp"
 #include "graphic/IGraphic.hpp"
 #include "soLoader/SoLoader.hpp"
@@ -26,7 +27,7 @@ namespace Core {
              */
             typedef void (Core::Core::*libChanger)(bool);
 
-            Core();
+            explicit Core(const std::string &graphicalLib);
             ~Core() = default;
 
             void useGraphic(const std::string &filename);
@@ -57,29 +58,30 @@ namespace Core {
             void previousLib(bool graphical);
             void nextLib(bool graphical);
             void exitKey(bool);
+            void enterGame(bool);
 
-            void menuEvents(std::string &event);
+            // Menu
             void renderMenu();
             std::string drawGames(Vector2f &final_pos);
             void drawGraphicalLib(Vector2f &position);
             void drawScore(const std::string &game, Vector2f &pos);
             void drawPlayerName(Vector2f &position);
             static std::string getLibName(std::string libName, bool uppercase = true);
-            short _gameSelected;
-
+            std::map<std::string, short> _selection;
+            #define IS_IN_GAME(a) (a->_selection["games"] == -1)
             void createStripGame();
             void createStripMenu();
-
             const Vector2f DEFAULT_SMALL_TEXT_SIZE = {10.f, 7.5f};
             const Vector2f DEFAULT_TEXT_SIZE = {20.f, 15.f};
             const Vector2f DEFAULT_MEDIUM_TEXT_SIZE = {25.f, 20.f};
             const Vector2f DEFAULT_TITLE_SIZE = {40.f, 30.f};
 
+            // Libraries
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
             std::map<std::string, std::string> _scores;
-            std::map<std::string, std::list<std::string>> _lib;
+            std::map<std::string, std::list<std::experimental::filesystem::path>> _lib;
             Score::Game _score;
     };
 
@@ -94,7 +96,6 @@ namespace Core {
         class MissingMandatoryFolder : public std::exception {
             public:
                 explicit MissingMandatoryFolder(const std::string &name) noexcept;
-                MissingMandatoryFolder(const MissingMandatoryFolder &a) noexcept;
                 MissingMandatoryFolder() = delete;
 
                 const char *what() const noexcept override;
@@ -106,7 +107,6 @@ namespace Core {
         class EmptyMandatoryFolder : public std::exception {
             public:
                 explicit EmptyMandatoryFolder(const std::string &name) noexcept;
-                EmptyMandatoryFolder(const EmptyMandatoryFolder &a) noexcept;
                 EmptyMandatoryFolder() = delete;
 
                 const char *what() const noexcept override;
@@ -118,8 +118,18 @@ namespace Core {
         class InvalidScorePath : public std::exception {
             public:
                 explicit InvalidScorePath(const std::string &name) noexcept;
-                InvalidScorePath(const InvalidScorePath &a) noexcept;
                 InvalidScorePath() = delete;
+
+                const char *what() const noexcept override;
+
+            private:
+                std::string _name;
+        };
+
+        class UnknownGraphicalLib : public std::exception {
+            public:
+                explicit UnknownGraphicalLib(const std::string &name) noexcept;
+                UnknownGraphicalLib() = delete;
 
                 const char *what() const noexcept override;
 
