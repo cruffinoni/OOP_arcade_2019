@@ -5,7 +5,6 @@
 ** Map.cpp - File used to generate pacman map
 */
 
-#include <iostream>
 #include "Pacman.hpp"
 
 void Game::Pacman::generateMap() {

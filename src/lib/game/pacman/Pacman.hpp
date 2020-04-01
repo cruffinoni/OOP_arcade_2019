@@ -26,6 +26,7 @@ namespace Game {
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
             void generateMap();
+            void checkPlayerEat();
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
             void drawPacGom(int x, int y, int sizeX, int sizeY);
@@ -51,7 +52,7 @@ namespace Game {
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
 
             struct player_s {
-                player_s() : position(10.f, 10.f),
+                player_s() : position(5.f, 5.f),
                 direction(IDLE), death(0), score(0), elapsedTime(0) {};
 
                 int elapsedTime;

@@ -5,6 +5,7 @@
 ** Pacman.cpp
 */
 
+#include <algorithm>
 #include "Pacman.hpp"
 
 static Game::Pacman *instance;
@@ -55,6 +56,14 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
                 break;
         }
         this->_player.elapsedTime = 0;
+    }
+    this->checkPlayerEat();
+}
+
+void Game::Pacman::checkPlayerEat() {
+    if (std::count(this->_pacGoms.begin(), this->_pacGoms.end(), this->_player.position) > 0) {
+        this->_pacGoms.remove(this->_player.position);
+        this->_player.score += 10;
     }
 }
 
