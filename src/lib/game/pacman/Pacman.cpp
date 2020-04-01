@@ -27,6 +27,7 @@ extern "C" {
 
 Game::Pacman::Pacman() {
     this->generateMap();
+    this->resetPlayer();
     this->_state = GAME;
 }
 
@@ -65,6 +66,13 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
         }
         this->_player.elapsedTime = 0;
     }
+}
+
+void Game::Pacman::resetPlayer() {
+    this->_player.position.clear();
+    this->_player.score.reset();
+    this->_player.position.emplace_back(10.f, 10.f);
+    this->_player.direction = IDLE;
 }
 
 void Game::Pacman::setGameData(IGame::GameDataType &data) {

@@ -26,12 +26,16 @@ namespace Game {
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
             void generateMap();
+            void resetPlayer();
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
+            void drawPacGom(int x, int y, int sizeX, int sizeY);
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
+            const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
             const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
+            const Color PACGOM_COLOR = Color::Green();
             enum PLAYER_DIRECTION {
                 NORTH,
                 SOUTH,
@@ -48,10 +52,10 @@ namespace Game {
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
 
             struct player_s {
-                player_s() : score(0, "nibbler") {};
+                player_s() : score(0, "pacman") {};
 
                 int elapsedTime;
-                std::list<Vector2f> position;
+                Vector2f position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;
                 Score::Game score;
@@ -59,5 +63,6 @@ namespace Game {
             player_s _player;
             GameDataType _data;
             std::vector<Vector2f> _map;
+            std::list<Vector2f> _pacGoms;
     };
 }

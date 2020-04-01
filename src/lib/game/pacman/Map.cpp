@@ -5,6 +5,7 @@
 ** Map.cpp - File used to generate pacman map
 */
 
+#include <iostream>
 #include "Pacman.hpp"
 
 void Game::Pacman::generateMap() {
@@ -35,6 +36,42 @@ void Game::Pacman::generateMap() {
     this->drawSquare(15, 11, 4, 2);
     this->drawSquare(15, 14, 3, 2);
     this->drawSquare(12, 14, 2, 2);
+    this->drawPacGom(1, 1, 1, 17);
+    this->drawPacGom(2, 1, 7, 1);
+    this->drawPacGom(2, 4, 17, 1);
+    this->drawPacGom(8, 2, 1, 2);
+    this->drawPacGom(11, 1, 8, 1);
+    this->drawPacGom(11, 2, 1, 2);
+    this->drawPacGom(18, 2, 1, 2);
+    this->drawPacGom(4, 5, 1, 2);
+    this->drawPacGom(10, 5, 1, 2);
+    this->drawPacGom(16, 5, 1, 2);
+    this->drawPacGom(4, 7, 15, 1);
+    this->drawPacGom(2, 12, 2, 1);
+    this->drawPacGom(2, 17, 2, 1);
+    this->drawPacGom(4, 10, 1, 8);
+    this->drawPacGom(5, 10, 3, 1);
+    this->drawPacGom(5, 13, 3, 1);
+    this->drawPacGom(8, 8, 1, 6);
+    this->drawPacGom(9, 12, 2, 1);
+    this->drawPacGom(4, 16, 15, 1);
+    this->drawPacGom(11, 8, 1, 8);
+    this->drawPacGom(14, 8, 1, 8);
+    this->drawPacGom(12, 13, 2, 1);
+    this->drawPacGom(15, 13, 3, 1);
+    this->drawPacGom(18, 13, 1, 3);
+    this->drawPacGom(18, 8, 1, 3);
+    this->drawPacGom(15, 10, 3, 1);
+}
+
+void Game::Pacman::drawPacGom(int x, int y, int sizeX, int sizeY) {
+    for (int i = 0; i < sizeY; ++i) {
+        for (int z = 0; z < sizeX; ++z) {
+            this->_pacGoms.emplace_back(
+                (static_cast<float>(x + z) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
+                (static_cast<float>(y + i) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
+        }
+    }
 }
 
 void Game::Pacman::drawSquare(int x, int y, int sizeX, int sizeY) {

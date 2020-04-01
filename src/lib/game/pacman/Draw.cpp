@@ -17,6 +17,13 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
             Game::Pacman::WALL_COLOR,
         });
     }
+    for (Vector2f &pacGom : this->_pacGoms) {
+        renderer.drawCircle(Circle {
+            pacGom,
+            this->DEFAULT_PACGOM_SIZE,
+            this->PACGOM_COLOR
+        });
+    }
     renderer.drawText(Text {
         std::string("Score: " + std::to_string(*this->_player.score)),
         {45.f, 0.f},
