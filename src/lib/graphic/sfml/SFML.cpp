@@ -8,6 +8,8 @@
 #include "lib/graphic/Exceptions.hpp"
 #include "SFML.hpp"
 
+#include <memory>
+
 static Graphic::SFML *instance;
 
 extern "C" {
@@ -28,10 +30,10 @@ extern "C" {
 
 Graphic::SFML::SFML() : _operational(true) {
     try {
-        this->_font = new sf::Font();
-        this->_window = new sf::RenderWindow({
-                Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT
-            },"Arcade");
+        this->_font = std::make_shared<sf::Font>();
+        this->_window = std::make_shared<sf::RenderWindow>();
+        this->_window->setSize({Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT});
+        this->_window->setTitle("Arcade");
         this->_window->setFramerateLimit(60);
         if (!this->_font->loadFromFile(FONT_FILENAME))
             throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
@@ -42,11 +44,11 @@ Graphic::SFML::SFML() : _operational(true) {
     }
 }
 
-Graphic::SFML::~SFML() {
-    //this->_window->close();
-    //delete this->_font;
-    //delete this->_window;
-}
+//Graphic::SFML::~SFML() {
+//    //this->_window->close();
+//    //delete this->_font;
+//    //delete this->_window;
+//}
 
 void Graphic::SFML::clearScreen() {
     this->_window->clear(sf::Color::White);
