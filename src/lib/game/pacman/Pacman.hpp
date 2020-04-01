@@ -33,9 +33,11 @@ namespace Game {
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
+            const Vector2f DEFAULT_ENEMY_SIZE = {2.f, 2.f};
             const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
             const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
             const Color PACGOM_COLOR = Color::Green();
+            const Color ENEMY_COLOR = Color::Blue();
             enum PLAYER_DIRECTION {
                 NORTH,
                 SOUTH,
@@ -61,7 +63,18 @@ namespace Game {
                 std::size_t death;
                 std::size_t score;
             };
+
+            struct enemy_s {
+                enemy_s(const Vector2f &position) : elapsedTime(0),
+                isDead(false), isEatable(false), position(position) {};
+
+                int elapsedTime;
+                Vector2f position;
+                bool isDead;
+                bool isEatable;
+            };
             player_s _player;
+            std::vector<enemy_s> _enemies;
             GameDataType _data;
             std::vector<Vector2f> _map;
             std::list<Vector2f> _pacGoms;

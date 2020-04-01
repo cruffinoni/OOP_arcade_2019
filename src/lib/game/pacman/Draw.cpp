@@ -24,6 +24,13 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
             this->PACGOM_COLOR
         });
     }
+    for (enemy_s &enemy : this->_enemies) {
+        renderer.drawCircle(Circle {
+            enemy.position,
+            this->DEFAULT_ENEMY_SIZE,
+            this->ENEMY_COLOR
+        });
+    }
     renderer.drawText(Text {
         std::string("Score: " + std::to_string(this->_player.score)),
         {45.f, 0.f},

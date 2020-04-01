@@ -29,6 +29,10 @@ extern "C" {
 Game::Pacman::Pacman() {
     this->generateMap();
     this->_state = GAME;
+    this->_enemies.emplace_back(enemy_s(Vector2f(90, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2f(85, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2f(80, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2f(75, 80)));
 }
 
 void Game::Pacman::handleEvent(std::string &name) {
