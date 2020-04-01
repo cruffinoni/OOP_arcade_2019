@@ -23,21 +23,6 @@ namespace Game {
             GameDataType getGameData() override;
 
         private:
-            void drawGame(IGraphicRenderer &renderer);
-            void drawScore(IGraphicRenderer &renderer);
-            void generateMap();
-            void checkPlayerEat();
-
-            void drawSquare(int x, int y, int sizeX, int sizeY);
-            void drawPacGom(int x, int y, int sizeX, int sizeY);
-
-            const ushort MAX_MAP_SIZE = 20;
-            const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
-            const Vector2f DEFAULT_ENEMY_SIZE = {2.f, 2.f};
-            const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
-            const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
-            const Color PACGOM_COLOR = Color::Green();
-            const Color ENEMY_COLOR = Color::Blue();
             enum PLAYER_DIRECTION {
                 NORTH,
                 SOUTH,
@@ -51,7 +36,12 @@ namespace Game {
                 SCORE
             } _state;
 
-            #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
+            enum MOVES_STATES {
+                WALL,
+                ENEMY,
+                PLAYER,
+                NONE
+            };
 
             struct player_s {
                 player_s() : position(5.f, 5.f),
@@ -73,6 +63,28 @@ namespace Game {
                 bool isDead;
                 bool isEatable;
             };
+
+            void drawGame(IGraphicRenderer &renderer);
+            void drawScore(IGraphicRenderer &renderer);
+            MOVES_STATES checkMove(Vector2f entityPos, PLAYER_DIRECTION playerDirection);
+            void generateMap();
+            void movePlayer();
+            void moveEnemy(enemy_s &enemy);
+
+            void drawSquare(int x, int y, int sizeX, int sizeY);
+            void drawPacGom(int x, int y, int sizeX, int sizeY);
+
+            const ushort MAX_MAP_SIZE = 20;
+            const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
+            const Vector2f DEFAULT_ENTITY_SIZE = {2.f, 2.f};
+            const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
+            const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
+            const Color PACGOM_COLOR = Color::Green();
+            const Color ENEMY_COLOR = Color::Blue();
+            const Color PACMAN_COLOR = {245, 189, 31, 0};
+
+            #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
+
             player_s _player;
             std::vector<enemy_s> _enemies;
             GameDataType _data;

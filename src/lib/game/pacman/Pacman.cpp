@@ -36,6 +36,28 @@ Game::Pacman::Pacman() {
 }
 
 void Game::Pacman::handleEvent(std::string &name) {
+    std::array<std::string, 8> keys = {
+        // Default keys
+        KeyboardEvent_s::UP,
+        KeyboardEvent_s::DOWN,
+        KeyboardEvent_s::RIGHT,
+        KeyboardEvent_s::LEFT,
+
+        KeyboardEvent_s::RESTART,
+    };
+
+    for (std::size_t i = 0, j = keys.size(); i < j; i++) {
+        if (keys[i] != name)
+            continue;
+        if (i + 1 != j && IS_GAME_IN_PROGRESS(this)) {
+            this->_player.direction = static_cast<Pacman::PLAYER_DIRECTION>(i);
+            return;
+        } else if (keys[i] == KeyboardEvent_s::RESTART){
+            this->_state = GAME_STATE::GAME;
+            //this->resetPlayer();
+            return;
+        }
+    }
 }
 
 void Game::Pacman::handleUpdate(int elapsedTime) {
@@ -43,31 +65,12 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
         return;
     this->_player.elapsedTime += elapsedTime;
     if (this->_player.elapsedTime > 250) {
-        switch (this->_player.direction) {
-            case NORTH:
-                this->_player.position.y -= DEFAULT_SQUARE_SIZE.y;
-                break;
-            case SOUTH:
-                this->_player.position.y += DEFAULT_SQUARE_SIZE.y;
-                break;
-            case EAST:
-                this->_player.position.x += DEFAULT_SQUARE_SIZE.x;
-                break;
-            case WEST:
-                this->_player.position.x -= DEFAULT_SQUARE_SIZE.x;
-                break;
-            case IDLE:
-                break;
-        }
-        this->_player.elapsedTime = 0;
+        this->movePlayer();
     }
-    this->checkPlayerEat();
-}
-
-void Game::Pacman::checkPlayerEat() {
-    if (std::count(this->_pacGoms.begin(), this->_pacGoms.end(), this->_player.position) > 0) {
-        this->_pacGoms.remove(this->_player.position);
-        this->_player.score += 10;
+    for (enemy_s &enemy : this->_enemies) {
+        enemy.elapsedTime += elapsedTime;
+        if (enemy.elapsedTime > 250)
+            this->moveEnemy(enemy);
     }
 }
 
