@@ -35,7 +35,7 @@ void Core::Core::useGame(const std::string &filename) {
     std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
-std::string Core::Core::loadScore(const std::string &gameName) {
+Score::File Core::Core::loadScore(const std::string &gameName) {
     std::string path = Core::SCORE_PATH + gameName + ".score";
     std::ifstream file(path);
     std::ostringstream oss;
@@ -43,5 +43,5 @@ std::string Core::Core::loadScore(const std::string &gameName) {
     if (!file.is_open())
         throw Exceptions::InvalidScorePath(path);
     oss << file.rdbuf();
-    return (oss.str());
+    return (Score::File(oss.str()));
 }

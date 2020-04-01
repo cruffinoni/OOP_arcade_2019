@@ -14,7 +14,6 @@ namespace SoLoader {
     namespace Exceptions {
         class InvalidSO : std::exception {
             public:
-                InvalidSO(const InvalidSO &a) noexcept;
                 explicit InvalidSO(const std::string &DLLPath) noexcept;
                 const char *what() const noexcept override;
 
@@ -24,7 +23,6 @@ namespace SoLoader {
 
         class InvalidEntryPoint : std::exception {
             public:
-                InvalidEntryPoint(const InvalidEntryPoint &a) noexcept;
                 explicit InvalidEntryPoint(const std::string &DLLName) noexcept;
                 const char *what() const noexcept override;
 

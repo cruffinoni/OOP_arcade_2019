@@ -49,6 +49,9 @@ namespace Game {
                 WEST
             };
 
+            // 1100
+            // 0011
+
             enum GAME_STATE {
                 GAME,
                 SCORE
@@ -57,7 +60,7 @@ namespace Game {
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Nibbler::GAME_STATE::GAME)
 
             struct player_s {
-                player_s() : score(0, "nibbler") {
+                player_s() : score(0) {
                     this->elapsedTime = 0;
                     this->direction = SOUTH;
                     this->death = 0;
@@ -67,7 +70,7 @@ namespace Game {
                 std::list<Vector2f> position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;
-                Score::Game score;
+                std::size_t score;
             };
             player_s _player;
             Vector2f _reward;

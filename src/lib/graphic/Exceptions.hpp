@@ -22,7 +22,7 @@ namespace Graphic {
                 }
                 const char *what() const noexcept override  {
                     static const std::string message =
-                        "The font " + this->_font + " can not be loaded. Please verify the entered path\n";
+                        "The font " + this->_font + " can not be loaded. Please verify the entered path";
                     return (message.c_str());
                 }
 

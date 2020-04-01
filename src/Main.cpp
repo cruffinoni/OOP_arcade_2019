@@ -37,22 +37,22 @@ int main(const int ac, const char **av)
         core.run();
         return (0);
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     } catch (const Core::Exceptions::UnableCreateFolder &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     } catch (const Core::Exceptions::MissingMandatoryFolder &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     } catch (const Core::Exceptions::EmptyMandatoryFolder &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     } catch (const Core::Exceptions::UnknownGraphicalLib &e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << std::endl;
         return (84);
     }
 }

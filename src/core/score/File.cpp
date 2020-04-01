@@ -25,16 +25,25 @@ Score::File::File(const std::string &content) noexcept {
         }
         currIdx = idx + 1;
     }
+    this->sort();
+}
+
+std::list<Score::File::PlayerData> Score::File::getListUser() {
+    return (this->_formatted);
+}
+
+void Score::File::addEntry(const Score::File::PlayerData &user) {
+    this->_formatted.push_back(user);
+    this->sort();
+}
+
+void Score::File::sort() {
     this->_formatted.sort([](const PlayerData &a, const PlayerData &b) {
         return (a._score > b._score);
     });
     auto iterator = this->_formatted.begin();
     std::advance(iterator, 3);
     this->_formatted.erase(iterator, this->_formatted.end());
-}
-
-std::list<Score::File::PlayerData> Score::File::getFormattedBuffer() {
-    return (this->_formatted);
 }
 
 Score::File::PlayerData::PlayerData(const std::string &name, const long score) {

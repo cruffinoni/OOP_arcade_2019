@@ -30,7 +30,7 @@ std::string Core::Core::drawGames(Vector2f &final_pos) {
             selectedGameName = libName;
         }
         this->_graphic->drawText(Text {
-            this->getLibName(libName),
+            Core::Core::getLibName(libName),
             pos,
             this->DEFAULT_SMALL_TEXT_SIZE,
             Color::Black()
@@ -66,7 +66,7 @@ void Core::Core::drawGraphicalLib(Vector2f &position) {
             });
         }
         this->_graphic->drawText(Text {
-            this->getLibName(libName),
+            Core::Core::getLibName(libName),
             position,
             this->DEFAULT_SMALL_TEXT_SIZE,
             Color::Black()
@@ -88,7 +88,7 @@ void Core::Core::drawScore(const std::string &game, Vector2f &pos) {
         // TODO: Changer la position des scores I guess
         Score::File scoreBuffer(this->_scores[game]);
         scorePos.y += 10.f;
-        for (auto &i : scoreBuffer.getFormattedBuffer()) {
+        for (auto &i : scoreBuffer.getListUser()) {
             this->_graphic->drawText(Text {
                 i.toStr(),
                 scorePos,
@@ -118,7 +118,7 @@ void Core::Core::drawPlayerName(Vector2f &position) {
         Color::Blue()
     });
     this->_graphic->drawText(Text {
-        this->_score.getAuthor(),
+        std::string("'" + this->_score.getAuthor() + "'"),
         position,
         this->DEFAULT_MEDIUM_TEXT_SIZE,
         Color::Red()

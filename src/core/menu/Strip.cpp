@@ -28,7 +28,7 @@ void Core::Core::createStripGame() {
     });
 
     this->_graphic->drawText(Text {
-        "E: Next game  C: Previous game",
+        std::string("Player: '" + this->_score.getAuthor() + "'"),
         {50.f, 95.f},
         DEFAULT_STRIP_TEXT_SIZE,
         Color::White(),

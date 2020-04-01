@@ -51,55 +51,35 @@ void Game::Nibbler::handleEvent(std::string &name) {
         KeyboardEvent_s::DOWN,
         KeyboardEvent_s::RIGHT,
         KeyboardEvent_s::LEFT,
-        // Cheats
-        //KeyboardEvent_s::NEXT_GRAPHIC,
-        //KeyboardEvent_s::KEY_B,
-        //KeyboardEvent_s::RESTART,
-        //
-        //// Special key
-        //KeyboardEvent_s::ENTER,
-    };
-    //void (Game::Nibbler::*gameCheatsFunc[])() = {
-    //    &Game::Nibbler::addNode,
-    //    &Game::Nibbler::spawnReward,
-    //    &Game::Nibbler::resetPlayer,
-    //};
 
-    for (std::size_t i = 0, j = keys.size(), middle = (keys.size() + 1) / 2; i < j; i++) {
+        KeyboardEvent_s::RESTART,
+    };
+
+    for (std::size_t i = 0, j = keys.size(); i < j; i++) {
         if (keys[i] != name)
             continue;
-        if (!IS_GAME_IN_PROGRESS(this)) {
-            try {
-                return (this->_player.score.handleEvent(keys[i]));
-            } catch (const Score::Exceptions::InvalidFile &e) {
-                std::cerr << e.what();
-            } catch (const Score::Exceptions::FileSaved &) {
-                std::cout << "File successfully saved!" << std::endl;
-            }
+        if (i + 1 != j && IS_GAME_IN_PROGRESS(this)) {
+            uint mask = (1u << i) | (1u << this->_player.direction);
+            if ((mask == 0b1100u || mask == 0b11u) && this->_player.position.size() > 1)
+                return;
+            this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
+            return;
+        } else if (keys[i] == KeyboardEvent_s::RESTART){
             this->_state = GAME_STATE::GAME;
             this->resetPlayer();
             return;
         }
-        if (i < middle) {
-            this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
-            return;
-        }
-        //} else if (keys[i] != KeyboardEvent_s::ENTER) {
-        //    printf("[nibbler] Cheat with the key %s activated\n", keys[i].c_str());
-        //    (this->*gameCheatsFunc[i - middle])();
-        //    return;
-        //}
     }
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
-    //std::cerr << "Tick: " << elapsedTime << std::endl;
     if (!IS_GAME_IN_PROGRESS(this))
         return;
     this->_player.elapsedTime += elapsedTime;
     if (this->_player.elapsedTime > 250) {
         Vector2f prev = this->_player.position.front();
         Vector2f next(0.f, 0.f);
+
         for (auto &iter: this->_player.position) {
             next = iter;
             iter.x = prev.x;
@@ -138,13 +118,11 @@ void Game::Nibbler::handleUpdate(int elapsedTime) {
 }
 
 void Game::Nibbler::setGameData(IGame::GameDataType &data) {
-    // TODO: Score, XP, Death, lives, game state, etc.
-    //  What's for?
     this->_data = data;
 }
 
 IGame::GameDataType Game::Nibbler::getGameData() {
-    this->_data["score"] = std::to_string(*this->_player.score);
+    this->_data["score"] = std::to_string(this->_player.score);
     this->_data["death"] = std::to_string(this->_player.death);
     return (this->_data);
 }
@@ -156,7 +134,7 @@ void Game::Nibbler::addNode() {
 
 void Game::Nibbler::resetPlayer() {
     this->_player.position.clear();
-    this->_player.score.reset();
+    this->_player.score = 0;
     this->_player.position.emplace_back(50.f, 50.f);
     this->_player.direction = SOUTH;
 }

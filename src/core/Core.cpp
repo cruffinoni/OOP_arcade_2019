@@ -30,7 +30,7 @@ void Core::Core::readFolder(const std::string &folderName) {
     closedir(dir);
 }
 
-Core::Core::Core(const std::string &graphicalLib) : _score(0, "none") {
+Core::Core::Core(const std::string &graphicalLib) : _playerName(), _score() {
     Core::Core::createScoreFolder();
     this->useGraphic(graphicalLib);
     for (auto &i: this->MANDATORY_FOLDERS) {
@@ -49,6 +49,7 @@ Core::Core::Core(const std::string &graphicalLib) : _score(0, "none") {
         throw Exceptions::UnknownGraphicalLib(this->_graphic.getLibPath());
     else
         this->_selection["lib"] = std::distance(this->_lib["lib"].begin(), iterator);
+    this->updateCurrentLetter();
 }
 
 void Core::Core::run() {
@@ -84,16 +85,16 @@ void Core::Core::run() {
             }
             this->_graphic->drawScreen();
         } catch (const std::bad_alloc &e) {
-            std::cerr << e.what();
+            std::cerr << e.what() << std::endl;
             return;
         } catch (const Graphic::Exceptions::LoadFontFailed &e) {
-            std::cerr << e.what();
+            std::cerr << e.what() << std::endl;
             return;
         } catch (const SoLoader::Exceptions::InvalidSO &e) {
-            std::cerr << e.what();
+            std::cerr << e.what() << std::endl;
             return;
         } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-            std::cerr << e.what();
+            std::cerr << e.what() << std::endl;
             return;
         } catch (const Exceptions::ExitGame &) {
             std::cout << "Exit arcade project gracefully" << std::endl;

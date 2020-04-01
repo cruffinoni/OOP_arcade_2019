@@ -14,19 +14,19 @@
 namespace Score {
     class Game {
         public:
-            Game(const int amount, const std::string &gameName);
+            Game() = default;
 
-            void addLetter(std::string &letter);
-            void handleEvent(std::string &letter);
-            void saveScore() const;
+            void addLetter(const char &letter);
+            const char &getLetter(const std::size_t idx) const;
+            void setLetter(const std::size_t idx, const char c);
+            void save() const;
             std::string getAuthor() const;
+            void setScore(const std::size_t score);
+            void setGame(const std::string &game);
             void reset();
+            void removeLastLetter();
 
-            void operator++(const int);
-            Game &operator=(const int);
-            int operator*();
-
-            const std::size_t MAX_AUTHOR_NAME = 6;
+            static const std::size_t MAX_AUTHOR_NAME = 8;
 
         private:
             std::string _author;
@@ -37,6 +37,7 @@ namespace Score {
     class File {
         public:
             explicit File(const std::string &content) noexcept;
+            File() = default;
 
             class PlayerData {
                 public:
@@ -49,9 +50,11 @@ namespace Score {
                     std::string _name;
                     long _score;
             };
+            void addEntry(const PlayerData &user);
 
-                std::list<PlayerData> getFormattedBuffer();
+            std::list<PlayerData> getListUser();
         private:
+            void sort();
             std::list<PlayerData> _formatted;
     };
 
@@ -60,12 +63,6 @@ namespace Score {
         class InvalidFile : public std::exception {
             public:
                 InvalidFile() = default;
-                const char *what() const noexcept override;
-        };
-
-        class FileSaved : public std::exception {
-            public:
-                FileSaved() = default;
                 const char *what() const noexcept override;
         };
     }

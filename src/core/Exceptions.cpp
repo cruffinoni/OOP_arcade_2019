@@ -8,7 +8,7 @@
 #include "Core.hpp"
 
 const char *Core::Exceptions::UnableCreateFolder::what() const noexcept {
-    return ("Unable to create score folder for the games.\n");
+    return ("Unable to create score folder for the games.");
 }
 
 Core::Exceptions::MissingMandatoryFolder::MissingMandatoryFolder(
@@ -18,7 +18,7 @@ Core::Exceptions::MissingMandatoryFolder::MissingMandatoryFolder(
 
 const char *Core::Exceptions::MissingMandatoryFolder::what() const noexcept {
     const static std::string msg = "Folder " + this->_name +
-        " doesn't exists and it's required.\n";
+        " doesn't exists and it's required.";
 
     return (msg.c_str());
 }
@@ -30,7 +30,7 @@ Core::Exceptions::EmptyMandatoryFolder::EmptyMandatoryFolder(
 
 const char *Core::Exceptions::EmptyMandatoryFolder::what() const noexcept {
     const static std::string msg = "Folder " + this->_name +
-        " is marked as mandatory but is empty. At least one element is required\n";
+        " is marked as mandatory but is empty. At least one element is required";
 
     return (msg.c_str());
 }
@@ -41,14 +41,14 @@ Core::Exceptions::InvalidScorePath::InvalidScorePath(
 }
 
 const char *Core::Exceptions::InvalidScorePath::what() const noexcept {
-    const static std::string msg = "The path below is invalid: '" + this->_name + "'\n";
+    const static std::string msg = "The path below is invalid: '" + this->_name + "'";
 
     return (msg.c_str());
 }
 
 
 const char *Core::Exceptions::ExitGame::what() const noexcept {
-    return ("Exit game gracefully\n");
+    return ("Exit game gracefully");
 }
 
 
@@ -59,7 +59,7 @@ Core::Exceptions::UnknownGraphicalLib::UnknownGraphicalLib(
 
 const char *Core::Exceptions::UnknownGraphicalLib::what() const noexcept {
     const static std::string msg = "The graphical library below '" + this->_name + "'"
-           "has been loaded but the file is not available anymore. It can be an internal error\n";
+           "has been loaded but the file is not available anymore. It can be an internal error";
 
     return (msg.c_str());
 }

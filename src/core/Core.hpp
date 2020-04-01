@@ -34,7 +34,7 @@ namespace Core {
             void useGame(const std::string &filename);
             void run();
 
-            static std::string loadScore(const std::string &gameName);
+            static Score::File loadScore(const std::string &gameName);
             constexpr static const char *SCORE_PATH = "./games/score/";
 
             /* 1000 / 60 = 17 (~ 16,666666667)
@@ -60,6 +60,21 @@ namespace Core {
             void exitKey(bool);
             void enterGame(bool);
 
+            // Name
+            // Handling key
+            void nameLeftAction(bool);
+            void nameRightAction(bool);
+            void nameUpAction(bool);
+            void nameDownAction(bool);
+
+            //#define IN_RANGE(val, min, max) (val >= min && val <= max)
+            struct playerName {
+                playerName() : currentLetter('_'), currentIndex(0) {}
+                char currentLetter;
+                unsigned char currentIndex;
+            } _playerName;
+            void updateCurrentLetter();
+
             // Menu
             void renderMenu();
             std::string drawGames(Vector2f &final_pos);
@@ -80,7 +95,7 @@ namespace Core {
             SoLoader::SoLoader<IGame> _game;
             SoLoader::SoLoader<IGraphic> _graphic;
 
-            std::map<std::string, std::string> _scores;
+            std::map<std::string, Score::File> _scores;
             std::map<std::string, std::list<std::experimental::filesystem::path>> _lib;
             Score::Game _score;
     };

@@ -9,25 +9,11 @@
 #include "core/Core.hpp"
 #include "Score.hpp"
 
-Score::Game::Game(const int amount, const std::string &gameName) {
-    // Load scores like core does it
-    this->_amount = amount;
-    this->_game = gameName;
+void Score::Game::addLetter(const char &letter) {
+    this->_author += letter;
 }
 
-void Score::Game::addLetter(std::string &letter) {
-    std::size_t idx = letter.find("EVENT_KEY_");
-    const std::size_t len = std::string("EVENT_KEY_").size();
-
-    if (idx == std::string::npos) {
-        this->_author.append(letter);
-        return;
-    }
-    letter.erase(0, len);
-    this->_author.append(letter);
-}
-
-void Score::Game::saveScore() const {
+void Score::Game::save() const {
     std::ofstream file;
 
     file.open(Core::Core::SCORE_PATH + this->_game + ".score", std::fstream::app);
@@ -39,41 +25,37 @@ void Score::Game::saveScore() const {
         file << std::string(this->_author + "=" + std::to_string(this->_amount)) << std::endl;
 }
 
-void Score::Game::operator++(const int) {
-    this->_amount++;
-}
-
-Score::Game &Score::Game::operator=(const int amount) {
-    this->_amount = amount;
-    return (*this);
-}
-
-int Score::Game::operator*() {
-    return (this->_amount);
-}
-
-void Score::Game::handleEvent(std::string &letter) {
-    if (letter == KeyboardEvent_s::ENTER) {
-        try {
-            this->saveScore();
-        } catch (const Score::Exceptions::InvalidFile &e) {
-            throw e;
-        }
-        throw Score::Exceptions::FileSaved();
-    }
-    else {
-        if (this->_author.size() > MAX_AUTHOR_NAME)
-            std::cerr << "Your name cannot exceed " + std::to_string(MAX_AUTHOR_NAME) + " characters" << std::endl;
-        else
-            this->addLetter(letter);
-    }
-}
-
 std::string Score::Game::getAuthor() const {
     return (this->_author);
 }
 
 void Score::Game::reset() {
-    this->_author.clear();
     this->_amount = 0;
+}
+
+const char &Score::Game::getLetter(const std::size_t idx) const {
+    return (this->_author.at(idx));
+}
+
+void Score::Game::setLetter(const std::size_t idx, const char c) {
+    try {
+        this->_author.at(idx);
+        this->_author[idx] = c;
+    } catch (const std::out_of_range &e) {
+        throw e;
+    }
+}
+
+void Score::Game::removeLastLetter() {
+    if (this->_author.empty())
+        throw std::out_of_range("size is 0, unable to remove the last letter");
+    this->_author.erase(this->_author.end() - 1, this->_author.end());
+}
+
+void Score::Game::setScore(const std::size_t score) {
+    this->_amount = score;
+}
+
+void Score::Game::setGame(const std::string &game) {
+    this->_game = game;
 }

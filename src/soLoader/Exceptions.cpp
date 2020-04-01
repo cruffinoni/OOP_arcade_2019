@@ -22,12 +22,7 @@ const char *SoLoader::Exceptions::InvalidSO::what() const noexcept {
         message.append(err);
     else
         message.append("None");
-    message.append("\n");
     return (message.c_str());
-}
-
-SoLoader::Exceptions::InvalidSO::InvalidSO(const Exceptions::InvalidSO &a) noexcept {
-    this->_dllName = a._dllName;
 }
 
 SoLoader::Exceptions::InvalidEntryPoint::InvalidEntryPoint(const std::string &DLLPath) noexcept {
@@ -44,10 +39,5 @@ const char *SoLoader::Exceptions::InvalidEntryPoint::what() const noexcept {
         message.append(err);
     else
         message.append("None");
-    message.append("\n");
     return (message.c_str());
-}
-
-SoLoader::Exceptions::InvalidEntryPoint::InvalidEntryPoint(const Exceptions::InvalidEntryPoint &a) noexcept {
-    this->_dllName = a._dllName;
 }
