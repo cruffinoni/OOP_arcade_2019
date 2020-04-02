@@ -41,10 +41,14 @@ namespace Graphic {
                 Color {Color::White().red, Color::White().green, Color::White().blue, Color::White().alpha},
             };
 
+            static const int WINDOW_WIDTH = 100;
+            static const int WINDOW_HEIGHT = 40;
+
         private:
             int getNcursesColor(Color color);
             std::chrono::time_point<std::chrono::high_resolution_clock> _tick;
             bool _alive;
+            bool _block;
     };
 }
 

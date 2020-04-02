@@ -16,7 +16,7 @@
 static Graphic::Ncurses *instance;
 
 extern "C" {
-    IGraphicRenderer *loadLibrary() {
+    IGraphic *loadLibrary() {
         return (instance);
     }
 
@@ -31,7 +31,7 @@ extern "C" {
     }
 }
 
-Graphic::Ncurses::Ncurses() : _alive(true) {
+Graphic::Ncurses::Ncurses() : _alive(true), _block(false) {
     initscr();
     noecho();
     start_color();
@@ -49,9 +49,18 @@ void Graphic::Ncurses::clearScreen() {
     this->_tick = std::chrono::high_resolution_clock::now();
     erase();
     clear();
+    this->_block = COLS != Graphic::Ncurses::WINDOW_WIDTH || LINES != Graphic::Ncurses::WINDOW_HEIGHT;
+    if (this->_block) {
+        const size_t len = std::strlen("Your window's size must be %ix%i.");
+        mvprintw(LINES / 2, COLS / 2 - len / 2, "Your window's size must be %ix%i.",
+                 Graphic::Ncurses::WINDOW_WIDTH,
+                 Graphic::Ncurses::WINDOW_HEIGHT);
+    }
 }
 
 void Graphic::Ncurses::drawCircle(Circle circle) {
+    if (this->_block)
+        return;
     int radius = static_cast<int>(PERCENTAGE(circle.getSizeX()) * static_cast<float>(COLS));
     int posX = static_cast<int>(PERCENTAGE(circle.getPositionX()) * static_cast<float>(COLS));
     int posY = static_cast<int>(PERCENTAGE(circle.getPositionY()) * static_cast<float>(LINES));
@@ -70,6 +79,8 @@ void Graphic::Ncurses::drawCircle(Circle circle) {
 }
 
 void Graphic::Ncurses::drawRect(Rect rect) {
+    if (this->_block)
+        return;
     int maxSizeX = static_cast<int>(PERCENTAGE(rect.getSizeX()) * static_cast<float>(COLS));
     int maxSizeY = static_cast<int>(PERCENTAGE(rect.getSizeY()) * static_cast<float>(LINES));
     int posX = static_cast<int>(PERCENTAGE(rect.getPositionX()) * static_cast<float>(COLS));
@@ -84,6 +95,8 @@ void Graphic::Ncurses::drawRect(Rect rect) {
 }
 
 void Graphic::Ncurses::drawScreen() {
+    if (this->_block)
+        return;
     refresh();
     auto now = std::chrono::high_resolution_clock::now();
     auto delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_tick).count();
@@ -99,6 +112,8 @@ void Graphic::Ncurses::drawSprite(Sprite sprite) {
 }
 
 void Graphic::Ncurses::drawText(Text text) {
+    if (this->_block)
+        return;
     mvprintw(
         static_cast<int>(PERCENTAGE(text.getPositionY()) * static_cast<float>(LINES)),
         static_cast<int>(PERCENTAGE(text.getPositionX()) * static_cast<float>(COLS)),
