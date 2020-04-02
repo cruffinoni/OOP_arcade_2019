@@ -54,27 +54,10 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
 }
 
 void Game::Pacman::drawScore(IGraphicRenderer &renderer) {
-    renderer.drawRect(Rect {
-        {40.f, 49.f},
-        {25.f, 10.f},
-        {0xBF, 0xBF, 0xBF, 0xFF},
-    });
     renderer.drawText(Text {
         std::string("Your score: " + std::to_string(this->_player.score) +
-                    "\nEnter you name:"),
-        {40.f, 40.f},
-        DEFAULT_TEXT_SIZE,
-        Color::Black(),
-    });
-    renderer.drawText(Text {
-        std::string("Press enter to confirm"),
-        {40.f, 60.f},
-        DEFAULT_TEXT_SIZE,
-        Color::Black(),
-    });
-    renderer.drawText(Text {
-        "this->_player.score.getAuthor()", //TODO : change for new score owner
-        {40.f, 49.f},
+        "\nPress R to restart the game\nPress ESC to exit the game"),
+        {30.f, 40.f},
         DEFAULT_TEXT_SIZE,
         Color::Black(),
     });

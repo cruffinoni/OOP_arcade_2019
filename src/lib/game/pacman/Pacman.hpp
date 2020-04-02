@@ -44,8 +44,12 @@ namespace Game {
             };
 
             struct player_s {
-                player_s() : position(5, 5),
-                direction(IDLE), death(0), score(0), elapsedTime(0) {};
+                player_s() : position(5, 5) {
+                    this->elapsedTime = 0;
+                    this->score = 0;
+                    this->death = 0;
+                    this->direction = IDLE;
+                };
 
                 int elapsedTime;
                 Vector2i position;
@@ -55,8 +59,11 @@ namespace Game {
             };
 
             struct enemy_s {
-                enemy_s(const Vector2i &position) : elapsedTime(0),
-                isDead(false), isEatable(false), position(position) {};
+                explicit enemy_s(const Vector2i &position) : position(position) {
+                    this->elapsedTime = 0;
+                    this->isDead = false;
+                    this->isEatable = false;
+                };
 
                 int elapsedTime;
                 Vector2i position;
@@ -70,6 +77,8 @@ namespace Game {
             void generateMap();
             void movePlayer();
             void moveEnemy(enemy_s &enemy);
+            void checkEnemyStatus(enemy_s &enemy);
+            void resetGame();
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
             void drawPacGom(int x, int y, int sizeX, int sizeY);

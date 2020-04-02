@@ -60,6 +60,10 @@ void Game::Pacman::handleEvent(std::string &name) {
     }
 }
 
+void Game::Pacman::resetGame() {
+
+}
+
 void Game::Pacman::handleUpdate(int elapsedTime) {
     if (!IS_GAME_IN_PROGRESS(this))
         return;
