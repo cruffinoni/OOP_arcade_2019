@@ -23,7 +23,7 @@ namespace Game {
             GameDataType getGameData() override;
 
         private:
-            enum PLAYER_DIRECTION {
+            enum ENTITY_DIRECTION {
                 NORTH,
                 SOUTH,
                 EAST,
@@ -49,7 +49,7 @@ namespace Game {
 
                 int elapsedTime;
                 Vector2i position;
-                PLAYER_DIRECTION direction;
+                ENTITY_DIRECTION direction;
                 std::size_t death;
                 std::size_t score;
             };
@@ -66,9 +66,9 @@ namespace Game {
 
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
-            MOVES_STATES checkMove(Vector2i entityPos, PLAYER_DIRECTION playerDirection);
+            MOVES_STATES checkMove(Vector2i entityPos, ENTITY_DIRECTION playerDirection);
             void generateMap();
-            void movePlayer();
+            void moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction);
             void moveEnemy(enemy_s &enemy);
 
             void drawSquare(int x, int y, int sizeX, int sizeY);

@@ -50,7 +50,7 @@ void Game::Pacman::handleEvent(std::string &name) {
         if (keys[i] != name)
             continue;
         if (i + 1 != j && IS_GAME_IN_PROGRESS(this)) {
-            this->_player.direction = static_cast<Pacman::PLAYER_DIRECTION>(i);
+            this->_player.direction = static_cast<Pacman::ENTITY_DIRECTION>(i);
             return;
         } else if (keys[i] == KeyboardEvent_s::RESTART){
             this->_state = GAME_STATE::GAME;
@@ -65,11 +65,11 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
         return;
     this->_player.elapsedTime += elapsedTime;
     if (this->_player.elapsedTime > 250) {
-        this->movePlayer();
+        this->moveEntity(this->_player.position, this->_player.direction);
     }
     for (enemy_s &enemy : this->_enemies) {
         enemy.elapsedTime += elapsedTime;
-        if (enemy.elapsedTime > 250)
+        if (enemy.elapsedTime > 230)
             this->moveEnemy(enemy);
     }
 }
