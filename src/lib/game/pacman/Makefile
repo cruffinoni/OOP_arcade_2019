@@ -13,7 +13,6 @@ SRC				=	./Pacman.cpp 							\
 					./Draw.cpp								\
 					./Map.cpp								\
 					./MoveEntity.cpp						\
-					./MoveEnemy.cpp							\
 					$(INCLUDE)/core/score/Game.cpp			\
 					$(INCLUDE)/core/score/Exceptions.cpp	\
 

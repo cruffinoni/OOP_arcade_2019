@@ -8,15 +8,14 @@
 #include <algorithm>
 #include "Pacman.hpp"
 
-void Game::Pacman::moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction) {
+void Game::Pacman::movePlayer() {
     MOVES_STATES moveState;
-
-    switch (direction) {
+    switch (this->_player.direction) {
         case NORTH:
-            moveState = checkMove(entityPos, NORTH);
+            moveState = checkMove(this->_player.position, NORTH);
             switch (moveState) {
                 case NONE:
-                    entityPos.y -= DEFAULT_SQUARE_SIZE.y;
+                    this->_player.position.y -= DEFAULT_SQUARE_SIZE.y;
                     this->_player.direction = NORTH;
                     break;
                 case WALL:
@@ -30,10 +29,10 @@ void Game::Pacman::moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction) 
             }
             break;
         case SOUTH:
-            moveState = checkMove(entityPos, SOUTH);
+            moveState = checkMove(this->_player.position, SOUTH);
             switch (moveState) {
                 case NONE:
-                    entityPos.y += DEFAULT_SQUARE_SIZE.y;
+                    this->_player.position.y += DEFAULT_SQUARE_SIZE.y;
                     this->_player.direction = SOUTH;
                     break;
                 case WALL:
@@ -47,10 +46,10 @@ void Game::Pacman::moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction) 
             }
             break;
         case EAST:
-            moveState = checkMove(entityPos, EAST);
+            moveState = checkMove(this->_player.position, EAST);
             switch (moveState) {
                 case NONE:
-                    entityPos.x += DEFAULT_SQUARE_SIZE.x;
+                    this->_player.position.x += DEFAULT_SQUARE_SIZE.x;
                     this->_player.direction = EAST;
                     break;
                 case WALL:
@@ -64,10 +63,10 @@ void Game::Pacman::moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction) 
             }
             break;
         case WEST:
-            moveState = checkMove(entityPos, WEST);
+            moveState = checkMove(this->_player.position, WEST);
             switch (moveState) {
                 case NONE:
-                    entityPos.x -= DEFAULT_SQUARE_SIZE.x;
+                    this->_player.position.x -= DEFAULT_SQUARE_SIZE.x;
                     this->_player.direction = WEST;
                     break;
                 case WALL:
@@ -84,10 +83,14 @@ void Game::Pacman::moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction) 
             break;
     }
     this->_player.elapsedTime = 0;
-    if (std::count(this->_pacGoms.begin(), this->_pacGoms.end(), entityPos) > 0) {
-        this->_pacGoms.remove(entityPos);
+    if (std::count(this->_pacGoms.begin(), this->_pacGoms.end(), this->_player.position) > 0) {
+        this->_pacGoms.remove(this->_player.position);
         this->_player.score += 10;
     }
+}
+
+void Game::Pacman::moveEnemy(enemy_s &enemy) {
+
 }
 
 Game::Pacman::MOVES_STATES

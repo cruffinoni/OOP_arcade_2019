@@ -68,7 +68,7 @@ namespace Game {
             void drawScore(IGraphicRenderer &renderer);
             MOVES_STATES checkMove(Vector2i entityPos, ENTITY_DIRECTION playerDirection);
             void generateMap();
-            void moveEntity(Vector2i &entityPos, ENTITY_DIRECTION &direction);
+            void movePlayer();
             void moveEnemy(enemy_s &enemy);
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
