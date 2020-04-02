@@ -5,7 +5,6 @@
 ** Menu.c - File used to handle menu
 */
 
-#include <fstream>
 #include "core/Core.hpp"
 #include "core/score/Score.hpp"
 

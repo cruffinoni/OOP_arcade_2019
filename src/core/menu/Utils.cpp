@@ -27,12 +27,10 @@ std::string Core::Core::getLibName(std::string libName, bool uppercase) {
 
 void Core::Core::useGraphic(const std::string &filename) {
     this->_graphic.changeSo(filename);
-    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
 void Core::Core::useGame(const std::string &filename) {
     this->_game.changeSo(filename);
-    std::cout << "[debug] library \"" << filename << "\" loaded" << std::endl;
 }
 
 Score::File Core::Core::loadScore(const std::string &gameName) {

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Mainfile for lib leading exceptions
 */
 
 #ifndef OOP_ARCADE_2019_EXCEPTIONS_HPP

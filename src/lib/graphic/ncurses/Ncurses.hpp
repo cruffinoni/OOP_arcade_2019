@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Header class file for Ncurses lib
 */
 
 #ifndef OOP_ARCADE_2019_NCURSES_HPP

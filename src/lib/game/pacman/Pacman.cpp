@@ -16,12 +16,10 @@ extern "C" {
     }
     
     __attribute__((constructor)) void load() {
-        printf("[game] constructor Pacman called\n");
         instance = new Game::Pacman();
     }
     
     __attribute__((destructor)) void unload() {
-        printf("[game] destructor Pacman called\n");
         delete instance;
     }
 }
@@ -34,7 +32,6 @@ Game::Pacman::Pacman() {
 
 void Game::Pacman::handleEvent(std::string &name) {
     std::array<std::string, 8> keys = {
-        // Default keys
         KeyboardEvent_s::UP,
         KeyboardEvent_s::DOWN,
         KeyboardEvent_s::RIGHT,
@@ -87,8 +84,6 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
 }
 
 void Game::Pacman::setGameData(IGame::GameDataType &data) {
-    // TODO: Score, XP, Death, lives, game state, etc.
-    //  What's for?
     this->_data = data;
 }
 

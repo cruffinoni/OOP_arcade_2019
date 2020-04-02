@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Mainfile for Nibbler game
 */
 
 #include <algorithm>
@@ -19,12 +19,10 @@ extern "C" {
     }
 
     __attribute__((constructor)) void load() {
-        printf("[game] constructor Nibbler called\n");
         instance = new Game::Nibbler();
     }
 
     __attribute__((destructor)) void unload() {
-        printf("[game] destructor Nibbler called\n");
         delete instance;
     }
 }
@@ -46,7 +44,6 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f), _state(Nibbler::GAME_STATE::GAME
 
 void Game::Nibbler::handleEvent(std::string &name) {
     std::array<std::string, 8> keys = {
-        // Default keys
         KeyboardEvent_s::UP,
         KeyboardEvent_s::DOWN,
         KeyboardEvent_s::RIGHT,

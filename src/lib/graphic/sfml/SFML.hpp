@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Class header file for SFML graphic lib
 */
 
 #ifndef OOP_ARCADE_2019_SFML_HPP

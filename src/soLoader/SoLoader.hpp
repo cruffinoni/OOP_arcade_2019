@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_boostrap_Arcade
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Header class file for lib loading functions
 */
 
 #ifndef OOP_ARCADE_DLLOADER_HPP

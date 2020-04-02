@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2019
 ** OOP_arcade_2019
 ** File description:
-** Core.cpp
+** Core.cpp - Mainfile for Arcade, regroups game and graphical lib
 */
 
 #include <iostream>
@@ -68,7 +68,6 @@ void Core::Core::run() {
             std::string event = this->_graphic->handleEvent();
             if (IS_IN_GAME(this)) {
                 if (event != KeyboardEvent_s::UNKNOWN) {
-                    printf("Event: '%s'\n", event.c_str());
                     if (!this->handleInternalKey(event))
                         this->_game->handleEvent(event);
                 }

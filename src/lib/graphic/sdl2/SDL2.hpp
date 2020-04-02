@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Header class file for SDL2
 */
 
 #ifndef OOP_ARCADE_2019_SDL2_HPP

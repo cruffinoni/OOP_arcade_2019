@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** TODO: CHANGE DESCRIPTION.
+** Header file class for score
 */
 
 #ifndef OOP_ARCADE_2019_SCORE_HPP_
