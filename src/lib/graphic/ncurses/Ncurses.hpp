@@ -18,10 +18,7 @@ namespace Graphic {
             ~Ncurses() override;
 
             #define KEY_ESCAPE  27
-
-            #ifndef PERCENTAGE
-                #define PERCENTAGE(a) (a / 100.f)
-            #endif
+            #define CUSTOM_KEY_ENTER  10
 
             void clearScreen() override;
             void drawCircle(Circle circle) override;

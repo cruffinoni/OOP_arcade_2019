@@ -31,6 +31,9 @@ struct KeyboardEvent_s {
 };
 
 #define FONT_FILENAME "/usr/share/fonts/liberation/LiberationMono-Regular.ttf"
+#ifndef PERCENTAGE
+    #define PERCENTAGE(a) (a / 100.f)
+#endif
 
 class IGraphicRenderer {
     public:

@@ -18,10 +18,6 @@ namespace Graphic {
             SFML();
             ~SFML() = default;
 
-            #ifndef PERCENTAGE
-                #define PERCENTAGE(a) (a / 100.f)
-            #endif
-
             void clearScreen() override;
 
             void drawCircle(Circle circle) override;

@@ -88,7 +88,6 @@ void Graphic::Ncurses::drawScreen() {
     auto now = std::chrono::high_resolution_clock::now();
     auto delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - this->_tick).count();
 
-    std::cerr << delta << std::endl;
     if (delta < Core::Core::FRAME_PER_TIME)
         std::this_thread::sleep_for(std::chrono::milliseconds(Core::Core::FRAME_PER_TIME - delta));
     this->_tick = now;
@@ -107,9 +106,7 @@ void Graphic::Ncurses::drawText(Text text) {
 }
 
 std::string Graphic::Ncurses::handleEvent() {
-    int c = getch();
-
-    switch (c) {
+    switch (getch()) {
         case 'r':
             return (KeyboardEvent_s::RESTART);
         case 'c':
@@ -134,7 +131,7 @@ std::string Graphic::Ncurses::handleEvent() {
         case KEY_RIGHT:
         case 'd':
             return (KeyboardEvent_s::RIGHT);
-        case KEY_ENTER:
+        case CUSTOM_KEY_ENTER:
             return (KeyboardEvent_s::ENTER);
         default:
             return (KeyboardEvent_s::UNKNOWN);
