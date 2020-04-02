@@ -27,12 +27,9 @@ extern "C" {
 }
 
 Game::Pacman::Pacman() {
-    this->generateMap();
-    this->_state = GAME;
-    this->_enemies.emplace_back(enemy_s(Vector2i(90, 80)));
-    this->_enemies.emplace_back(enemy_s(Vector2i(85, 80)));
-    this->_enemies.emplace_back(enemy_s(Vector2i(80, 80)));
-    this->_enemies.emplace_back(enemy_s(Vector2i(75, 80)));
+    this->resetGame();
+    this->_player.death = 0;
+    this->_state = GAME_STATE::GAME;
 }
 
 void Game::Pacman::handleEvent(std::string &name) {
@@ -52,16 +49,27 @@ void Game::Pacman::handleEvent(std::string &name) {
         if (i + 1 != j && IS_GAME_IN_PROGRESS(this)) {
             this->_player.direction = static_cast<Pacman::ENTITY_DIRECTION>(i);
             return;
-        } else if (keys[i] == KeyboardEvent_s::RESTART){
+        } else if (keys[i] == KeyboardEvent_s::RESTART) {
             this->_state = GAME_STATE::GAME;
-            //this->resetPlayer();
+            this->resetGame();
             return;
         }
     }
 }
 
 void Game::Pacman::resetGame() {
-
+    this->_enemies.clear();
+    this->_map.clear();
+    this->_pacGoms.clear();
+    this->_player.score = 0;
+    this->_player.death++;
+    this->_player.position.x = 5;
+    this->_player.position.y = 5;
+    this->generateMap();
+    this->_enemies.emplace_back(enemy_s(Vector2i(90, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2i(85, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2i(80, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2i(75, 80)));
 }
 
 void Game::Pacman::handleUpdate(int elapsedTime) {
