@@ -16,7 +16,7 @@ namespace Graphic {
     class SFML : public IGraphic {
         public:
             SFML();
-            ~SFML() = default;
+            ~SFML() override;
 
             void clearScreen() override;
 
@@ -39,7 +39,5 @@ namespace Graphic {
             bool _operational;
     };
 }
-
-
 
 #endif //OOP_ARCADE_2019_SFML_HPP

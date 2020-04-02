@@ -18,13 +18,11 @@ extern "C" {
     }
 
     __attribute__((constructor)) void load() {
-        printf("[graphic] constructor SFML called\n");
         instance = new Graphic::SFML();
     }
 
     __attribute__((destructor)) void unload() {
-        printf("[graphic] destructor SFML called\n");
-        delete instance;
+        delete instance; //TODO Look why sfml can't be destroyed
     }
 }
 
@@ -44,11 +42,12 @@ Graphic::SFML::SFML() : _operational(true) {
     }
 }
 
-//Graphic::SFML::~SFML() {
-//    //this->_window->close();
-//    //delete this->_font;
-//    //delete this->_window;
-//}
+Graphic::SFML::~SFML() {
+    this->_window->close();
+    for (sf::Drawable *&entity : this->_entities) {
+        delete entity;
+    }
+}
 
 void Graphic::SFML::clearScreen() {
     this->_window->clear(sf::Color::White);

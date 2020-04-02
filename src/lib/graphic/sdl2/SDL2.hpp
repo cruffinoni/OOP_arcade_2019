@@ -18,7 +18,7 @@ namespace Graphic {
     class SDL2 : public IGraphic {
         public:
             SDL2();
-            ~SDL2();
+            ~SDL2() override;
 
             void clearScreen() override;
 

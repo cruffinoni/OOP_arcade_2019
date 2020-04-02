@@ -17,12 +17,10 @@ extern "C" {
     }
 
     __attribute__((constructor)) void load() {
-        printf("[graphic] constructor SDL2 called\n");
         instance = new Graphic::SDL2();
     }
 
     __attribute__((destructor)) void unload() {
-        printf("[graphic] destructor SDL2 called\n");
         delete instance;
     }
 }
