@@ -44,29 +44,29 @@ namespace Game {
             };
 
             struct player_s {
-                player_s() : position(5.f, 5.f),
+                player_s() : position(5, 5),
                 direction(IDLE), death(0), score(0), elapsedTime(0) {};
 
                 int elapsedTime;
-                Vector2f position;
+                Vector2i position;
                 PLAYER_DIRECTION direction;
                 std::size_t death;
                 std::size_t score;
             };
 
             struct enemy_s {
-                enemy_s(const Vector2f &position) : elapsedTime(0),
+                enemy_s(const Vector2i &position) : elapsedTime(0),
                 isDead(false), isEatable(false), position(position) {};
 
                 int elapsedTime;
-                Vector2f position;
+                Vector2i position;
                 bool isDead;
                 bool isEatable;
             };
 
             void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
-            MOVES_STATES checkMove(Vector2f entityPos, PLAYER_DIRECTION playerDirection);
+            MOVES_STATES checkMove(Vector2i entityPos, PLAYER_DIRECTION playerDirection);
             void generateMap();
             void movePlayer();
             void moveEnemy(enemy_s &enemy);
@@ -88,7 +88,7 @@ namespace Game {
             player_s _player;
             std::vector<enemy_s> _enemies;
             GameDataType _data;
-            std::vector<Vector2f> _map;
-            std::list<Vector2f> _pacGoms;
+            std::vector<Vector2i> _map;
+            std::list<Vector2i> _pacGoms;
     };
 }

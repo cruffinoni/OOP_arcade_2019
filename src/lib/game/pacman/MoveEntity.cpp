@@ -9,13 +9,12 @@
 #include "Pacman.hpp"
 
 void Game::Pacman::movePlayer() {
-    MOVES_STATES playerDirection;
+    MOVES_STATES moveState;
 
-    printf("playerPos(x: %f, y: %f)\n", this->_player.position.x, this->_player.position.y);
     switch (this->_player.direction) {
         case NORTH:
-            playerDirection = checkMove(this->_player.position, NORTH);
-            switch (playerDirection) {
+            moveState = checkMove(this->_player.position, NORTH);
+            switch (moveState) {
                 case NONE:
                     this->_player.position.y -= DEFAULT_SQUARE_SIZE.y;
                     this->_player.direction = NORTH;
@@ -31,8 +30,8 @@ void Game::Pacman::movePlayer() {
             }
             break;
         case SOUTH:
-            playerDirection = checkMove(this->_player.position, SOUTH);
-            switch (playerDirection) {
+            moveState = checkMove(this->_player.position, SOUTH);
+            switch (moveState) {
                 case NONE:
                     this->_player.position.y += DEFAULT_SQUARE_SIZE.y;
                     this->_player.direction = SOUTH;
@@ -48,8 +47,8 @@ void Game::Pacman::movePlayer() {
             }
             break;
         case EAST:
-            playerDirection = checkMove(this->_player.position, EAST);
-            switch (playerDirection) {
+            moveState = checkMove(this->_player.position, EAST);
+            switch (moveState) {
                 case NONE:
                     this->_player.position.x += DEFAULT_SQUARE_SIZE.x;
                     this->_player.direction = EAST;
@@ -65,8 +64,8 @@ void Game::Pacman::movePlayer() {
             }
             break;
         case WEST:
-            playerDirection = checkMove(this->_player.position, WEST);
-            switch (playerDirection) {
+            moveState = checkMove(this->_player.position, WEST);
+            switch (moveState) {
                 case NONE:
                     this->_player.position.x -= DEFAULT_SQUARE_SIZE.x;
                     this->_player.direction = WEST;
@@ -96,7 +95,7 @@ void Game::Pacman::moveEnemy(enemy_s &enemy) {
 }
 
 Game::Pacman::MOVES_STATES
-Game::Pacman::checkMove(Vector2f entityPos, PLAYER_DIRECTION playerDirection) {
+Game::Pacman::checkMove(Vector2i entityPos, PLAYER_DIRECTION playerDirection) {
     switch (playerDirection) {
         case IDLE:
             return (NONE);

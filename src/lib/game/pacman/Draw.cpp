@@ -10,29 +10,38 @@
 static const Vector2f DEFAULT_TEXT_SIZE = {10.f, 5.f};
 
 void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
-    for (auto &mapNode : this->_map) {
+    Vector2f pos(0.0f, 0.0f);
+    for (Vector2i &mapNode : this->_map) {
+        pos.x = static_cast<float>(mapNode.x);
+        pos.y = static_cast<float>(mapNode.y);
         renderer.drawRect(Rect {
-            mapNode,
+            pos,
             this->DEFAULT_SQUARE_SIZE,
             Game::Pacman::WALL_COLOR,
         });
     }
-    for (Vector2f pacGom : this->_pacGoms) {
+    for (Vector2i &pacGom : this->_pacGoms) {
+        pos.x = static_cast<float>(pacGom.x);
+        pos.y = static_cast<float>(pacGom.y);
         renderer.drawCircle(Circle {
-            pacGom,
+            pos,
             this->DEFAULT_PACGOM_SIZE,
             this->PACGOM_COLOR
         });
     }
     for (enemy_s &enemy : this->_enemies) {
+        pos.x = static_cast<float>(enemy.position.x);
+        pos.y = static_cast<float>(enemy.position.y);
         renderer.drawCircle(Circle {
-            enemy.position,
+            pos,
             this->DEFAULT_ENTITY_SIZE,
             this->ENEMY_COLOR
         });
     }
+    pos.x = static_cast<float>(this->_player.position.x);
+    pos.y = static_cast<float>(this->_player.position.y);
     renderer.drawCircle(Circle {
-        this->_player.position,
+        pos,
         this->DEFAULT_ENTITY_SIZE,
         this->PACMAN_COLOR
     });
