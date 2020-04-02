@@ -31,14 +31,14 @@ namespace Graphic {
             bool isOperational() override;
 
             std::array<Color, 8> TRANSLATE_COLORS = {
-                Color {Color::Black().red, Color::Black().green, Color::Black().blue, Color::Black().alpha},
-                Color {Color::Red().red, Color::Red().green, Color::Red().blue, Color::Red().alpha},
-                Color {Color::Green().red, Color::Green().green, Color::Green().blue, Color::Green().alpha},
-                Color {230, 230, 0, 255},
-                Color {Color::Blue().red, Color::Blue().green, Color::Blue().blue, Color::Blue().alpha},
-                Color {255, 0, 255, Color::Blue().alpha},
+                Color {Color::Black().red, Color::Black().blue, Color::Black().green, Color::Black().alpha},
+                Color {Color::Red().red, Color::Red().blue, Color::Red().green, Color::Red().alpha},
+                Color {Color::Green().red, Color::Green().blue, Color::Green().green, Color::Green().alpha},
+                Color {230, 0, 230, 255},
+                Color {Color::Blue().red, Color::Blue().blue, Color::Blue().green, Color::Blue().alpha},
+                Color {255, 255, 0, Color::Blue().alpha},
                 Color {0, 255, 255, Color::Blue().alpha},
-                Color {Color::White().red, Color::White().green, Color::White().blue, Color::White().alpha},
+                Color {Color::White().red, Color::White().blue, Color::White().green, Color::White().alpha},
             };
 
             static const int WINDOW_WIDTH = 100;
