@@ -17,45 +17,46 @@ Game::Pacman::checkMove(Vector2i entityPos, ENTITY_DIRECTION playerDirection) {
             entityPos.y -= DEFAULT_SQUARE_SIZE.y;
             if (std::count(this->_map.begin(), this->_map.end(), entityPos) > 0)
                 return (WALL);
+            if (entityPos == this->_player.position)
+                return (PLAYER);
             for (enemy_s &enemy : this->_enemies) {
                 if (entityPos == enemy.position)
                     return (ENEMY);
             }
-            if (entityPos == this->_player.position)
-                return (PLAYER);
             return (NONE);
         case SOUTH:
             entityPos.y += DEFAULT_SQUARE_SIZE.y;
             if (std::count(this->_map.begin(), this->_map.end(), entityPos) > 0)
                 return (WALL);
+            if (entityPos == this->_player.position)
+                return (PLAYER);
             for (enemy_s &enemy : this->_enemies) {
                 if (entityPos == enemy.position)
                     return (ENEMY);
             }
-            if (entityPos == this->_player.position)
-                return (PLAYER);
             return (NONE);
         case EAST:
             entityPos.x += DEFAULT_SQUARE_SIZE.x;
             if (std::count(this->_map.begin(), this->_map.end(), entityPos) > 0)
                 return (WALL);
+            if (entityPos == this->_player.position)
+                return (PLAYER);
             for (enemy_s &enemy : this->_enemies) {
                 if (entityPos == enemy.position)
                     return (ENEMY);
             }
-            if (entityPos == this->_player.position)
-                return (PLAYER);
             return (NONE);
         case WEST:
             entityPos.x -= DEFAULT_SQUARE_SIZE.x;
             if (std::count(this->_map.begin(), this->_map.end(), entityPos) > 0)
                 return (WALL);
+            if (entityPos == this->_player.position) {
+                return (PLAYER);
+            }
             for (enemy_s &enemy : this->_enemies) {
                 if (entityPos == enemy.position)
                     return (ENEMY);
             }
-            if (entityPos == this->_player.position)
-                return (PLAYER);
             return (NONE);
     }
     return (NONE);

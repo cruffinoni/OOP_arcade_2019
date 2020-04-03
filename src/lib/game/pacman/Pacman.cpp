@@ -78,7 +78,7 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
     }
     for (enemy_s &enemy : this->_enemies) {
         enemy.elapsedTime += elapsedTime;
-        if (enemy.elapsedTime > 230)
+        if (enemy.elapsedTime > 700)
             this->moveEnemy(enemy);
     }
 }

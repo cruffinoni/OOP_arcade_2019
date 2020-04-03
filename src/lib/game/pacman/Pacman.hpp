@@ -71,7 +71,7 @@ namespace Game {
                 bool isEatable;
             };
 
-            void drawGame(IGraphicRenderer &renderer);
+        void drawGame(IGraphicRenderer &renderer);
             void drawScore(IGraphicRenderer &renderer);
             MOVES_STATES checkMove(Vector2i entityPos, ENTITY_DIRECTION playerDirection);
             void generateMap();
@@ -79,6 +79,7 @@ namespace Game {
             void moveEnemy(enemy_s &enemy);
             void checkEnemyStatus(enemy_s &enemy);
             void resetGame();
+            ENTITY_DIRECTION findPathToPlayer(Vector2i startingPoint, Vector2i goalPoint);
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
             void drawPacGom(int x, int y, int sizeX, int sizeY);

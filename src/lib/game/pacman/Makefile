@@ -15,6 +15,7 @@ SRC				=	./Pacman.cpp 							\
 					./MoveEntity.cpp						\
 					./MoveEnemy.cpp							\
 					./MovePlayer.cpp						\
+					./Pathfinding.cpp						\
 					$(INCLUDE)/core/score/Game.cpp			\
 					$(INCLUDE)/core/score/Exceptions.cpp	\
 
