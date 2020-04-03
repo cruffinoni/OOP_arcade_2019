@@ -59,6 +59,7 @@ void Game::Pacman::resetGame() {
     this->_enemies.clear();
     this->_map.clear();
     this->_pacGoms.clear();
+    this->_superGoms.clear();
     this->_player.score = 0;
     this->_player.death++;
     this->_player.position.x = 5;

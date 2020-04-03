@@ -35,6 +35,7 @@ void Game::Pacman::generateMap() {
     this->drawSquare(15, 11, 4, 2);
     this->drawSquare(15, 14, 3, 2);
     this->drawSquare(12, 14, 2, 2);
+
     this->drawPacGom(1, 1, 1, 17);
     this->drawPacGom(2, 1, 7, 1);
     this->drawPacGom(2, 4, 17, 1);
@@ -61,6 +62,8 @@ void Game::Pacman::generateMap() {
     this->drawPacGom(18, 13, 1, 3);
     this->drawPacGom(18, 8, 1, 3);
     this->drawPacGom(15, 10, 3, 1);
+
+    this->drawSuperGom(2, 17,1,1);
 }
 
 void Game::Pacman::drawPacGom(int x, int y, int sizeX, int sizeY) {
@@ -79,6 +82,16 @@ void Game::Pacman::drawSquare(int x, int y, int sizeX, int sizeY) {
             this->_map.emplace_back(
                 (static_cast<float>(x + z) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
                 (static_cast<float>(y + i) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
+        }
+    }
+}
+
+void Game::Pacman::drawSuperGom(int x, int y, int sizeX, int sizeY) {
+    for (int i = 0; i < sizeY; ++i) {
+        for (int z = 0; z < sizeX; ++z) {
+            this->_superGoms.emplace_back(
+                    (static_cast<float>(x + z) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f,
+                    (static_cast<float>(y + i) / static_cast<float>(this->MAX_MAP_SIZE)) * 100.f);
         }
     }
 }

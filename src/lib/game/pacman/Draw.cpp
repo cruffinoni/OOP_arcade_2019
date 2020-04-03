@@ -29,14 +29,24 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
             this->PACGOM_COLOR
         });
     }
+    for (Vector2i &superGom : this->_superGoms) {
+        pos.x = static_cast<float>(superGom.x);
+        pos.y = static_cast<float>(superGom.y);
+        renderer.drawCircle(Circle {
+                pos,
+                this->DEFAULT_SUPERGOM_SIZE,
+                this->PACGOM_COLOR
+        });
+    }
     for (enemy_s &enemy : this->_enemies) {
         pos.x = static_cast<float>(enemy.position.x);
         pos.y = static_cast<float>(enemy.position.y);
-        renderer.drawCircle(Circle {
-            pos,
-            this->DEFAULT_ENTITY_SIZE,
+        if (!enemy.isDead)
+            renderer.drawCircle(Circle {
+                pos,
+                this->DEFAULT_ENTITY_SIZE,
             this->ENEMY_COLOR
-        });
+          });
     }
     pos.x = static_cast<float>(this->_player.position.x);
     pos.y = static_cast<float>(this->_player.position.y);

@@ -49,6 +49,7 @@ namespace Game {
                     this->score = 0;
                     this->death = 0;
                     this->direction = IDLE;
+                    this->super = false;
                 };
 
                 int elapsedTime;
@@ -56,6 +57,7 @@ namespace Game {
                 ENTITY_DIRECTION direction;
                 std::size_t death;
                 std::size_t score;
+                bool super;
             };
 
             struct enemy_s {
@@ -83,11 +85,13 @@ namespace Game {
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
             void drawPacGom(int x, int y, int sizeX, int sizeY);
+            void drawSuperGom(int x, int y, int sizeX, int sizeY);
 
             const ushort MAX_MAP_SIZE = 20;
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
             const Vector2f DEFAULT_ENTITY_SIZE = {2.f, 2.f};
             const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
+            const Vector2f DEFAULT_SUPERGOM_SIZE = {1.5f, 1.5f};
             const Color WALL_COLOR = {0x18, 0xE1, 0x26, 0xFF};
             const Color PACGOM_COLOR = Color::Black();
             const Color ENEMY_COLOR = Color::Red();
@@ -100,5 +104,6 @@ namespace Game {
             GameDataType _data;
             std::vector<Vector2i> _map;
             std::list<Vector2i> _pacGoms;
+            std::list<Vector2i> _superGoms;
     };
 }

@@ -11,6 +11,8 @@
 void Game::Pacman::checkEnemyStatus(enemy_s &enemy) {
     if (!enemy.isEatable)
         this->_state = SCORE;
+    else
+        enemy.isDead = true;
 }
 
 void Game::Pacman::movePlayer() {
@@ -111,5 +113,14 @@ void Game::Pacman::movePlayer() {
     if (std::count(this->_pacGoms.begin(), this->_pacGoms.end(), this->_player.position) > 0) {
         this->_pacGoms.remove(this->_player.position);
         this->_player.score += 10;
+    }
+    if (std::count(this->_superGoms.begin(), this->_superGoms.end(), this->_player.position) > 0) {
+        this->_superGoms.remove(this->_player.position);
+        this->_player.score += 40;
+        _player.super = true;
+        for (enemy_s &enemy : this->_enemies) {
+//            while (clock() != 1 ) ???????
+                enemy.isEatable = true;
+        }
     }
 }
