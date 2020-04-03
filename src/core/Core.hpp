@@ -18,34 +18,76 @@
 
 namespace Core {
     /**
-     * BLABLA class CORE
+     * Class Core:
+
+     * This class is the main one which is coordinate the graphic and
+     * the games libraries.
      */
     class Core {
         public:
+
+            /**
+             * Constructor for the Core class
+             * @param graphicalLib : The path to the graphical library to load
+             * @throw SoLoader::Exceptions::InvalidSO
+             * @throw SoLoader::Exceptions::InvalidEntryPoint
+             * @throw Core::Exceptions::EmptyMandatoryFolder
+             * @throw Core::Exceptions::UnknownGraphicalLib
+             * @throw Core::Exceptions::UnableCreateFolder
+             * @throw Core::Exceptions::MissingMandatoryFolder
+             */
+            explicit Core(const std::string &graphicalLib);
+            ~Core() = default;
+
+
+            /**
+             * Load a graphical library and store the instance. Can throw exceptions
+             * @param filename : The path to the graphical library
+             * @throw SoLoader::Exceptions::InvalidSO
+             * @throw SoLoader::Exceptions::InvalidEntryPoint
+             */
+
+            void useGraphic(const std::string &filename);
+            /**
+             * Load a game library and store the instance. Can throw exceptions
+             * @param filename : The path to the game library
+             * @throw SoLoader::Exceptions::InvalidSO
+             * @throw SoLoader::Exceptions::InvalidEntryPoint
+             */
+            void useGame(const std::string &filename);
+
+            /**
+             * Launch the main loop for the project. If the loop is over, the programme ends
+             */
+            void run();
+
+             /**
+              * Load a score file. The score's files path is defined by the static public variable `SCORE_PATH`
+              * @param gameName : The game's name score to load
+              * @throw Core::Exceptions::InvalidScorePath
+              * @return
+              */
+            static Score::File loadScore(const std::string &gameName);
+
+            /**
+             * See `loadScore` description
+             */
+            constexpr static const char *SCORE_PATH = "./games/score/";
+
+            /**
+             * 1000 / 60 = 17 (~ 16,666666667)
+             *  - 1000 milliseconds = 1 sec
+             *  - 60 FPS (frame per seconds) or the number of total images that we want per second
+             *  -> 17 = number of frame / millisecond
+             *  + We choose millisecond as the architecture stipulate it
+             */
+            const static uint FRAME_PER_TIME = 17;
+
+        private:
             /**
              * typedef changer
              */
             typedef void (Core::Core::*libChanger)(bool);
-
-            explicit Core(const std::string &graphicalLib);
-            ~Core() = default;
-
-            void useGraphic(const std::string &filename);
-            void useGame(const std::string &filename);
-            void run();
-
-            static Score::File loadScore(const std::string &gameName);
-            constexpr static const char *SCORE_PATH = "./games/score/";
-
-            /* 1000 / 60 = 17 (~ 16,666666667)
-                - 1000 milliseconds = 1 sec
-                - 60 FPS (frame per seconds) or the number of total images that we want per second
-                -> 17 = number of frame / millisecond
-                + We choose millisecond as the architecture stipulate it
-            */
-            const static uint FRAME_PER_TIME = 17;
-
-        private:
             static void createScoreFolder();
             void readFolder(const std::string &folderName);
             bool handleInternalKey(const std::string &key);

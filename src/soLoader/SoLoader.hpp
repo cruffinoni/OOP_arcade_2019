@@ -20,29 +20,13 @@ namespace SoLoader {
             typedef T *(*EntryPointPtrFunc)(void);
             static constexpr const char *entryPointName = "loadLibrary";
 
-            explicit SoLoader(const std::string &DLLPath) : _dll(nullptr) {
-                try {
-                    this->loadSo(DLLPath);
-                } catch (const Exceptions::InvalidSO &e) {
-                    throw e;
-                } catch (const Exceptions::InvalidEntryPoint &e) {
-                    throw e;
-                }
-            }
-
             SoLoader() : _instance(nullptr), _dll(nullptr) {
             }
 
             void changeSo(const std::string &DLLPath) {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
-                try {
-                    this->loadSo(DLLPath);
-                } catch (const Exceptions::InvalidSO &e) {
-                    throw e;
-                } catch (const Exceptions::InvalidEntryPoint &e) {
-                    throw e;
-                }
+                this->loadSo(DLLPath);
             }
 
             ~SoLoader() {

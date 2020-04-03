@@ -59,3 +59,6 @@ void Score::Game::setScore(const std::size_t score) {
 void Score::Game::setGame(const std::string &game) {
     this->_game = game;
 }
+
+Score::Game::Game() : _amount(0), _author(""), _game("") {
+}

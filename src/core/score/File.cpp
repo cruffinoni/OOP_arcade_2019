@@ -39,7 +39,7 @@ void Score::File::addEntry(const Score::File::PlayerData &user) {
 
 void Score::File::sort() {
     this->_formatted.sort([](const PlayerData &a, const PlayerData &b) {
-        return (a._score > b._score);
+        return (a.score > b.score);
     });
     auto iterator = this->_formatted.begin();
     std::advance(iterator, 3);
@@ -47,10 +47,10 @@ void Score::File::sort() {
 }
 
 Score::File::PlayerData::PlayerData(const std::string &name, const long score) {
-    this->_name = name;
-    this->_score = score;
+    this->name = name;
+    this->score = score;
 }
 
 std::string Score::File::PlayerData::toStr() const {
-    return (std::string(this->_name + " = " + std::to_string(this->_score)));
+    return (std::string(this->name + " = " + std::to_string(this->score)));
 }
