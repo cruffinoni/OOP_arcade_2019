@@ -55,6 +55,7 @@ void Game::Pacman::handleEvent(std::string &name) {
 }
 
 void Game::Pacman::resetGame() {
+    srand(time(nullptr));
     this->_enemies.clear();
     this->_map.clear();
     this->_pacGoms.clear();
@@ -63,8 +64,8 @@ void Game::Pacman::resetGame() {
     this->_player.position.x = 5;
     this->_player.position.y = 5;
     this->generateMap();
-    this->_enemies.emplace_back(enemy_s(Vector2i(90, 80)));
-    this->_enemies.emplace_back(enemy_s(Vector2i(85, 80)));
+    this->_enemies.emplace_back(enemy_s(Vector2i(90, 5)));
+    this->_enemies.emplace_back(enemy_s(Vector2i(5, 80)));
     this->_enemies.emplace_back(enemy_s(Vector2i(80, 80)));
     this->_enemies.emplace_back(enemy_s(Vector2i(75, 80)));
 }
@@ -78,7 +79,7 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
     }
     for (enemy_s &enemy : this->_enemies) {
         enemy.elapsedTime += elapsedTime;
-        if (enemy.elapsedTime > 700) //TODO pacman move more faster
+        if (enemy.elapsedTime > 200)
             this->moveEnemy(enemy);
     }
 }

@@ -8,9 +8,11 @@
 #include "Pacman.hpp"
 
 Game::Pacman::ENTITY_DIRECTION
-Game::Pacman::findPathToPlayer(Vector2i startingPoint, Vector2i goalPoint) {
+Game::Pacman::randomPosition(Vector2i startingPoint) {
     std::vector<std::pair<ENTITY_DIRECTION, MOVES_STATES>> movesPossible;
     MOVES_STATES tmpState;
+    int move;
+    int sizeMove;
 
     tmpState = this->checkMove(startingPoint, NORTH);
     if (tmpState != WALL && tmpState != ENEMY)
@@ -26,5 +28,9 @@ Game::Pacman::findPathToPlayer(Vector2i startingPoint, Vector2i goalPoint) {
         movesPossible.emplace_back(std::pair<ENTITY_DIRECTION, MOVES_STATES>(EAST, tmpState));
     if (movesPossible.empty())
         return (IDLE);
-    return (WEST);
+    sizeMove = movesPossible.size();
+    move = rand() % sizeMove;
+    if (move < 0 || move > sizeMove)
+        return (IDLE);
+    return (movesPossible.at(move).first);
 }

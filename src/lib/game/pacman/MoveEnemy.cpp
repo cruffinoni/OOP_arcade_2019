@@ -12,10 +12,9 @@ void Game::Pacman::moveEnemy(enemy_s &enemy) {
     ENTITY_DIRECTION enemyDirection;
 
     if (!enemy.isEatable) {
-        enemyDirection = this->findPathToPlayer(enemy.position,
-            this->_player.position);
+        enemyDirection = this->randomPosition(enemy.position);
     } else {
-        enemyDirection = IDLE; //TODO implement when enemy need to run away of player
+        enemyDirection = this->randomPosition(enemy.position);
     }
     switch (enemyDirection) {
         case NORTH:

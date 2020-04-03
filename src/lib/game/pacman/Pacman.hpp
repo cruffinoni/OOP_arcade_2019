@@ -79,7 +79,7 @@ namespace Game {
             void moveEnemy(enemy_s &enemy);
             void checkEnemyStatus(enemy_s &enemy);
             void resetGame();
-            ENTITY_DIRECTION findPathToPlayer(Vector2i startingPoint, Vector2i goalPoint);
+            ENTITY_DIRECTION randomPosition(Vector2i startingPoint);
 
             void drawSquare(int x, int y, int sizeX, int sizeY);
             void drawPacGom(int x, int y, int sizeX, int sizeY);
