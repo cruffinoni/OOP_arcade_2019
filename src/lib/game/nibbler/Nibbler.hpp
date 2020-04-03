@@ -16,14 +16,46 @@
 
 namespace Game {
     class Nibbler : public IGame {
+    /**
+     * Class Nibbler:
+
+     * This class is the main class for the game Nibbler.
+     * Herits from IGame Interface
+     */
         public:
+            /**
+             * Constructor for the Nibbler class.
+             */
             Nibbler();
             ~Nibbler() override = default;
 
+            /**
+            * Handle an event from the IGraphic library.
+            * @param name : The name of the event.
+            */
             void handleEvent(std::string &name) override;
+
+            /**
+            * Handle screen graphic actualisation.
+            * @param renderer : The graphic lib to render.
+            */
             void handleRender(IGraphicRenderer &renderer) override;
+
+            /**
+            * Handle clock time for the game.
+            * @param elapsedTime : The time lenght between two calls.
+            */
             void handleUpdate(int elapsedTime) override;
+
+            /**
+            * Update game data.
+            * @param data : The game data to send.
+            */
             void setGameData(GameDataType &data) override;
+
+            /**
+            * Get game data.
+            */
             GameDataType getGameData() override;
 
         private:
