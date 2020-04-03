@@ -87,10 +87,10 @@ namespace Game {
             const Vector2f DEFAULT_SQUARE_SIZE = {5.f, 5.f};
             const Vector2f DEFAULT_ENTITY_SIZE = {2.f, 2.f};
             const Vector2f DEFAULT_PACGOM_SIZE = {1.f, 1.f};
-            const Color WALL_COLOR = {0xB3, 0x00, 0x00, 0xFF};
-            const Color PACGOM_COLOR = Color::Green();
-            const Color ENEMY_COLOR = Color::Blue();
-            const Color PACMAN_COLOR = Color(245, 189, 31, 0);
+            const Color WALL_COLOR = {0x18, 0xE1, 0x26, 0xFF};
+            const Color PACGOM_COLOR = Color::Black();
+            const Color ENEMY_COLOR = Color::Red();
+            const Color PACMAN_COLOR = Color(0xFF, 0x00, 0xEE, 0xFF);
 
             #define IS_GAME_IN_PROGRESS(a) (a->_state == Pacman::GAME_STATE::GAME)
 
