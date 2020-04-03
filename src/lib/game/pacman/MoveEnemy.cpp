@@ -65,15 +65,12 @@ void Game::Pacman::moveEnemy(enemy_s &enemy) {
             break;
         case WEST:
             tmpState = checkMove(enemy.position, WEST);
-            printf("state: %d\n", tmpState);
             switch (tmpState) {
                 case NONE:
                     enemy.position.x -= DEFAULT_SQUARE_SIZE.x;
                     break;
                 case PLAYER:
-                    printf("EATPLAYER\n");
                     if (!enemy.isEatable) {
-                        printf("ENEMY NOT EATABLE\n");
                         this->_state = SCORE;
                     }
                     break;
