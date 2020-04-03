@@ -5,8 +5,8 @@
 ** Header class file for lib loading functions
 */
 
-#ifndef OOP_ARCADE_DLLOADER_HPP
-#define OOP_ARCADE_DLLOADER_HPP
+#ifndef OOP_ARCADE_SOLOADER_HPP_
+#define OOP_ARCADE_SOLOADER_HPP_
 
 #include <string>
 #include <dlfcn.h>
@@ -14,41 +14,68 @@
 #include "soLoader/Exceptions.hpp"
 
 namespace SoLoader {
+    /**
+     * The class allows to load a library and associate a type determined by the template T.
+     * @tparam T Type which will be associated to the library.
+     */
     template <typename T>
     class SoLoader {
         public:
-            typedef T *(*EntryPointPtrFunc)(void);
-            static constexpr const char *entryPointName = "loadLibrary";
+            static constexpr const char *ENTRY_POINT_NAME = "loadLibrary";
 
             SoLoader() : _instance(nullptr), _dll(nullptr) {
             }
 
+            /**
+             * Change the current loaded library to the new one specified by the parameter.
+             * If there was already a library loaded, it closes it before loading the new one.
+             * @param DLLPath : The new library's path.
+             * @throw SoLoader::Exceptions::InvalidSO
+             * @throw SoLoader::Exceptions::InvalidEntryPoint
+             */
             void changeSo(const std::string &DLLPath) {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
                 this->loadSo(DLLPath);
             }
 
+            /**
+             * The destructor closes the current loaded library if there is one
+             */
             ~SoLoader() {
                 if (this->_dll != nullptr)
                     dlclose(this->_dll);
             }
 
+            /**
+             * Overloading the `->` operator to access to the members functions of the T type.
+             * @warning It leads to a crash if there is no instance loaded
+             * @return The current instance loaded.
+             */
             T *operator->() {
                 if (this->_instance == nullptr)
                     std::cerr << "[SoLoader] The instance is null, you might not want to use that" << std::endl;
                 return (this->_instance);
             }
 
+            /**
+             * Get the current instance loaded
+             * @return The current instance
+             */
             T *getInstance() {
                 return (this->_instance);
             }
 
+            /**
+             * Get the library's path loaded
+             * @return A string to the library's path
+             */
             std::string getLibPath() {
                 return (this->_libPath);
             }
 
         private:
+            typedef T *(*EntryPointPtrFunc)(void);
             T *_instance;
             void *_dll;
             std::string _libPath;
@@ -59,7 +86,7 @@ namespace SoLoader {
                 this->_dll = dlopen(DLLPath.c_str(), RTLD_LAZY);
                 if (this->_dll == nullptr)
                     throw Exceptions::InvalidSO(DLLPath);
-                entryPointFunc = (EntryPointPtrFunc) dlsym(this->_dll, entryPointName);
+                entryPointFunc = (EntryPointPtrFunc) dlsym(this->_dll, ENTRY_POINT_NAME);
                 if (entryPointFunc == nullptr)
                     throw Exceptions::InvalidEntryPoint(DLLPath);
                 this->_instance = entryPointFunc();
@@ -68,4 +95,4 @@ namespace SoLoader {
     };
 }
 
-#endif //OOP_BOOSTRAP_ARCADE_DLLOADER_HPP
+#endif //OOP_ARCADE_SOLOADER_HPP_

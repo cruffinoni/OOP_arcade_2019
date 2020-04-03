@@ -1,8 +1,8 @@
 /*
-** EPITECH PROJECT, 2018
-** include/Core
+** EPITECH PROJECT, 2020
+** OOP_arcade_2019
 ** File description:
-** Core
+** Regroup multiple core classes
 */
 
 #ifndef CORE_HPP_
@@ -27,8 +27,8 @@ namespace Core {
         public:
 
             /**
-             * Constructor for the Core class
-             * @param graphicalLib : The path to the graphical library to load
+             * Constructor for the Core class.
+             * @param graphicalLib : The path to the graphical library to load.
              * @throw SoLoader::Exceptions::InvalidSO
              * @throw SoLoader::Exceptions::InvalidEntryPoint
              * @throw Core::Exceptions::EmptyMandatoryFolder
@@ -39,38 +39,37 @@ namespace Core {
             explicit Core(const std::string &graphicalLib);
             ~Core() = default;
 
-
             /**
-             * Load a graphical library and store the instance. Can throw exceptions
-             * @param filename : The path to the graphical library
+             * Load a graphical library and store the instance. Can throw exceptions.
+             * @param filename : The path to the graphical library.
              * @throw SoLoader::Exceptions::InvalidSO
              * @throw SoLoader::Exceptions::InvalidEntryPoint
              */
-
             void useGraphic(const std::string &filename);
+
             /**
-             * Load a game library and store the instance. Can throw exceptions
-             * @param filename : The path to the game library
+             * Load a game library and store the instance. Can throw exceptions.
+             * @param filename : The path to the game library.
              * @throw SoLoader::Exceptions::InvalidSO
              * @throw SoLoader::Exceptions::InvalidEntryPoint
              */
             void useGame(const std::string &filename);
 
             /**
-             * Launch the main loop for the project. If the loop is over, the programme ends
+             * Launch the main loop for the project. If the loop is over, the programme ends.
              */
             void run();
 
              /**
-              * Load a score file. The score's files path is defined by the static public variable `SCORE_PATH`
-              * @param gameName : The game's name score to load
+              * Load a score file. The score's files path is defined by the static public variable `SCORE_PATH`.
+              * @param gameName : The game's name score to load.
               * @throw Core::Exceptions::InvalidScorePath
               * @return
               */
             static Score::File loadScore(const std::string &gameName);
 
             /**
-             * See `loadScore` description
+             * See `loadScore` description.
              */
             constexpr static const char *SCORE_PATH = "./games/score/";
 
@@ -102,14 +101,12 @@ namespace Core {
             void exitKey(bool);
             void enterGame(bool);
 
-            // Name
             // Handling key
             void nameLeftAction(bool);
             void nameRightAction(bool);
             void nameUpAction(bool);
             void nameDownAction(bool);
 
-            //#define IN_RANGE(val, min, max) (val >= min && val <= max)
             struct playerName {
                 playerName() : currentLetter('_'), currentIndex(0) {}
                 char currentLetter;
@@ -143,61 +140,108 @@ namespace Core {
     };
 
     namespace Exceptions {
+        /**
+         * UnableCreateFolder is an exception throw when the program cannot create the folder
+         * which will gather score files together.
+         */
         class UnableCreateFolder : public std::exception {
             public:
                 UnableCreateFolder() noexcept = default;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
         };
 
+        /**
+         * MissingMandatoryFolder is an exception throw when the mandatory folders are missing.
+         * These folders are required by the project 'Arcade'.
+         */
         class MissingMandatoryFolder : public std::exception {
             public:
                 explicit MissingMandatoryFolder(const std::string &name) noexcept;
                 MissingMandatoryFolder() = delete;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
 
             private:
                 std::string _name;
         };
 
+        /**
+         * EmptyMandatoryFolder is an exception throw when the mandatory folders are empty.
+         * That means there is no library (games or graphical libraries) inside one nor both empty.
+         */
         class EmptyMandatoryFolder : public std::exception {
             public:
                 explicit EmptyMandatoryFolder(const std::string &name) noexcept;
                 EmptyMandatoryFolder() = delete;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
 
             private:
                 std::string _name;
         };
 
+        /**
+         * InvalidScorePath is a minor exception throw when the path to load a score file is invalid.
+         * The program must handle this exception since it's a minor one.
+         */
         class InvalidScorePath : public std::exception {
             public:
                 explicit InvalidScorePath(const std::string &name) noexcept;
                 InvalidScorePath() = delete;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
 
             private:
                 std::string _name;
         };
 
+        /**
+         * UnknownGraphicalLib is a minor exception throw when the initial graphical library has been
+         * correctly loaded but cannot be found anymore, anywhere.
+         */
         class UnknownGraphicalLib : public std::exception {
             public:
                 explicit UnknownGraphicalLib(const std::string &name) noexcept;
                 UnknownGraphicalLib() = delete;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
 
             private:
                 std::string _name;
         };
 
+        /**
+         * ExitGame is a minor exception throw when the program must exit gracefully.
+         */
         class ExitGame : public std::exception {
             public:
                 ExitGame() noexcept = default;
 
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred.
+                 */
                 const char *what() const noexcept override;
         };
     }

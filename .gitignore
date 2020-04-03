@@ -83,7 +83,6 @@ dkms.conf
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 

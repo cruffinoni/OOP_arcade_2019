@@ -128,14 +128,6 @@ namespace Score {
                     std::string toStr() const;
 
                     /**
-                     * Operator > because it's required for sorting
-                     * @param a Instance compared to a.k.a right_instance
-                     * @return left_instance is inferior to right_instance
-                     */
-                    bool operator>(const PlayerData &a) const {
-                        return (this->score < a.score);
-                    }
-                    /**
                      * Player's name
                      */
                     std::string name;
@@ -165,9 +157,17 @@ namespace Score {
 
 
     namespace Exceptions {
+        /**
+         * InvalidFile is an exception throw when a file cannot be open nor created
+         */
         class InvalidFile : public std::exception {
             public:
                 InvalidFile() = default;
+
+                /**
+                 * Required by std::exception
+                 * @return An explicit message explaining why the error occurred
+                 */
                 const char *what() const noexcept override;
         };
     }

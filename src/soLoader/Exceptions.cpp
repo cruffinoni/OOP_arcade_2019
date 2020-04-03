@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** Mainfile who handle lib loading
+** Main file for lib leading exceptions
 */
 
 #include "SoLoader.hpp"
@@ -33,7 +33,7 @@ const char *SoLoader::Exceptions::InvalidEntryPoint::what() const noexcept {
 
     static std::string message =
         "SO file '" + this->_dllName + "' doesn't have the entry point named: "
-        + std::string(SoLoader<void>::entryPointName) + "\nAdditional information: ";
+        + std::string(SoLoader<void>::ENTRY_POINT_NAME) + "\nAdditional information: ";
     auto err = dlerror();
     if (dlerror() != nullptr)
         message.append(err);
