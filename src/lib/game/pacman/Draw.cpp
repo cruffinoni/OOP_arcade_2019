@@ -45,7 +45,7 @@ void Game::Pacman::drawGame(IGraphicRenderer &renderer) {
             renderer.drawCircle(Circle {
                 pos,
                 this->DEFAULT_ENTITY_SIZE,
-            this->ENEMY_COLOR
+                this->_player.super ? this->FEAR_ENEMY_COLOR : this->ENEMY_COLOR
           });
     }
     pos.x = static_cast<float>(this->_player.position.x);

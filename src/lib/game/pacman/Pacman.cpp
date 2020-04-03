@@ -78,8 +78,17 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
     if (this->_player.elapsedTime > 250) {
         this->movePlayer();
     }
+    if (this->_player.super) {
+        if (this->_player.superTime >= 10000) {
+            this->_player.superTime = 0;
+            this->_player.super = false;
+        } else {
+            this->_player.superTime += elapsedTime;
+        }
+    }
     for (enemy_s &enemy : this->_enemies) {
         enemy.elapsedTime += elapsedTime;
+        enemy.isEatable = this->_player.super;
         if (enemy.elapsedTime > 200)
             this->moveEnemy(enemy);
     }
