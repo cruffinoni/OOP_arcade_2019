@@ -13,21 +13,18 @@
 #include "core/Core.hpp"
 #include "Ncurses.hpp"
 
-static Graphic::Ncurses *instance;
+static std::shared_ptr<Graphic::Ncurses *> instance;
 
 extern "C" {
     IGraphic *loadLibrary() {
-        return (instance);
+        return (*instance);
     }
 
     __attribute__((constructor)) void load() {
-        printf("[graphic] constructor Ncurses called\n");
-        instance = new Graphic::Ncurses();
+        instance = std::make_shared<Graphic::Ncurses *>(new Graphic::Ncurses());
     }
 
     __attribute__((destructor)) void unload() {
-        printf("[graphic] destructor Ncurses called\n");
-        delete instance;
     }
 }
 

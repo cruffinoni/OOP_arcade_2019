@@ -10,19 +10,18 @@
 
 #include <memory>
 
-static Graphic::SFML *instance;
+static std::shared_ptr<Graphic::SFML *> instance;
 
 extern "C" {
     IGraphic *loadLibrary() {
-        return (instance);
+        return (*instance);
     }
 
     __attribute__((constructor)) void load() {
-        instance = new Graphic::SFML();
+        instance = std::make_shared<Graphic::SFML *>(new Graphic::SFML());
     }
 
     __attribute__((destructor)) void unload() {
-        delete instance; //TODO Look why sfml can't be destroyed
     }
 }
 
@@ -42,24 +41,14 @@ Graphic::SFML::SFML() : _operational(true) {
     }
 }
 
-Graphic::SFML::~SFML() {
-    this->_window->close();
-    for (sf::Drawable *&entity : this->_entities) {
-        delete entity;
-    }
-}
-
 void Graphic::SFML::clearScreen() {
     this->_window->clear(sf::Color::White);
-    for (auto &i: this->_entities) {
-        delete i;
-    }
     this->_entities.clear();
 }
 
 void Graphic::SFML::drawCircle(Circle circle) {
     try {
-        auto entity = new sf::CircleShape(PERCENTAGE(circle.getSizeX()) * Graphic::SFML::WINDOW_WIDTH);
+        auto entity = std::make_shared<sf::CircleShape>(PERCENTAGE(circle.getSizeX()) * Graphic::SFML::WINDOW_WIDTH);
 
         entity->setPosition(PERCENTAGE(circle.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(circle.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
@@ -72,7 +61,7 @@ void Graphic::SFML::drawCircle(Circle circle) {
 
 void Graphic::SFML::drawRect(Rect rect) {
     try {
-        auto entity = new sf::RectangleShape(sf::Vector2f {
+        auto entity = std::make_shared<sf::RectangleShape>(sf::Vector2f {
             PERCENTAGE(rect.getSizeX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(rect.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT}
             );
@@ -96,7 +85,7 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
              },
         });
 
-        auto entity = new sf::Sprite(*texture);
+        auto entity = std::make_shared<sf::Sprite>(*texture);
         entity->setPosition(PERCENTAGE(sprite.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
             PERCENTAGE(sprite.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
         this->_entities.push_back(entity);
@@ -107,7 +96,8 @@ void Graphic::SFML::drawSprite(Sprite sprite) {
 
 void Graphic::SFML::drawText(Text text) {
     try {
-        auto entity = new sf::Text(text.getText(), *this->_font);
+        auto entity = std::make_shared<sf::Text>(text.getText(), *this->_font);
+
         entity->setCharacterSize(static_cast<int>((PERCENTAGE(text.getSizeX()) + 0.8) * 25));
         entity->setStyle(sf::Text::Bold);
         entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));

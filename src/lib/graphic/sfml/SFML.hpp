@@ -16,7 +16,7 @@ namespace Graphic {
     class SFML : public IGraphic {
         public:
             SFML();
-            ~SFML() override;
+            ~SFML() override = default;
 
             void clearScreen() override;
 
@@ -34,7 +34,7 @@ namespace Graphic {
 
         private:
             std::shared_ptr<sf::RenderWindow> _window;
-            std::vector<sf::Drawable *> _entities;
+            std::vector<std::shared_ptr<sf::Drawable>> _entities;
             std::shared_ptr<sf::Font> _font;
             bool _operational;
     };

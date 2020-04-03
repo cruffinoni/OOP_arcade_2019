@@ -96,7 +96,7 @@ void Core::Core::run() {
             std::cerr << e.what() << std::endl;
             return;
         } catch (const Exceptions::ExitGame &) {
-            std::cout << "Exit arcade project gracefully" << std::endl;
+            std::cerr << "Exit arcade project gracefully" << std::endl;
             return;
         } catch (...) {
             std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;

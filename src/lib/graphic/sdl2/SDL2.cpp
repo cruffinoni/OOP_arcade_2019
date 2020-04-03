@@ -9,19 +9,18 @@
 #include "core/Core.hpp"
 #include "SDL2.hpp"
 
-static Graphic::SDL2 *instance;
+static std::shared_ptr<Graphic::SDL2 *> instance;
 
 extern "C" {
     IGraphic *loadLibrary() {
-        return (instance);
+        return (*instance);
     }
 
     __attribute__((constructor)) void load() {
-        instance = new Graphic::SDL2();
+        instance = std::make_shared<Graphic::SDL2 *>(new Graphic::SDL2());
     }
 
     __attribute__((destructor)) void unload() {
-        delete instance;
     }
 }
 
