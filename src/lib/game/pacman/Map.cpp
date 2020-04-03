@@ -64,6 +64,9 @@ void Game::Pacman::generateMap() {
     this->drawPacGom(15, 10, 3, 1);
 
     this->drawSuperGom(2, 17,1,1);
+    this->drawSuperGom(11, 8,1,1);
+    this->drawSuperGom(18, 13,1,1);
+    this->drawSuperGom(2, 4,1,1);
 }
 
 void Game::Pacman::drawPacGom(int x, int y, int sizeX, int sizeY) {
