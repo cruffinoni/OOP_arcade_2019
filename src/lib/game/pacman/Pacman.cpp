@@ -78,7 +78,7 @@ void Game::Pacman::handleUpdate(int elapsedTime) {
     }
     for (enemy_s &enemy : this->_enemies) {
         enemy.elapsedTime += elapsedTime;
-        if (enemy.elapsedTime > 700)
+        if (enemy.elapsedTime > 700) //TODO pacman move more faster
             this->moveEnemy(enemy);
     }
 }
