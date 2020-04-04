@@ -62,7 +62,6 @@ void Core::Core::run() {
     }
     while (this->_graphic->isOperational()) {
         try {
-            this->_graphic->clearScreen();
             std::string event = this->_graphic->handleEvent();
             if (IS_IN_GAME(this)) {
                 if (event != KeyboardEvent_s::UNKNOWN) {
@@ -76,27 +75,13 @@ void Core::Core::run() {
                 this->_game->handleRender(*this->_graphic.getInstance());
                 createStripGame();
             } else {
+                this->_graphic->clearScreen();
                 this->handleInternalKey(event);
                 createStripMenu();
                 this->renderMenu();
+                this->_graphic->drawScreen();
             }
-            this->_graphic->drawScreen();
-        } catch (const std::bad_alloc &e) {
-            std::cerr << e.what() << std::endl;
-            return;
-        } catch (const Graphic::Exceptions::LoadFontFailed &e) {
-            std::cerr << e.what() << std::endl;
-            return;
-        } catch (const SoLoader::Exceptions::InvalidSO &e) {
-            std::cerr << e.what() << std::endl;
-            return;
-        } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-            std::cerr << e.what() << std::endl;
-            return;
         } catch (const Exceptions::ExitGame &) {
-            return;
-        } catch (...) {
-            std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;
             return;
         }
     }

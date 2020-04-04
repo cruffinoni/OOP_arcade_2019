@@ -49,7 +49,7 @@ are documented.
 ```bash
 doxygen DocFileDoxygen;
 ```
-- When it's done, naviguate to the `html` folder and open the file `index.html`.
+- When it's done, navigate to the `html` folder and open the file `index.html`.
 - Done, you have the whole documentation.
 
 ##### PDF version:

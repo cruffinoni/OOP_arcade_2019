@@ -17,21 +17,12 @@ struct Vector2
     T y;
 
     Vector2(T pX, T pY) : x(pX), y(pY) {}
-    Vector2 operator +(Vector2 const &with) const {
-        return Vector2(this->x + with.x, this->y + with.y);
-    }
-    Vector2 &operator +=(Vector2 const &with) {
-        this->x += with.x; this->y += with.y; return *this;
-    }
-    Vector2 operator -(Vector2 const &with) const {
-        return Vector2(this->x - with.x, this->y - with.y);
-    }
-    Vector2 &operator -=(Vector2 const &with) {
-        this->x -= with.x; this->y -= with.y; return *this;
-    }
-    bool operator==(Vector2 const &a) const {
-        return (this->x == a.x && this->y == a.y);
-    }
+    Vector2 operator +(Vector2 const &with) const { return Vector2(this->x + with.x, this->y + with.y); }
+    Vector2 &operator +=(Vector2 const &with) { this->x += with.x; this->y += with.y; return *this; }
+    Vector2 operator -(Vector2 const &with) const { return Vector2(this->x - with.x, this->y - with.y); }
+    Vector2 &operator -=(Vector2 const &with) { this->x -= with.x; this->y -= with.y; return *this; }
+    bool operator ==(Vector2 const &with) const { return this->x == with.x && this->y == with.y; }
+    bool operator !=(Vector2 const &with) const { return !(this->x == with.x && this->y == with.y); }
 };
 
 typedef Vector2<float> Vector2f;
@@ -70,33 +61,38 @@ typedef Vector3<int> Vector3i;
 struct Color
 {
     static Color Red() {
-        return Color(255, 0, 0, 255);
+        return {255, 0, 0, 255};
     }
     static Color Blue() {
-        return Color(0, 255, 0, 255);
+        return {0, 0, 255, 255};
     }
     static Color Green() {
-        return Color(0, 0, 255, 255);
+        return {0, 255, 0, 255};
     }
     static Color Black() {
-        return Color(0, 0, 0, 255);
+        return {0, 0, 0, 255};
     }
     static Color White() {
-        return Color(255, 255, 255, 255);
+        return {255, 255, 255, 255};
     }
     static Color Transparent() {
-        return Color(0, 0, 0, 0);
+        return {0, 0, 0, 0};
     }
-    bool operator==(const Color a) const {
-        return a.red == this->red && a.green == this->green &&
-            a.blue == this->blue && a.alpha == this->alpha;
-    }
+
     unsigned char red;
-    unsigned char blue;
     unsigned char green;
+    unsigned char blue;
     unsigned char alpha;
 
-    Color(unsigned char red, unsigned char blue, unsigned char green, unsigned char alpha) : red(red), blue(blue), green(green), alpha(alpha) {}
+    Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) : red(red), green(green), blue(blue), alpha(alpha) {
+    }
+
+    bool operator ==(Color const &with) {
+        return this->red == with.red && this->blue == with.blue && this->green == with.green && this->alpha == with.alpha;
+    }
+    bool operator !=(Color const &with) {
+        return !(this->red == with.red && this->blue == with.blue && this->green == with.green && this->alpha == with.alpha);
+    }
 };
 
 class APosition {

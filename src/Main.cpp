@@ -54,23 +54,24 @@ int main(const int ac, const char **av)
         Core::Core core(av[1]);
         core.run();
         return (0);
+    } catch (const std::bad_alloc &e) {
+        std::cerr << e.what() << std::endl;
     } catch (const SoLoader::Exceptions::InvalidSO &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
     } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
     } catch (const Core::Exceptions::UnableCreateFolder &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
     } catch (const Core::Exceptions::MissingMandatoryFolder &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
     } catch (const Core::Exceptions::EmptyMandatoryFolder &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
     } catch (const Core::Exceptions::UnknownGraphicalLib &e) {
         std::cerr << e.what() << std::endl;
-        return (84);
+    } catch (const Graphic::Exceptions::LoadFontFailed &e) {
+        std::cerr << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;
     }
+    return (84);
 }

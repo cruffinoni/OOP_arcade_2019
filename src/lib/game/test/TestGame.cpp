@@ -27,12 +27,11 @@ extern "C" {
 }
 
 void Game::TestGame::handleEvent(std::string &name) {
-    //std::cout << "Function handleEvent called" << std::endl;
     std::cerr << "Event named \"" << name << "\" called" << std::endl;
 }
 
 void Game::TestGame::handleRender(IGraphicRenderer &renderer) {
-    //std::cout << "Function handleRender called" << std::endl;
+    renderer.clearScreen();
     renderer.drawRect(Rect {
         {50.f, 50.f},
         {10.f, 10.f},
@@ -49,6 +48,7 @@ void Game::TestGame::handleRender(IGraphicRenderer &renderer) {
         {10.f, 10.f},
         Color::Blue(),
     });
+    renderer.drawScreen();
 }
 
 void Game::TestGame::handleUpdate(int elapsedTime) {

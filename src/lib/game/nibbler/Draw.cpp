@@ -12,6 +12,7 @@ static const Vector2f DEFAULT_TEXT_SIZE = {35.f, 5.f};
 void Game::Nibbler::drawGame(IGraphicRenderer &renderer) {
     std::size_t count = 0;
 
+    renderer.clearScreen();
     for (auto &node : this->_player.position) {
         if (count++ % 2 == 0) {
             renderer.drawRect(Rect {
@@ -45,6 +46,7 @@ void Game::Nibbler::drawGame(IGraphicRenderer &renderer) {
         {10.f, 5.f},
         Color::White(),
     });
+    renderer.drawScreen();
 }
 
 void Game::Nibbler::drawScore(IGraphicRenderer &renderer) {

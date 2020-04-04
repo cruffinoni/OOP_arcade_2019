@@ -5,10 +5,9 @@
 ** Mainfile for SFML graphic lib
 */
 
+#include <memory>
 #include "lib/graphic/Exceptions.hpp"
 #include "SFML.hpp"
-
-#include <memory>
 
 static std::shared_ptr<Graphic::SFML *> instance;
 
@@ -26,19 +25,13 @@ extern "C" {
 }
 
 Graphic::SFML::SFML() : _operational(true) {
-    try {
-        this->_font = std::make_shared<sf::Font>();
-        this->_window = std::make_shared<sf::RenderWindow>();
-        this->_window->setFramerateLimit(60);
-        this->_window->create({Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT},
-            "Arcade", sf::Style::Titlebar);
-        if (!this->_font->loadFromFile(FONT_FILENAME))
-            throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
-    } catch (const Graphic::Exceptions::LoadFontFailed &e) {
-        throw e;
-    } catch (const std::bad_alloc &e) {
-        throw e;
-    }
+    this->_font = std::make_shared<sf::Font>();
+    this->_window = std::make_shared<sf::RenderWindow>();
+    this->_window->setFramerateLimit(60);
+    this->_window->create({Graphic::SFML::WINDOW_WIDTH, Graphic::SFML::WINDOW_HEIGHT},
+        "Arcade", sf::Style::Titlebar);
+    if (!this->_font->loadFromFile(FONT_FILENAME))
+        throw Graphic::Exceptions::LoadFontFailed(FONT_FILENAME);
 }
 
 void Graphic::SFML::clearScreen() {
@@ -47,66 +40,50 @@ void Graphic::SFML::clearScreen() {
 }
 
 void Graphic::SFML::drawCircle(Circle circle) {
-    try {
-        auto entity = std::make_shared<sf::CircleShape>(PERCENTAGE(circle.getSizeX()) * Graphic::SFML::WINDOW_WIDTH);
+    auto entity = std::make_shared<sf::CircleShape>(PERCENTAGE(circle.getSizeX()) * Graphic::SFML::WINDOW_WIDTH);
 
-        entity->setPosition(PERCENTAGE(circle.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
-            PERCENTAGE(circle.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
-        entity->setFillColor(sf::Color(circle.getColorRed(), circle.getColorGreen(), circle.getColorBlue()));
-        this->_entities.push_back(entity);
-    } catch (const std::bad_alloc &e) {
-        throw e;
-    }
+    entity->setPosition(PERCENTAGE(circle.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+        PERCENTAGE(circle.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
+    entity->setFillColor(sf::Color(circle.getColorRed(), circle.getColorGreen(), circle.getColorBlue()));
+    this->_entities.push_back(entity);
 }
 
 void Graphic::SFML::drawRect(Rect rect) {
-    try {
-        auto entity = std::make_shared<sf::RectangleShape>(sf::Vector2f {
-            PERCENTAGE(rect.getSizeX()) * Graphic::SFML::WINDOW_WIDTH,
-            PERCENTAGE(rect.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT}
-            );
-        entity->setPosition(PERCENTAGE(rect.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
-            PERCENTAGE(rect.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
-        entity->setFillColor(sf::Color(rect.getColorRed(), rect.getColorGreen(), rect.getColorBlue()));
-        this->_entities.push_back(entity);
-    } catch (const std::bad_alloc &e) {
-        throw e;
-    }
+    auto entity = std::make_shared<sf::RectangleShape>(sf::Vector2f {
+        PERCENTAGE(rect.getSizeX()) * Graphic::SFML::WINDOW_WIDTH,
+        PERCENTAGE(rect.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT}
+        );
+    entity->setPosition(PERCENTAGE(rect.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+        PERCENTAGE(rect.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
+    entity->setFillColor(sf::Color(rect.getColorRed(), rect.getColorGreen(), rect.getColorBlue()));
+    this->_entities.push_back(entity);
 }
 
 void Graphic::SFML::drawSprite(Sprite sprite) {
-    try {
-        auto texture = new sf::Texture();
-        texture->loadFromFile(sprite.getTextureName(), sf::IntRect {
-            {0, 0},
-            {
-                static_cast<int>(PERCENTAGE(sprite.getSizeX()) * Graphic::SFML::WINDOW_WIDTH),
-             static_cast<int>(PERCENTAGE(sprite.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT)
-             },
-        });
+    auto texture = new sf::Texture();
+    texture->loadFromFile(sprite.getTextureName(), sf::IntRect {
+        {0, 0},
+        {
+            static_cast<int>(PERCENTAGE(sprite.getSizeX()) * Graphic::SFML::WINDOW_WIDTH),
+         static_cast<int>(PERCENTAGE(sprite.getSizeY()) * Graphic::SFML::WINDOW_HEIGHT)
+         },
+    });
 
-        auto entity = std::make_shared<sf::Sprite>(*texture);
-        entity->setPosition(PERCENTAGE(sprite.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
-            PERCENTAGE(sprite.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
-        this->_entities.push_back(entity);
-    } catch (const std::bad_alloc &e) {
-        throw e;
-    }
+    auto entity = std::make_shared<sf::Sprite>(*texture);
+    entity->setPosition(PERCENTAGE(sprite.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+        PERCENTAGE(sprite.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
+    this->_entities.push_back(entity);
 }
 
 void Graphic::SFML::drawText(Text text) {
-    try {
-        auto entity = std::make_shared<sf::Text>(text.getText(), *this->_font);
+    auto entity = std::make_shared<sf::Text>(text.getText(), *this->_font);
 
-        entity->setCharacterSize(static_cast<int>((PERCENTAGE(text.getSizeX()) + 0.8) * 25));
-        entity->setStyle(sf::Text::Bold);
-        entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
-        entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
-            PERCENTAGE(text.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
-        this->_entities.push_back(entity);
-    } catch (const std::bad_alloc &e) {
-        throw e;
-    }
+    entity->setCharacterSize(static_cast<int>((PERCENTAGE(text.getSizeX()) + 0.8) * 25));
+    entity->setStyle(sf::Text::Bold);
+    entity->setFillColor(sf::Color(text.getColorRed(), text.getColorGreen(), text.getColorBlue()));
+    entity->setPosition(PERCENTAGE(text.getPositionX()) * Graphic::SFML::WINDOW_WIDTH,
+        PERCENTAGE(text.getPositionY()) * Graphic::SFML::WINDOW_HEIGHT);
+    this->_entities.push_back(entity);
 }
 
 void Graphic::SFML::drawScreen() {

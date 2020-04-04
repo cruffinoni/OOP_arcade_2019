@@ -8,8 +8,8 @@
 #ifndef OOP_ARCADE_2019_NCURSES_HPP
 #define OOP_ARCADE_2019_NCURSES_HPP
 
-#include "graphic/IGraphic.hpp"
 #include <curses.h>
+#include "graphic/IGraphic.hpp"
 
 namespace Graphic {
     class Ncurses : public IGraphic {
@@ -57,7 +57,7 @@ namespace Graphic {
             };
 
             static const int WINDOW_WIDTH = 100;
-            static const int WINDOW_HEIGHT = 40;
+            static const int WINDOW_HEIGHT = 50;
 
         private:
             int getNcursesColor(Color color);
