@@ -16,7 +16,7 @@
 static std::shared_ptr<Graphic::Ncurses *> instance;
 
 extern "C" {
-    IGraphic *loadLibrary() {
+    IGraphic *entry() {
         return (*instance);
     }
 

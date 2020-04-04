@@ -23,7 +23,7 @@ std::string Core::Core::drawGames(Vector2f &final_pos) {
         if (i++ == this->_selection["games"]) {
             this->_graphic->drawRect(Rect {
                 pos,
-                this->DEFAULT_SMALL_TEXT_SIZE,
+                {13.f, 3.f},
                 Color::Red()
             });
             selectedGameName = libName;
@@ -32,14 +32,14 @@ std::string Core::Core::drawGames(Vector2f &final_pos) {
             Core::Core::getLibName(libName),
             pos,
             this->DEFAULT_SMALL_TEXT_SIZE,
-            Color::Black()
+            Color::White()
         });
         pos.x += 15.f;
     }
     this->_graphic->drawRect(Rect{
         {0.f, (pos.y += 10.f)},
         {100.f, 2.5f},
-        Color::Black(),
+        Color::White(),
     });
     pos.x = 5.f;
     pos.y += 25.f;
@@ -60,7 +60,7 @@ void Core::Core::drawGraphicalLib(Vector2f &position) {
         if (i++ == this->_selection["lib"]) {
             this->_graphic->drawRect(Rect {
                 position,
-                this->DEFAULT_SMALL_TEXT_SIZE,
+                {13.f, 3.f},
                 Color::Red()
             });
         }
@@ -68,7 +68,7 @@ void Core::Core::drawGraphicalLib(Vector2f &position) {
             Core::Core::getLibName(libName),
             position,
             this->DEFAULT_SMALL_TEXT_SIZE,
-            Color::Black()
+            Color::White()
         });
         position.x += 15.f;
     }
@@ -81,10 +81,9 @@ void Core::Core::drawScore(const std::string &game, Vector2f &pos) {
         "Scores du jeu",
         scorePos,
         this->DEFAULT_TEXT_SIZE,
-        Color::Black()
+        Color::White()
     });
     if (this->_scores.find(game) != this->_scores.end()) {
-        // TODO: Changer la position des scores I guess
         Score::File scoreBuffer(this->_scores[game]);
         scorePos.y += 10.f;
         for (auto &i : scoreBuffer.getListUser()) {
@@ -138,6 +137,6 @@ void Core::Core::renderMenu() {
     });
     this->drawScore(selectedGameName, playerNamePos);
     this->_graphic->drawRect(Rect({48.f, 25.f},
-        {2.f, 70.f}, Color::Black()));
+        {2.f, 70.f}, Color::White()));
     this->drawPlayerName(graphicalLibPos);
 }

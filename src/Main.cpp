@@ -5,17 +5,35 @@
 ** Main file for the project.
 */
 
-/*! \mainpage My Personal Index Page
+/*! \mainpage OOP_arcade_2019
  *
  * \section intro_sec Introduction
  *
- * This is the introduction.
+ * Arcade is a gaming platform: a program that lets the user choose a game to play and keeps a register of
+ * player scores.
  *
- * \section install_sec Installation
+ * To be able to deal with the elements of your gaming plateform at run-time,
+ * your graphic libraries and your games must be implemented as dynamic libraries, loaded at runtime.
  *
- * \subsection step1 Step 1: Opening the box
+ * Each GUI available for the program must be used as a shared
+ * library that will be loaded and used dynamically by the main program.
  *
- * etc...
+ * \section install_sec Add a dynamic library
+ * \warning Your library must be have an entry point (a.k.a a function) named `entry`.
+ *
+ *  Place your library (only the `.so` extension is supported) in the `lib` or `games` folder depending if
+ *  it's a graphical library or a game. Your file name must be respect the following pattern:
+ *  `lib_arcade_$gamename.so` or `lib_arcade_$libraryname.so`
+ *  \warning The graphical library's entry point must return a `IGraphic *` instance
+ *  \warning The game library's entry point must return a `IGame *` instance
+ *
+ *
+ *  \section colab Collaboration
+ *
+ *  The project has been made in collaboration with:
+ *  - Louise KLEIVER - Leo KAIDER - Loic BRANSTETT
+ *  - Victor LIMBACH - Leo SEICHEPINE - Maxime SCHAEFFER
+ *  @authors Clément RUFFINONI - Quentin HALTER - Antoine PRONNIER
  */
 
 #include <iostream>

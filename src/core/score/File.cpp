@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** Opens file score and get informations from it
+** Opens file score and get information from it
 */
 
 #include <algorithm>
@@ -18,7 +18,7 @@ Score::File::File(const std::string &content) noexcept {
         line = content.substr(currIdx, idx - currIdx);
         sec_idx = line.find('=');
         if (sec_idx != std::string::npos) {
-            this->_formatted.emplace_back(
+            this->_userList.emplace_back(
                 line.substr(0, sec_idx),
                 std::atol(line.substr(sec_idx + 1).c_str())
             );
@@ -29,21 +29,21 @@ Score::File::File(const std::string &content) noexcept {
 }
 
 std::list<Score::File::PlayerData> Score::File::getListUser() {
-    return (this->_formatted);
+    return (this->_userList);
 }
 
 void Score::File::addEntry(const Score::File::PlayerData &user) {
-    this->_formatted.push_back(user);
+    this->_userList.push_back(user);
     this->sort();
 }
 
 void Score::File::sort() {
-    this->_formatted.sort([](const PlayerData &a, const PlayerData &b) {
+    this->_userList.sort([](const PlayerData &a, const PlayerData &b) {
         return (a.score > b.score);
     });
-    auto iterator = this->_formatted.begin();
+    auto iterator = this->_userList.begin();
     std::advance(iterator, 3);
-    this->_formatted.erase(iterator, this->_formatted.end());
+    this->_userList.erase(iterator, this->_userList.end());
 }
 
 Score::File::PlayerData::PlayerData(const std::string &name, const long score) {

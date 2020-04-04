@@ -11,7 +11,7 @@
 static Game::TestGame *instance;
 
 extern "C" {
-    IGame *loadLibrary() {
+    IGame *entry() {
         return (instance);
     }
 

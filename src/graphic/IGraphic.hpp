@@ -11,6 +11,11 @@
 #include "lib/graphic/Exceptions.hpp"
 #include "Drawables.hpp"
 
+/**
+ * The structure KeyboardEvent_s define generic values for the different action that
+ * can occurs in the program. The associated key for each key is defined inside the private function: Core::Core::handleInternalKey
+ * and is displayed during runtime.
+ */
 struct KeyboardEvent_s {
     static constexpr const char *NEXT_GAME = "next_game";
     static constexpr const char *PREV_GAME = "prev_game";
@@ -30,14 +35,24 @@ struct KeyboardEvent_s {
     static constexpr const char *UNKNOWN = "unknown";
 };
 
+/**
+ * Common macro defined between groups.
+ */
 #define FONT_FILENAME "/usr/share/fonts/liberation/LiberationMono-Regular.ttf"
 #ifndef PERCENTAGE
     #define PERCENTAGE(a) (a / 100.f)
 #endif
 
+/**
+ * The IGraphicRenderer class render the graphical aspect of a game.
+ */
 class IGraphicRenderer {
     public:
         virtual ~IGraphicRenderer() = default;
+        /**
+         * Draw all visual elements on the screen. Up to each library graphical library to handle the
+         * way they manages their graphical entities.
+         */
         virtual void drawScreen() = 0;
         virtual void clearScreen() = 0;
         virtual void drawRect(Rect rect) = 0;
@@ -55,6 +70,10 @@ class IGraphic : public IGraphicRenderer {
         virtual ~IGraphic() = default;
 
         virtual bool isOperational() = 0;
+        /**
+         * The function handle keyboard events
+         * @return A string with the latest event. The string must be one element of the structure KeyboardEvent_s.
+         */
         virtual std::string handleEvent() = 0;
 };
 

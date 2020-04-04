@@ -14,7 +14,7 @@
 static Game::Nibbler *instance;
 
 extern "C" {
-    IGame *loadLibrary() {
+    IGame *entry() {
         return (instance);
     }
 
@@ -43,25 +43,26 @@ Game::Nibbler::Nibbler() : _reward(50.f, 50.f), _state(Nibbler::GAME_STATE::GAME
 }
 
 void Game::Nibbler::handleEvent(std::string &name) {
-    std::array<std::string, 8> keys = {
+    std::array<std::string, 6> keys = {
         KeyboardEvent_s::UP,
         KeyboardEvent_s::DOWN,
         KeyboardEvent_s::RIGHT,
         KeyboardEvent_s::LEFT,
 
         KeyboardEvent_s::RESTART,
+        KeyboardEvent_s::ESC,
     };
 
     for (std::size_t i = 0, j = keys.size(); i < j; i++) {
         if (keys[i] != name)
             continue;
-        if (i + 1 != j && IS_GAME_IN_PROGRESS(this)) {
+        if (i < 4 && IS_GAME_IN_PROGRESS(this)) {
             uint mask = (1u << i) | (1u << this->_player.direction);
             if ((mask == 0b1100u || mask == 0b11u) && this->_player.position.size() > 1)
                 return;
             this->_player.direction = static_cast<Nibbler::PLAYER_DIRECTION>(i);
             return;
-        } else if (keys[i] == KeyboardEvent_s::RESTART){
+        } else if (keys[i] == KeyboardEvent_s::RESTART || keys[i] == KeyboardEvent_s::ESC) {
             this->_state = GAME_STATE::GAME;
             this->resetPlayer();
             return;
@@ -70,6 +71,7 @@ void Game::Nibbler::handleEvent(std::string &name) {
 }
 
 void Game::Nibbler::handleUpdate(int elapsedTime) {
+    //printf("Elapsed time: %i / %i = %li\n", elapsedTime, IS_GAME_IN_PROGRESS(this), this->_player.elapsedTime);
     if (!IS_GAME_IN_PROGRESS(this))
         return;
     this->_player.elapsedTime += elapsedTime;

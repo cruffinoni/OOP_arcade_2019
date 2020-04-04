@@ -12,12 +12,18 @@
 #include <SFML/Graphics.hpp>
 #include "graphic/IGraphic.hpp"
 
+/**
+ * Graphic namespace include all graphical library.
+ */
 namespace Graphic {
     class SFML : public IGraphic {
         public:
+            /**
+             * Basic constructor for SFML. It creates the window with some
+             * specific parameters (framerate, window's name, ...).
+             */
             SFML();
             ~SFML() override = default;
-
             void clearScreen() override;
 
             void drawCircle(Circle circle) override;

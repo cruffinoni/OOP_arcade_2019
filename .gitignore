@@ -113,3 +113,6 @@ arcade
 html/
 rtf/
 latex/
+
+# Tests with other compatible libraries
+lib_tests/

@@ -21,7 +21,7 @@ namespace SoLoader {
     template <typename T>
     class SoLoader {
         public:
-            static constexpr const char *ENTRY_POINT_NAME = "loadLibrary";
+            static constexpr const char *ENTRY_POINT_NAME = "entry";
 
             SoLoader() : _instance(nullptr), _dll(nullptr) {
             }

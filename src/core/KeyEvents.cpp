@@ -21,7 +21,7 @@ bool Core::Core::handleInternalKey(const std::string &key) {
         std::make_pair(KeyboardEvent_s::ESC, &Core::Core::exitKey),
         std::make_pair(KeyboardEvent_s::ENTER, &Core::Core::enterGame),
 
-        //
+        // User's name interaction
         std::make_pair(KeyboardEvent_s::LEFT, &Core::Core::nameLeftAction),
         std::make_pair(KeyboardEvent_s::RIGHT, &Core::Core::nameRightAction),
         std::make_pair(KeyboardEvent_s::UP, &Core::Core::nameUpAction),
@@ -33,7 +33,8 @@ bool Core::Core::handleInternalKey(const std::string &key) {
     for (std::size_t i = 0; i != keys.size(); i++) {
         if (keys[i].first == key) {
             (this->*keys[i].second)(i < 2);
-            return (true);
+            // ESC key must be passed to the game to let know that the game has been exited
+            return (key != KeyboardEvent_s::ESC);
         }
     }
     return (false);
@@ -49,16 +50,10 @@ void Core::Core::previousLib(bool graphical) {
         this->_selection[categoryName]--;
     std::advance(iterator, this->_selection[categoryName]);
     std::cout << "Changing backward [\"" << categoryName << "\"] dll to: " << *iterator << std::endl;
-    try {
-        if (graphical)
-            this->useGraphic(*iterator);
-        else
-            this->useGame(*iterator);
-    } catch (const SoLoader::Exceptions::InvalidSO &e) {
-        throw e;
-    } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-        throw e;
-    }
+    if (graphical)
+        this->useGraphic(*iterator);
+    else
+        this->useGame(*iterator);
 }
 
 void Core::Core::nextLib(bool graphical) {
@@ -71,16 +66,10 @@ void Core::Core::nextLib(bool graphical) {
         this->_selection[categoryName]++;
     std::advance(iterator, this->_selection[categoryName]);
     std::cout << "Changing forward [\"" << categoryName << "\"] dll to: " << *iterator << std::endl;
-    try {
-        if (graphical)
-            this->useGraphic(*iterator);
-        else
-            this->useGame(*iterator);
-    } catch (const SoLoader::Exceptions::InvalidSO &e) {
-        throw e;
-    } catch (const SoLoader::Exceptions::InvalidEntryPoint &e) {
-        throw e;
-    }
+    if (graphical)
+        this->useGraphic(*iterator);
+    else
+        this->useGame(*iterator);
 }
 
 void Core::Core::exitKey(bool) {

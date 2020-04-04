@@ -38,8 +38,6 @@ Core::Core::Core(const std::string &graphicalLib) : _playerName(), _score() {
         this->readFolder(i);
         if (this->_lib[i].empty())
             throw Exceptions::EmptyMandatoryFolder(i);
-        for (auto &k: this->_lib[i])
-            std::cout << k << std::endl;
     }
     this->useGame( this->_lib["games"].front());
     auto iterator = std::find(this->_lib["lib"].begin(),
@@ -53,7 +51,7 @@ Core::Core::Core(const std::string &graphicalLib) : _playerName(), _score() {
 }
 
 void Core::Core::run() {
-    auto t1 = std::chrono::high_resolution_clock::now();
+    auto currentTime = std::chrono::high_resolution_clock::now();
     for (auto &libName : this->_lib["games"]) {
         try {
             this->_scores[libName] = Core::Core::loadScore(
@@ -73,8 +71,8 @@ void Core::Core::run() {
                 }
                 auto now = std::chrono::high_resolution_clock::now();
                 this->_game->handleUpdate(
-                    std::chrono::duration_cast<std::chrono::milliseconds>(now - t1).count());
-                t1 = now;
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - currentTime).count());
+                currentTime = now;
                 this->_game->handleRender(*this->_graphic.getInstance());
                 createStripGame();
             } else {
@@ -96,7 +94,6 @@ void Core::Core::run() {
             std::cerr << e.what() << std::endl;
             return;
         } catch (const Exceptions::ExitGame &) {
-            std::cerr << "Exit arcade project gracefully" << std::endl;
             return;
         } catch (...) {
             std::cerr << "[!] An exception occurred that cannot be caught" << std::endl;

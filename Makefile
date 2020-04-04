@@ -74,4 +74,4 @@ fclean:
 
 re:	fclean all
 
-.PHONY:	all clean fclean re debug graphicals core games test
+.PHONY:	all clean fclean re debug graphicals core games test core_re

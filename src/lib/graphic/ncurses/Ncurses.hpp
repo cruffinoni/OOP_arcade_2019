@@ -14,10 +14,21 @@
 namespace Graphic {
     class Ncurses : public IGraphic {
         public:
+            /**
+             * Basic constructor for SFML. It creates the window with some
+             * specific parameters (framerate, window's name, ...).
+             */
             Ncurses();
             ~Ncurses() override;
 
+            /**
+             * The KEY_ESCAPE macro doesn't exists in NCurses, we add it.
+             */
             #define KEY_ESCAPE  27
+            /**
+             * Since the KEY_ENTER NCurses macro doesn't correspond to the actual
+             * ENTER key, we define a custom one.
+             */
             #define CUSTOM_KEY_ENTER  10
 
             void clearScreen() override;
@@ -30,6 +41,10 @@ namespace Graphic {
             std::string handleEvent() override;
             bool isOperational() override;
 
+            /**
+             * This array correspond to the liaison between NCurses' colors and
+             * the color's value within the Color class.
+             */
             std::array<Color, 8> TRANSLATE_COLORS = {
                 Color {Color::Black().red, Color::Black().blue, Color::Black().green, Color::Black().alpha},
                 Color {Color::Red().red, Color::Red().blue, Color::Red().green, Color::Red().alpha},

@@ -7,7 +7,7 @@
 
 #include "Nibbler.hpp"
 
-static const Vector2f DEFAULT_TEXT_SIZE = {10.f, 5.f};
+static const Vector2f DEFAULT_TEXT_SIZE = {35.f, 5.f};
 
 void Game::Nibbler::drawGame(IGraphicRenderer &renderer) {
     std::size_t count = 0;
@@ -42,18 +42,29 @@ void Game::Nibbler::drawGame(IGraphicRenderer &renderer) {
     renderer.drawText(Text {
         std::string("Score: " + std::to_string(this->_player.score)),
         {45.f, 0.f},
-        DEFAULT_TEXT_SIZE,
-        Color::Black(),
+        {10.f, 5.f},
+        Color::White(),
     });
 }
 
 void Game::Nibbler::drawScore(IGraphicRenderer &renderer) {
     renderer.drawText(Text {
-        std::string("Your score: " + std::to_string(this->_player.score) +
-        "\nPress R to restart the game\nPress ESC to exit the game"),
+        std::string("Your score: " + std::to_string(this->_player.score)),
         {30.f, 40.f},
         DEFAULT_TEXT_SIZE,
-        Color::Black(),
+        Color::White(),
+    });
+    renderer.drawText(Text {
+        "Press R to restart the game",
+        {30.f, 45.f},
+        DEFAULT_TEXT_SIZE,
+        Color::White(),
+    });
+    renderer.drawText(Text {
+        "Press ESC to exit the game",
+        {30.f, 50.f},
+        DEFAULT_TEXT_SIZE,
+        Color::White(),
     });
 }
 

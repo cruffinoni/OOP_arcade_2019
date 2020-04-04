@@ -23,7 +23,7 @@ void Core::Core::createStripGame() {
     this->_graphic->drawText(Text {
         std::string("Game: " + Core::Core::getLibName(this->_game.getLibPath())),
         {0.f, 95.f},
-        {5.f, 5.f},
+        DEFAULT_STRIP_TEXT_SIZE,
         Color::White(),
     });
 
@@ -58,7 +58,7 @@ void Core::Core::createStripMenu() {
     this->_graphic->drawText(Text {
         "A: Next graphic lib  W: Previous graphic lib",
         {50.f, 95.f},
-        {50.f, 5.f},
+        DEFAULT_STRIP_TEXT_SIZE,
         Color::White(),
     });
 }

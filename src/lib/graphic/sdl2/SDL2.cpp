@@ -12,7 +12,7 @@
 static std::shared_ptr<Graphic::SDL2 *> instance;
 
 extern "C" {
-    IGraphic *loadLibrary() {
+    IGraphic *entry() {
         return (*instance);
     }
 
@@ -79,7 +79,7 @@ void Graphic::SDL2::drawRect(Rect rect) {
 }
 
 void Graphic::SDL2::drawScreen() {
-    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0);
     SDL_RenderPresent(_renderer);
     uint32_t now = SDL_GetTicks();
     uint32_t delta = now - this->_ticks;

@@ -13,7 +13,7 @@
 static std::shared_ptr<Graphic::SFML *> instance;
 
 extern "C" {
-    IGraphic *loadLibrary() {
+    IGraphic *entry() {
         return (*instance);
     }
 
@@ -42,7 +42,7 @@ Graphic::SFML::SFML() : _operational(true) {
 }
 
 void Graphic::SFML::clearScreen() {
-    this->_window->clear(sf::Color::White);
+    this->_window->clear();
     this->_entities.clear();
 }
 
@@ -110,10 +110,8 @@ void Graphic::SFML::drawText(Text text) {
 }
 
 void Graphic::SFML::drawScreen() {
-    for (auto &i: this->_entities) {
-        //printf("Display entity: %p\n", i);
+    for (auto &i: this->_entities)
         this->_window->draw(*i);
-    }
     this->_window->display();
 }
 

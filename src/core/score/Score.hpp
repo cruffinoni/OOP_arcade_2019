@@ -152,7 +152,7 @@ namespace Score {
 
         private:
             void sort();
-            std::list<PlayerData> _formatted;
+            std::list<PlayerData> _userList;
     };
 
 

@@ -59,7 +59,8 @@ Core::Exceptions::UnknownGraphicalLib::UnknownGraphicalLib(
 
 const char *Core::Exceptions::UnknownGraphicalLib::what() const noexcept {
     const static std::string msg = "The graphical library below '" + this->_name + "'"
-           "has been loaded but the file is not available anymore. It can be an internal error";
+           " has been loaded but the file is not available anymore. It can be an internal error. "
+           "Make sure the loaded library still in one of the mandatory folder.";
 
     return (msg.c_str());
 }

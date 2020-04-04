@@ -11,14 +11,14 @@
 static Game::Pacman *instance;
 
 extern "C" {
-    IGame *loadLibrary() {
+    IGame *entry() {
         return (instance);
     }
-    
+
     __attribute__((constructor)) void load() {
         instance = new Game::Pacman();
     }
-    
+
     __attribute__((destructor)) void unload() {
         delete instance;
     }
